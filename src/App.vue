@@ -32,46 +32,6 @@
           </button>
         </nav>
 
-        <template v-if="currentDemoPages.length">
-          <p class="rail-label demo-label">Demo</p>
-          <nav class="side-tabs demo-tabs" aria-label="brand demo rooms">
-            <button
-              v-for="template in currentDemoPages"
-              :key="template.id"
-              type="button"
-              :class="{ active: selectedTemplateId === template.id }"
-              @click="selectTemplate(template.id)"
-            >
-              {{ template.tab }}
-            </button>
-          </nav>
-        </template>
-
-        <p class="rail-label evidence-label">Evidence</p>
-        <div class="extraction-card style-evidence-card">
-          <strong>{{ selectedStyle.label }} 学习证据</strong>
-          <p>{{ selectedStyle.evidenceNote }}</p>
-          <div class="mapping-list compact-evidence">
-            <div
-              v-for="signal in selectedStyle.signals"
-              :key="`${selectedStyle.id}-${signal.raw}-${signal.target}`"
-              class="mapping-row"
-              :class="{ primary: signal.target.includes('primary') }"
-            >
-              <span class="raw-signal">
-                <i v-if="isColorSignal(signal.raw)" class="swatch" :style="{ background: signal.raw }"></i>
-                {{ signal.raw }}
-              </span>
-              <span class="frequency">{{ signal.count }}x</span>
-              <span class="percent">{{ signal.percent }}</span>
-              <span class="mapped-token">
-                {{ signal.target }}
-                <em>{{ signal.value }}</em>
-              </span>
-            </div>
-          </div>
-        </div>
-
         <p class="rail-label anchors-label">Nodes</p>
         <div class="component-list rail-list">
           <div
@@ -133,6 +93,60 @@
       <div class="demo-stage">
         <article class="component-showcase" aria-label="dangoui component showcase">
           <section class="template-preview">
+            <aside class="workspace-context" aria-label="Brand learning evidence">
+              <div class="context-card brand-summary-card">
+                <span>Current Style</span>
+                <strong>{{ selectedStyle.label }}</strong>
+                <p>{{ selectedStyle.notice }}</p>
+              </div>
+
+              <div v-if="currentDemoPages.length" class="context-card">
+                <div class="context-heading">
+                  <span>Demo</span>
+                  <strong>品牌场景</strong>
+                </div>
+                <nav class="workspace-demo-tabs" aria-label="brand demo rooms">
+                  <button
+                    v-for="template in currentDemoPages"
+                    :key="template.id"
+                    type="button"
+                    :class="{ active: selectedTemplateId === template.id }"
+                    @click="selectTemplate(template.id)"
+                  >
+                    <span>{{ template.tab }}</span>
+                    <small>{{ template.name }}</small>
+                  </button>
+                </nav>
+              </div>
+
+              <div class="context-card style-evidence-card">
+                <div class="context-heading">
+                  <span>Evidence</span>
+                  <strong>{{ selectedStyle.label }} 学习证据</strong>
+                </div>
+                <p>{{ selectedStyle.evidenceNote }}</p>
+                <div class="mapping-list compact-evidence">
+                  <div
+                    v-for="signal in selectedStyle.signals"
+                    :key="`${selectedStyle.id}-${signal.raw}-${signal.target}`"
+                    class="mapping-row"
+                    :class="{ primary: signal.target.includes('primary') }"
+                  >
+                    <span class="raw-signal">
+                      <i v-if="isColorSignal(signal.raw)" class="swatch" :style="{ background: signal.raw }"></i>
+                      {{ signal.raw }}
+                    </span>
+                    <span class="frequency">{{ signal.count }}x</span>
+                    <span class="percent">{{ signal.percent }}</span>
+                    <span class="mapped-token">
+                      {{ signal.target }}
+                      <em>{{ signal.value }}</em>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </aside>
+
             <div class="phone template-phone">
               <div class="phone-screen">
                 <div
