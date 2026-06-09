@@ -1556,6 +1556,225 @@ pre {
   grid-template-columns: auto 1fr;
 }
 
+.theme-notion .workspace {
+  background:
+    linear-gradient(90deg, rgba(230, 230, 230, 0.45) 1px, transparent 1px) 0 0 / 28px 28px,
+    linear-gradient(180deg, #ffffff 0%, #f6f5f4 100%);
+}
+
+.theme-notion .template-phone {
+  border-color: #dfddda;
+  border-radius: 30px;
+  box-shadow: 0 20px 54px rgba(33, 49, 131, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
+}
+
+.theme-notion .phone-screen {
+  background: var(--style-page-bg);
+}
+
+.theme-notion .phone .du-navigation-bar {
+  background: rgba(255, 255, 255, 0.94) !important;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+.theme-notion .du-button,
+.theme-notion .du-button.du-button--primary {
+  border-radius: 999px !important;
+  font-weight: 760;
+}
+
+.theme-notion .du-button.du-button--outline {
+  background: #ffffff !important;
+  color: #000000 !important;
+}
+
+.theme-notion .tag {
+  border-radius: 999px;
+  background: #edf6ff;
+  color: #0075de;
+}
+
+.theme-notion .style-button.active,
+.theme-notion .side-tabs button.active {
+  background: #edf6ff;
+  color: #0075de;
+}
+
+.theme-notion .phone .du-card,
+.theme-notion .display-summary,
+.theme-notion .placeholder-card,
+.theme-notion .setting-row.compact {
+  border-color: #e6e6e6;
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+.theme-notion .notion-hero,
+.theme-notion .notion-doc-card,
+.theme-notion .notion-plan-card {
+  position: relative;
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #000000;
+  box-shadow: var(--style-card-shadow);
+}
+
+.theme-notion .notion-hero {
+  min-height: 240px;
+  align-content: end;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 77% 14%, #62aef0 0 22px, transparent 23px),
+    radial-gradient(circle at 88% 38%, #d6b6f6 0 30px, transparent 31px),
+    radial-gradient(circle at 70% 58%, #ff64c8 0 20px, transparent 21px),
+    linear-gradient(180deg, #213183 0 44%, #ffffff 44% 100%);
+}
+
+.theme-notion .notion-hero::before {
+  content: "";
+  position: absolute;
+  right: 18px;
+  top: 52px;
+  width: 92px;
+  height: 92px;
+  border-radius: 18px;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, transparent 1px) 0 0 / 14px 14px,
+    linear-gradient(#fff, #f6f5f4);
+  transform: rotate(-6deg);
+  box-shadow: 0 18px 30px rgba(0, 0, 0, 0.14);
+}
+
+.theme-notion .notion-hero p {
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+  margin: 0;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #0075de;
+  font-size: 11px;
+  font-weight: 820;
+}
+
+.theme-notion .notion-hero strong {
+  position: relative;
+  z-index: 1;
+  max-width: 280px;
+  color: #000000;
+  font-size: 30px;
+  line-height: 1.05;
+}
+
+.theme-notion .notion-hero > span:not(.tag) {
+  position: relative;
+  z-index: 1;
+  color: #615d59;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.theme-notion .notion-hero .button-row {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-notion .notion-sticker-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.theme-notion .notion-doc-card .du-card {
+  box-shadow: none;
+}
+
+.theme-notion .notion-list {
+  display: grid;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.theme-notion .notion-list span {
+  padding: 9px 10px;
+  border-radius: 8px;
+  background: #f6f5f4;
+  color: #31302e;
+  font-size: 13px;
+}
+
+.theme-notion .notion-sticker-panel {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  padding: 14px;
+  border: 1px solid #e6e6e6;
+  border-radius: 12px;
+  background: #ffffff;
+}
+
+.theme-notion .notion-sticker-panel i {
+  display: block;
+  aspect-ratio: 1;
+  border-radius: 12px;
+}
+
+.theme-notion .notion-sticker-panel i:nth-child(2) {
+  background: #d6b6f6;
+}
+
+.theme-notion .notion-sticker-panel i:nth-child(3) {
+  background: #ff64c8;
+}
+
+.theme-notion .notion-sticker-panel i:nth-child(4) {
+  background: #1aae39;
+}
+
+.theme-notion .notion-sticker-panel i:first-of-type {
+  background: #62aef0;
+}
+
+.theme-notion .notion-plan-card strong {
+  font-size: 18px;
+}
+
+.theme-notion .notion-plan-card p {
+  margin: 0;
+  color: #615d59;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.theme-notion .notion-plan-card b {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.theme-notion .notion-plan-card small {
+  color: #615d59;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.theme-notion .notion-plan-card.featured {
+  background: #000000;
+  color: #ffffff;
+}
+
+.theme-notion .notion-plan-card.featured p,
+.theme-notion .notion-plan-card.featured small {
+  color: rgba(255, 255, 255, 0.72);
+}
+
 .component-title {
   display: flex;
   align-items: baseline;

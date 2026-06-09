@@ -33,6 +33,53 @@ npm run sync:skills
 - 每次映射都必须有证据、状态和落地位置。
 - 当前 dangoui 不支持的能力，不伪装成正式 `--du-*`。
 
+## Mode Selection
+
+先判断用户是在“维护 skill”还是“使用 skill”。
+
+### Mode A：Maintain Skill
+
+当用户在 Dangoui Design System Skill 仓库中要求更新 skill 本身时使用。
+
+触发例子：
+
+- 更新、优化、同步、发布这个 `brand` skill。
+- 刷新内置 dangoui schema、参考文档、脚本或输出模板。
+- 让 Codex / Claude 都能使用这个 skill。
+- 修改 `skills/brand/`、`.claude/skills/brand/`、`scripts/sync-agent-skills.mjs` 或本仓库 README。
+
+执行规则：
+
+- 只维护源目录 `skills/brand/`，不要手动编辑 `.claude/skills/brand/`。
+- 改完运行 `npm run sync:skills` 同步 Claude Code 镜像。
+- 验证 `diff -qr skills/brand .claude/skills/brand` 无差异。
+- 能构建时运行 `npm run build`。
+- 如用户要求，提交并 push。
+
+Mode A 的输出是 skill 仓库变更，不是业务项目主题。
+
+### Mode B：Apply Brand Style
+
+当用户在任意业务项目中要求把某个品牌风格应用到当前项目、页面或 demo 时使用。
+
+触发例子：
+
+- “用 brand skill，把这个网址的风格迁移到当前项目。”
+- “给这个业务项目做 3 个 Apple / Spotify / 某品牌风格 preview。”
+- “把 DESIGN.md 应用到当前 Vue / React / dangoui demo。”
+- “只生成迁移资产，不更新 skill 仓库。”
+
+执行规则：
+
+- 先识别宿主项目的框架、样式入口、demo 页面和 dangoui 使用方式。
+- 不修改 Dangoui Design System Skill 仓库，除非用户明确要求回到 Mode A。
+- 在宿主项目生成或更新 `migrations/{brand}/` 资产。
+- 将选中的 preview 应用到宿主项目自己的页面、主题文件或 demo 入口。
+- 正式 dangoui token 只写已有 `--du-*`；未承接能力写入 demo 专用样式、adapter 或 ReviewQueue。
+- 运行宿主项目的构建/测试，并用浏览器验证可见 demo。
+
+Mode B 的输出是宿主项目变更，不是这个 skill 的新版发布。
+
 ## 每次必读文件
 
 - `references/brand-dtcg-migration-asset-standard.md`：长期资产架构。

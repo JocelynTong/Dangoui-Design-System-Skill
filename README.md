@@ -22,6 +22,61 @@ skills/brand/
 npm run sync:skills
 ```
 
+不要手动维护两份 skill。`.claude/skills/brand/` 是 Claude Code 镜像，由同步脚本生成。
+
+## 两种模式
+
+### Mode A：维护 Skill
+
+在这个仓库里使用，目标是更新工具本身。
+
+示例：
+
+```text
+帮我更新 brand skill，让它支持从截图里提取颜色频次，并同步 Claude 版本，然后 push。
+```
+
+会改动：
+
+```text
+skills/brand/
+.claude/skills/brand/
+scripts/
+references/
+README.md
+```
+
+推荐流程：
+
+```bash
+npm run sync:skills
+diff -qr skills/brand .claude/skills/brand
+npm run build
+git add --all
+git commit -m "Update brand skill"
+git push
+```
+
+### Mode B：应用品牌风格
+
+在开发者自己的项目里使用，目标是把某个品牌风格应用到当前项目或 demo。
+
+示例：
+
+```text
+用 brand skill，把 https://example.com 的品牌风格迁移到当前项目，先给我 3 个 demo 方向。
+```
+
+典型输出在宿主项目里：
+
+```text
+migrations/{brand}/
+src/styles/brand-theme.css
+src/pages/BrandPreview.vue
+```
+
+Mode B 不更新这个 skill 仓库；如果使用中发现 skill 缺能力，再回到 Mode A 维护。
+
 ## 使用场景
 
 - 为其他项目先生成 2-3 个 demo 视觉方向，让用户选择风格。

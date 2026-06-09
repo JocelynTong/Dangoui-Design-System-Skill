@@ -234,6 +234,87 @@
                     </div>
                   </template>
 
+                  <template v-else-if="selectedTemplateId === 'notion-home'">
+                    <div class="click-target notion-hero" :class="{ selected: selectedInstanceId === pageNodeId('Hero') }" :data-node-id="pageNodeId('Hero')" @click="selectInstance(pageNodeId('Hero'))">
+                      <span class="tag">Hero</span>
+                      <p>Write, plan, organize</p>
+                      <strong>Your team's calm operating system</strong>
+                      <span>白纸感画布、近黑大字和单一蓝色行动入口，彩色贴纸只负责人格。</span>
+                      <div class="button-row">
+                        <DuButton text="Start building" type="primary" />
+                        <DuButton text="Browse templates" type="outline" />
+                      </div>
+                    </div>
+                    <div class="click-target notion-sticker-row" :class="{ selected: selectedInstanceId === pageNodeId('Tag') }" :data-node-id="pageNodeId('Tag')" @click="selectInstance(pageNodeId('Tag'))">
+                      <span class="tag">Tag</span>
+                      <DuTag color="primary" round>docs</DuTag>
+                      <DuTag color="default" round>wiki</DuTag>
+                      <DuTag color="default" round>projects</DuTag>
+                    </div>
+                    <div class="click-target notion-doc-card" :class="{ selected: selectedInstanceId === pageNodeId('Card') }" :data-node-id="pageNodeId('Card')" @click="selectInstance(pageNodeId('Card'))">
+                      <span class="tag">Card</span>
+                      <DuCard title="Company home" guide-text="" size="large">
+                        <p class="card-copy">用 dangoui Card 承接 Notion 的文档卡片模式；纸面、圆角和 hairline 是 demo 视觉控制。</p>
+                      </DuCard>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Button') }" :data-node-id="pageNodeId('Button')" @click="selectInstance(pageNodeId('Button'))">
+                      <span class="tag">Button</span>
+                      <div class="button-row">
+                        <DuButton text="Get Notion free" type="primary" />
+                        <DuButton text="Request demo" type="outline" />
+                      </div>
+                    </div>
+                  </template>
+
+                  <template v-else-if="selectedTemplateId === 'notion-wiki'">
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Search') }" :data-node-id="pageNodeId('Search')" @click="selectInstance(pageNodeId('Search'))">
+                      <span class="tag">Search</span>
+                      <DuSearch readonly :placeholder="['搜索文档、项目、成员']" />
+                    </div>
+                    <div class="click-target notion-doc-card" :class="{ selected: selectedInstanceId === pageNodeId('Card') }" :data-node-id="pageNodeId('Card')" @click="selectInstance(pageNodeId('Card'))">
+                      <span class="tag">Card</span>
+                      <DuCard title="Team wiki" guide-text="" size="large">
+                        <div class="notion-list">
+                          <span>Getting started</span>
+                          <span>Product roadmap</span>
+                          <span>Design system notes</span>
+                        </div>
+                      </DuCard>
+                    </div>
+                    <div class="click-target notion-doc-card" :class="{ selected: selectedInstanceId === pageNodeId('NoticeBar') }" :data-node-id="pageNodeId('NoticeBar')" @click="selectInstance(pageNodeId('NoticeBar'))">
+                      <span class="tag">NoticeBar</span>
+                      <DuNoticeBar text="新成员已加入工作区，建议先阅读 onboarding 页面。" link-text="打开" />
+                    </div>
+                    <div class="click-target notion-sticker-panel" :class="{ selected: selectedInstanceId === pageNodeId('Image') }" :data-node-id="pageNodeId('Image')" @click="selectInstance(pageNodeId('Image'))">
+                      <span class="tag">Image</span>
+                      <i></i><i></i><i></i><i></i>
+                    </div>
+                  </template>
+
+                  <template v-else-if="selectedTemplateId === 'notion-pricing'">
+                    <div class="click-target notion-plan-card" :class="{ selected: selectedInstanceId === pageNodeId('Card') }" :data-node-id="pageNodeId('Card')" @click="selectInstance(pageNodeId('Card'))">
+                      <span class="tag">Card</span>
+                      <strong>Plus</strong>
+                      <p>For small teams and professionals.</p>
+                      <b>$10 <small>/ seat</small></b>
+                      <DuButton text="Get started" type="primary" />
+                    </div>
+                    <div class="click-target notion-plan-card featured" :class="{ selected: selectedInstanceId === pageNodeId('Badge') }" :data-node-id="pageNodeId('Badge')" @click="selectInstance(pageNodeId('Badge'))">
+                      <span class="tag">Badge</span>
+                      <strong>Business</strong>
+                      <p>Advanced permissions, SSO and shared teamspaces.</p>
+                      <b>$20 <small>/ seat</small></b>
+                      <DuTag color="primary" round>Recommended</DuTag>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Button') }" :data-node-id="pageNodeId('Button')" @click="selectInstance(pageNodeId('Button'))">
+                      <span class="tag">Button</span>
+                      <div class="button-row">
+                        <DuButton text="Contact sales" type="primary" />
+                        <DuButton text="Compare plans" type="outline" />
+                      </div>
+                    </div>
+                  </template>
+
                   <template v-else-if="selectedTemplateId === 'distribution'">
                     <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Search') }" :data-node-id="pageNodeId('Search')" @click="selectInstance(pageNodeId('Search'))">
                       <span class="tag">Search</span>
@@ -620,6 +701,50 @@ const stylePresets = [
     ],
   },
   {
+    id: "notion",
+    label: "Notion",
+    icon: "https://www.notion.so/images/favicon.ico",
+    source: "DESIGN-notion.md / 组件引用口径",
+    hero: "Notion Workspace",
+    notice: "暖白纸面、近黑 Inter 字体、单一可信蓝和多色贴纸被拆成 dangoui token 与 demo-only 视觉控制。",
+    evidenceNote: "频次来自 DESIGN-notion.md 的 components: 对 colors.*、rounded.*、spacing.* 的引用统计；UI chrome 只用中性和蓝色，贴纸多色不进入 primary。",
+    sectionTitle: "Paper-Calm Docs",
+    tabs: ["文档", "知识库", "团队"],
+    cards: [
+      { title: "安静文档壳", copy: "大面积白和暖灰承接页面节奏，按钮只保留一个清晰蓝色行动入口。" },
+      { title: "贴纸人格层", copy: "紫、粉、橙、绿等品牌色只作为插画/贴纸资产，不污染 dangoui 语义 token。" },
+    ],
+    tokens: [
+      { name: "--du-bg-2", value: "#f6f5f4" },
+      { name: "--du-bg-1", value: "#ffffff" },
+      { name: "--du-text-1", value: "#000000" },
+      { name: "--du-text-2", value: "#31302e" },
+      { name: "--du-text-3", value: "#615d59" },
+      { name: "--du-border-1", value: "#e6e6e6" },
+      { name: "--du-primary-color", value: "#0075de" },
+      { name: "--du-primary-border", value: "#0075de" },
+      { name: "--du-primary-outline-color", value: "#0075de" },
+      { name: "--du-primary-soft-bg", value: "#edf6ff" },
+      { name: "--du-primary-solid-bg", value: "#0075de" },
+    ],
+    style: {
+      cardRadius: "12px",
+      controlRadius: "999px",
+      pageSpacing: "16px",
+      cardShadow: "0 1px 0 rgba(0,0,0,.08), 0 14px 34px rgba(33,49,131,.08)",
+      media: "radial-gradient(circle at 20% 26%, #62aef0 0 15%, transparent 16%), radial-gradient(circle at 68% 22%, #d6b6f6 0 13%, transparent 14%), radial-gradient(circle at 44% 68%, #ff64c8 0 12%, transparent 13%), radial-gradient(circle at 78% 72%, #1aae39 0 10%, transparent 11%), linear-gradient(135deg,#ffffff,#f6f5f4)",
+    },
+    signals: [
+      { raw: "#ffffff", count: 8, percent: "24.2%", target: "--du-bg-1 / --du-white-*", value: "canvas、surface、on-primary" },
+      { raw: "#000000", count: 7, percent: "21.2%", target: "--du-text-1", value: "标题、正文、次级按钮文字" },
+      { raw: "#f6f5f4", count: 3, percent: "9.1%", target: "--du-bg-2", value: "canvas-soft、featured pricing、footer" },
+      { raw: "#0075de", count: 3, percent: "9.1%", target: "--du-primary-color", value: "primary CTA、badge、app-shell active indicator" },
+      { raw: "#e6e6e6", count: 2, percent: "6.1%", target: "--du-border-1", value: "hairline、table row、drawer divider" },
+      { raw: "#213183", count: 1, percent: "3%", target: "demoOnlyVisualControls", value: "hero-band dark island" },
+      { raw: "贴纸多色 palette", count: 9, percent: "27.3%", target: "demoOnlyVisualControls", value: "accent-sky/purple/pink/orange/teal/green/brown" },
+    ],
+  },
+  {
     id: "spotify",
     label: "Spotify",
     icon: "https://open.spotify.com/favicon.ico",
@@ -999,7 +1124,34 @@ const cznTemplatePages = [
     components: ["NavigationBar", "CharacterPanel", "Avatar", "Card", "Tag"],
   },
 ];
-const currentDemoPages = computed(() => (selectedStyleId.value === "czn" ? cznTemplatePages : []));
+const notionTemplatePages = [
+  {
+    id: "notion-home",
+    tab: "文档首页",
+    name: "Notion 文档首页",
+    description: "对应 Notion 首页：暖白画布、近黑大标题、蓝色 CTA 和贴纸人格层。",
+    components: ["NavigationBar", "Hero", "Tag", "Card", "Button"],
+  },
+  {
+    id: "notion-wiki",
+    tab: "知识库",
+    name: "团队知识库",
+    description: "对应 Notion 文档/知识库：搜索、文档列表、轻提示和多色插画块。",
+    components: ["NavigationBar", "Search", "Card", "NoticeBar", "Image"],
+  },
+  {
+    id: "notion-pricing",
+    tab: "团队计划",
+    name: "团队计划页",
+    description: "对应 Notion pricing card：白卡、hairline、少量蓝色行动入口和 featured 反相卡。",
+    components: ["NavigationBar", "Card", "Badge", "Button"],
+  },
+];
+const demoPagesByStyle = {
+  czn: cznTemplatePages,
+  notion: notionTemplatePages,
+};
+const currentDemoPages = computed(() => demoPagesByStyle[selectedStyleId.value] || []);
 const currentTemplatePages = computed(() => [...templatePages, ...currentDemoPages.value]);
 const selectedTemplate = computed(() => currentTemplatePages.value.find((template) => template.id === selectedTemplateId.value) || currentTemplatePages.value[0]);
 const pageInstances = computed(() =>
@@ -1040,10 +1192,10 @@ const themeVars = computed(() => ({
   "--style-muted": selectedStyleTokenMap.value["--du-text-3"],
   "--style-accent": selectedStyleTokenMap.value["--du-primary-color"],
   "--style-accent-soft": selectedStyleTokenMap.value["--du-primary-soft-bg"],
-  "--style-card-radius": "14px",
-  "--style-control-radius": "8px",
-  "--style-page-spacing": "16px",
-  "--style-card-shadow": "0 12px 30px rgba(31,31,35,.08)",
+  "--style-card-radius": selectedStyle.value.style.cardRadius,
+  "--style-control-radius": selectedStyle.value.style.controlRadius,
+  "--style-page-spacing": selectedStyle.value.style.pageSpacing,
+  "--style-card-shadow": selectedStyle.value.style.cardShadow,
   "--style-media": selectedStyle.value.style.media,
 }));
 const styleJson = computed(() =>
@@ -1178,7 +1330,7 @@ function selectTemplate(templateId) {
 
 function selectStyle(styleId) {
   selectedStyleId.value = styleId;
-  const pages = styleId === "czn" ? [...templatePages, ...cznTemplatePages] : templatePages;
+  const pages = [...templatePages, ...(demoPagesByStyle[styleId] || [])];
   if (!pages.some((template) => template.id === selectedTemplateId.value)) {
     selectedTemplateId.value = "distribution";
   }
