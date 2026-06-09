@@ -19,73 +19,108 @@
       </div>
 
       <div class="side-rail">
-        <p class="rail-label">Scene</p>
-        <nav class="side-tabs workflow-tabs" aria-label="business scenes">
-          <button
-            v-for="template in templatePages"
-            :key="template.id"
-            type="button"
-            :class="{ active: selectedTemplateId === template.id }"
-            @click="selectTemplate(template.id)"
-          >
-            {{ template.tab }}
-          </button>
+        <nav class="inspector-tabs" aria-label="inspector sections">
+          <button type="button" :class="{ active: selectedInspectorTab === 'base' }" @click="selectedInspectorTab = 'base'">基础</button>
+          <button type="button" :class="{ active: selectedInspectorTab === 'components' }" @click="selectedInspectorTab = 'components'">组件</button>
         </nav>
 
-        <p class="rail-label anchors-label">Nodes</p>
-        <div class="component-list rail-list">
-          <div
-            v-for="instance in pageInstances"
-            :key="instance.id"
-            class="component"
-            :class="{ active: selectedInstanceId === instance.id, missing: isMissing(instance.name) }"
-            :data-instance-id="instance.id"
-          >
+        <template v-if="selectedInspectorTab === 'base'">
+          <p class="rail-label">设计系统</p>
+          <nav class="side-tabs workflow-tabs" aria-label="design system scenes">
             <button
-              class="node-button"
+              v-for="template in templatePages"
+              :key="template.id"
               type="button"
-              @click="selectInstance(instance.id)"
+              :class="{ active: selectedTemplateId === template.id }"
+              @click="selectTemplate(template.id)"
             >
-              <strong>
-                {{ instance.label }} <em>{{ componentChineseName(instance.name) }}</em>
-                <span>{{ componentMeta(instance.name)?.className || missingMeta(instance.name)?.status || "unknown" }}</span>
-              </strong>
+              {{ template.tab }}
             </button>
-            <div v-if="selectedInstanceId === instance.id" class="node-detail">
-              <p>
-                {{ humanDescription }}
-                <a class="inline-doc-link" :href="componentDocsUrl(selectedComponent)" target="_blank" rel="noreferrer">docs</a>
-              </p>
-              <div class="editable-list">
-                <span v-for="field in editableFields" :key="field" class="mini-token">可改：{{ field }}</span>
-              </div>
+          </nav>
 
-              <details class="node-token-section">
-                <summary>展开 tokens</summary>
-                <p class="token-doc-row">
-                  <a class="inline-doc-link" :href="tokenDocsUrl" target="_blank" rel="noreferrer">token docs</a>
-                </p>
-                <div v-if="selectedTokens.length" class="token-grid rail-tokens">
-                  <button
-                    v-for="token in visibleTokens"
-                    :key="token.name"
-                    class="token"
-                    :class="{ active: selectedTokenName === token.name }"
-                    type="button"
-                    @click="selectToken(token.name)"
-                  >
-                    <i class="swatch" :style="{ background: token.value }"></i>
-                    <span><strong>{{ token.name }}</strong><span>{{ token.usage }}</span></span>
-                    <span>{{ token.value }}</span>
-                  </button>
-                  <button v-if="selectedTokens.length > tokenPreviewLimit" class="collapse-button" type="button" @click="tokensExpanded = !tokensExpanded">
-                    {{ tokensExpanded ? "收起 tokens" : `展开全部 ${selectedTokens.length} 个 tokens` }}
-                  </button>
-                </div>
-              </details>
+          <p class="rail-label evidence-label">Token</p>
+          <div class="extraction-card style-evidence-card">
+            <strong>{{ selectedStyle.label }} Token 学习证据</strong>
+            <p>{{ selectedStyle.evidenceNote }}</p>
+            <p class="evidence-method">次数 = 该视觉值在本次统计口径中的出现次数；占比 = 出现次数 / 本次统计总次数。</p>
+            <div class="mapping-list compact-evidence">
+              <div
+                v-for="signal in selectedStyle.signals"
+                :key="`${selectedStyle.id}-${signal.raw}-${signal.target}`"
+                class="mapping-row"
+                :class="{ primary: signal.target.includes('primary') }"
+              >
+                <span class="raw-signal">
+                  <i v-if="isColorSignal(signal.raw)" class="swatch" :style="{ background: signal.raw }"></i>
+                  {{ signal.raw }}
+                </span>
+                <span class="frequency">{{ signal.count }} 次</span>
+                <span class="percent">{{ signal.percent }}</span>
+                <span class="mapped-token">
+                  {{ signal.target }}
+                  <em>{{ signal.value }}</em>
+                </span>
+              </div>
             </div>
           </div>
-        </div>
+        </template>
+
+        <template v-else>
+          <p class="rail-label">Nodes</p>
+          <div class="component-list rail-list">
+            <div
+              v-for="instance in pageInstances"
+              :key="instance.id"
+              class="component"
+              :class="{ active: selectedInstanceId === instance.id, missing: isMissing(instance.name) }"
+              :data-instance-id="instance.id"
+            >
+              <button
+                class="node-button"
+                type="button"
+                @click="selectInstance(instance.id)"
+              >
+                <strong>
+                  {{ instance.label }} <em>{{ componentChineseName(instance.name) }}</em>
+                  <span>{{ componentMeta(instance.name)?.className || missingMeta(instance.name)?.status || "unknown" }}</span>
+                </strong>
+              </button>
+              <div v-if="selectedInstanceId === instance.id" class="node-detail">
+                <p>
+                  {{ humanDescription }}
+                  <a class="inline-doc-link" :href="componentDocsUrl(selectedComponent)" target="_blank" rel="noreferrer">docs</a>
+                </p>
+                <div class="editable-list">
+                  <span v-for="field in editableFields" :key="field" class="mini-token">可改：{{ field }}</span>
+                </div>
+
+                <details class="node-token-section">
+                  <summary>展开 tokens</summary>
+                  <p class="token-doc-row">
+                    <a class="inline-doc-link" :href="tokenDocsUrl" target="_blank" rel="noreferrer">token docs</a>
+                  </p>
+                  <div v-if="selectedTokens.length" class="token-grid rail-tokens">
+                    <button
+                      v-for="token in visibleTokens"
+                      :key="token.name"
+                      class="token"
+                      :class="{ active: selectedTokenName === token.name }"
+                      type="button"
+                      @click="selectToken(token.name)"
+                    >
+                      <i class="swatch" :style="{ background: token.value }"></i>
+                      <span><strong>{{ token.name }}</strong><span>{{ token.usage }}</span></span>
+                      <span>{{ token.value }}</span>
+                    </button>
+                    <button v-if="selectedTokens.length > tokenPreviewLimit" class="collapse-button" type="button" @click="tokensExpanded = !tokensExpanded">
+                      {{ tokensExpanded ? "收起 tokens" : `展开全部 ${selectedTokens.length} 个 tokens` }}
+                    </button>
+                  </div>
+                </details>
+              </div>
+            </div>
+          </div>
+        </template>
       </div>
     </aside>
 
@@ -116,36 +151,8 @@
                   >
                     <span>{{ template.tab }}</span>
                     <small>{{ template.name }}</small>
-                  </button>
-                </nav>
-                </div>
-
-                <div class="context-section style-evidence-card">
-                  <div class="context-heading">
-                    <span>Evidence</span>
-                    <strong>{{ selectedStyle.label }} 学习证据</strong>
-                  </div>
-                  <p>{{ selectedStyle.evidenceNote }}</p>
-                  <p class="evidence-method">次数 = 该视觉值在本次统计口径中的出现次数；占比 = 出现次数 / 本次统计总次数。</p>
-                  <div class="mapping-list compact-evidence">
-                    <div
-                      v-for="signal in selectedStyle.signals"
-                      :key="`${selectedStyle.id}-${signal.raw}-${signal.target}`"
-                      class="mapping-row"
-                      :class="{ primary: signal.target.includes('primary') }"
-                    >
-                      <span class="raw-signal">
-                        <i v-if="isColorSignal(signal.raw)" class="swatch" :style="{ background: signal.raw }"></i>
-                        {{ signal.raw }}
-                      </span>
-                      <span class="frequency">{{ signal.count }} 次</span>
-                      <span class="percent">{{ signal.percent }}</span>
-                      <span class="mapped-token">
-                        {{ signal.target }}
-                        <em>{{ signal.value }}</em>
-                      </span>
-                    </div>
-                  </div>
+                    </button>
+                  </nav>
                 </div>
               </div>
             </aside>
@@ -956,6 +963,7 @@ const selectedComponent = ref("NavigationBar");
 const selectedTokenName = ref("");
 const tokensExpanded = ref(false);
 const selectedTemplateId = ref("distribution");
+const selectedInspectorTab = ref("base");
 
 const imagePreviewSrc =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' rx='24' fill='%23f5f5f5'/%3E%3Ccircle cx='92' cy='76' r='44' fill='%23874fff' fill-opacity='.82'/%3E%3Ccircle cx='160' cy='92' r='48' fill='%2300b6ff' fill-opacity='.72'/%3E%3Ccircle cx='224' cy='82' r='38' fill='%23ff7237' fill-opacity='.78'/%3E%3C/svg%3E";
