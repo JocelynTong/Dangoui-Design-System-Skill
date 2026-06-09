@@ -27,7 +27,6 @@
         <template v-if="selectedInspectorTab === 'style'">
           <p class="rail-label">Color Palette</p>
           <div class="extraction-card style-evidence-card">
-            <strong>{{ selectedStyle.label }} Color Palette</strong>
             <p>{{ selectedStyle.evidenceNote }}</p>
             <p class="evidence-method">次数 = 出现次数；占比 = 出现次数 / 统计总次数。</p>
             <div class="palette-list">
