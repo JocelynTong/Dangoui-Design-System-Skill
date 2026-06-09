@@ -1,0 +1,48 @@
+{
+  "$description": "CZN screenshot-calibrated brand migration profile for demo validation.",
+  "Color": {
+    "PrimaryAction": {
+      "$type": "color",
+      "$value": "#ff5a1f",
+      "$description": "橙色主行动入口：导航激活、官网按钮、下载 CTA、轮播边框。",
+      "$extensions": {
+        "com.echo.brandMigration": {
+          "status": "mapped",
+          "dangouiTargets": ["--du-primary-color", "--du-primary-solid-bg", "--du-primary-border"],
+          "evidenceRefs": ["brand-evidence.json#/statistics/color/frequency/0"]
+        }
+      }
+    },
+    "DarkImmersiveBackground": {
+      "$type": "color",
+      "$value": "#0b0710",
+      "$description": "黑紫沉浸式页面背景。",
+      "$extensions": {
+        "com.echo.brandMigration": {
+          "status": "mapped",
+          "dangouiTargets": ["--du-bg-2"],
+          "evidenceRefs": ["brand-evidence.json#/statistics/color/frequency/1"]
+        }
+      }
+    },
+    "DarkHudSurface": {
+      "$type": "color",
+      "$value": "#17111f",
+      "$description": "HUD 面板和暗色内容表面。",
+      "$extensions": {
+        "com.echo.brandMigration": {
+          "status": "mapped",
+          "dangouiTargets": ["--du-bg-1"],
+          "evidenceRefs": ["brand-evidence.json#/statistics/color/frequency/2"]
+        }
+      }
+    }
+  },
+  "$extensions": {
+    "com.echo.brandMigration": {
+      "componentMapping": "component-mapping.json",
+      "demoOnlyVisualControls": ["--style-media"],
+      "reviewQueue": ["需要真实站点 CSS 或更多截图来校准完整频次。"]
+    }
+  }
+}

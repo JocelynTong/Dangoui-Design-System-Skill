@@ -1,0 +1,307 @@
+{
+  "$description": "品牌风格迁移资产模板。用于把品牌证据、Echo/Figma 承接、dangoui 落地和组件映射保存在同一份长期可迁移结构里。",
+  "$extensions": {
+    "com.echo.asset": {
+      "assetVersion": "0.1.0",
+      "language": "zh-CN",
+      "createdFor": "brand-to-echo-to-dangoui migration",
+      "statusValues": ["mapped", "fallback", "style-only", "missing", "ask-user"],
+      "previewGate": "required-before-formal-mapping",
+      "defaultUtilityLayer": "unocss-with-uno-preset-echo"
+    },
+    "com.echo.sources": {
+      "brandSource": "",
+      "figmaTokenFiles": [
+        "/Users/jocelyn/Downloads/echo-design-system/01 tokens/00 qiandao/千岛.tokens.json",
+        "/Users/jocelyn/Downloads/echo-design-system/01 tokens/00 qiandao/千岛暗黑.tokens.json",
+        "/Users/jocelyn/Downloads/echo-design-system/01 tokens/00 qiandao/Primitives-QD.json"
+      ],
+      "dangouiSchema": "data/dangoui.design-system.json"
+    }
+  },
+  "PreviewGate": {
+    "$description": "正式迁移前的视觉方向预审。preview demo 只用于确认方向，临时 class、裸 CSS value 和页面变量不能直接成为正式 token。",
+    "$extensions": {
+      "com.echo.previewGate": {
+        "status": "pending",
+        "decision": "",
+        "selectedPreviewId": "",
+        "mergedFrom": [],
+        "rejected": [],
+        "notes": ""
+      }
+    },
+    "Previews": [
+      {
+        "previewId": "preview-a",
+        "pages": [],
+        "visualHypothesis": {
+          "mood": "",
+          "density": "",
+          "colorDirection": "",
+          "layoutRhythm": "",
+          "componentPatterns": []
+        },
+        "temporaryStyles": {
+          "utilityLayer": "unocss",
+          "preset": "uno-preset-echo",
+          "notes": "Temporary styles are exploration evidence only."
+        },
+        "userFeedback": {
+          "decision": "",
+          "reason": ""
+        }
+      }
+    ]
+  },
+  "BrandEvidence": {
+    "Color": {
+      "$description": "UI color 统计，不与媒体/插画/摄影资产混算。",
+      "$extensions": {
+        "com.echo.statistic": {
+          "scope": "UI color values from backgrounds, text, borders, icons and action controls",
+          "formula": "percent = count / total count in this scope",
+          "total": 0,
+          "frequency": []
+        }
+      }
+    },
+    "Radius": {
+      "$description": "圆角统计。用于判断品牌的 card/control/pill 风格，再映射到 Echo primitives 或记录 fallback。",
+      "$extensions": {
+        "com.echo.statistic": {
+          "scope": "border-radius values from UI components",
+          "formula": "percent = count / total count in this scope",
+          "total": 0,
+          "frequency": []
+        }
+      }
+    },
+    "Spacing": {
+      "$description": "间距统计。用于判断页面节奏和组件内部密度。",
+      "$extensions": {
+        "com.echo.statistic": {
+          "scope": "gap, padding, margin values from UI layout and components",
+          "formula": "percent = count / total count in this scope",
+          "total": 0,
+          "frequency": []
+        }
+      }
+    },
+    "Shadow": {
+      "$description": "阴影统计。当前如果 Echo/dangoui 没有 shadow token，记录为 missing 或 style-only。",
+      "$extensions": {
+        "com.echo.statistic": {
+          "scope": "box-shadow values from UI components",
+          "formula": "percent = count / total count in this scope",
+          "total": 0,
+          "frequency": []
+        }
+      }
+    },
+    "ComponentPattern": {
+      "$description": "组件模式统计，不只记录组件名，还记录结构、状态、slot、props、组合方式。",
+      "$extensions": {
+        "com.echo.statistic": {
+          "scope": "component patterns from target brand pages",
+          "formula": "percent = count / total component-pattern count in this scope",
+          "total": 0,
+          "frequency": []
+        }
+      }
+    }
+  },
+  "BrandIntent": {
+    "$description": "中立品牌意图层。这里的 key 不能直接当成 dangoui token 或组件名。",
+    "$extensions": {
+      "com.echo.intent": {
+        "tokens": {
+          "color.neutral.surface": "",
+          "color.action.primary": "",
+          "radius.card": "",
+          "radius.control": "",
+          "spacing.component": "",
+          "spacing.section": "",
+          "shadow.surface": ""
+        },
+        "components": {
+          "card": "",
+          "button": "",
+          "navigation": "",
+          "formControl": "",
+          "feedback": ""
+        }
+      }
+    }
+  },
+  "EchoMapping": {
+    "Tokens": {
+      "$description": "品牌意图到 Echo/Figma DTCG token 的承接关系。",
+      "Radius": {
+        "Card": {
+          "$type": "dimension",
+          "$value": { "value": 16, "unit": "px" },
+          "$extensions": {
+            "com.echo.brandMigration": {
+              "status": "fallback",
+              "rawBrandValue": "",
+              "currentToken": "Radius/Large",
+              "currentSourceType": "number",
+              "futureTokenCandidate": "",
+              "confidence": "low",
+              "reason": "",
+              "evidenceRefs": []
+            }
+          }
+        },
+        "Control": {
+          "$type": "dimension",
+          "$value": { "value": 8, "unit": "px" },
+          "$extensions": {
+            "com.echo.brandMigration": {
+              "status": "fallback",
+              "rawBrandValue": "",
+              "currentToken": "Radius/Normal",
+              "currentSourceType": "number",
+              "futureTokenCandidate": "",
+              "confidence": "low",
+              "reason": "",
+              "evidenceRefs": []
+            }
+          }
+        }
+      },
+      "Spacing": {
+        "Component": {
+          "$type": "dimension",
+          "$value": { "value": 8, "unit": "px" },
+          "$extensions": {
+            "com.echo.brandMigration": {
+              "status": "mapped",
+              "rawBrandValue": "",
+              "currentToken": "Spacing/Normal",
+              "currentSourceType": "number",
+              "futureTokenCandidate": "",
+              "confidence": "low",
+              "reason": "",
+              "evidenceRefs": []
+            }
+          }
+        }
+      },
+      "Shadow": {
+        "$description": "当前没有可输出的标准 shadow token 时，不创建空 $value；缺口记录在 group extension。",
+        "$extensions": {
+          "com.echo.brandMigration": {
+            "status": "missing",
+            "rawBrandValue": "",
+            "currentToken": null,
+            "futureTokenCandidate": "Shadow/CardSoft",
+            "confidence": "low",
+            "reason": "当前 Echo primitives 和 dangoui 代码库暂未确认 shadow token。",
+            "evidenceRefs": []
+          }
+        }
+      }
+    },
+    "Components": {
+      "$description": "组件不是 DTCG 标准 token 类型；这里只作为 group metadata 保存，真正机器处理也会同步到 component-mapping.json。",
+      "BrandCard": {
+        "$description": "",
+        "$extensions": {
+          "com.echo.brandMigration": {
+            "status": "composed",
+            "brandPattern": "",
+            "echoComponentCandidate": "Card",
+            "figmaComponentCandidate": "",
+            "variantCandidate": "",
+            "props": {},
+            "slots": [],
+            "usesTokens": [],
+            "unsupported": [],
+            "evidenceRefs": []
+          }
+        }
+      }
+    }
+  },
+  "DangouiAdapter": {
+    "$description": "Echo/Figma 到当前 dangoui 代码库的落地关系。当前代码库缺失时使用 --style-*，未来升级到 --du-*。",
+    "Tokens": {
+      "Radius/Card": {
+        "status": "style-only",
+        "echoToken": "Radius/Large",
+        "currentCssVar": "--style-card-radius",
+        "futureDangouiVar": "--du-radius-card-large",
+        "value": 16
+      },
+      "Radius/Control": {
+        "status": "style-only",
+        "echoToken": "Radius/Normal",
+        "currentCssVar": "--style-control-radius",
+        "futureDangouiVar": "--du-radius-control-normal",
+        "value": 8
+      },
+      "Spacing/Component": {
+        "status": "style-only",
+        "echoToken": "Spacing/Normal",
+        "currentCssVar": "--style-page-spacing",
+        "futureDangouiVar": "--du-spacing-normal",
+        "value": 8
+      },
+      "Shadow/Card": {
+        "status": "missing",
+        "echoToken": null,
+        "currentCssVar": "--style-card-shadow",
+        "futureDangouiVar": "--du-shadow-card-soft",
+        "value": null
+      }
+    },
+    "Components": {
+      "BrandCard": {
+        "status": "composed",
+        "dangouiComponents": ["DuCard", "DuTag", "DuImage"],
+        "props": {
+          "DuCard": ["title", "guideText", "size"]
+        },
+        "slots": {
+          "DuCard": ["default"]
+        },
+        "unsupported": []
+      }
+    }
+  },
+  "UnoAdapter": {
+    "$description": "Echo / dangoui token 到 UnoCSS / uno-preset-echo 的渲染适配关系。用于文档站、demo 和页面原型；不是设计系统真相源。",
+    "$extensions": {
+      "com.echo.utilityLayer": {
+        "framework": "unocss",
+        "preset": "uno-preset-echo",
+        "tailwindOutput": "compatibility-only",
+        "reason": "Echo / dangoui 默认技术栈使用 UnoCSS；Tailwind 不作为当前迁移主链路产物。"
+      }
+    },
+    "TokenUtilities": [],
+    "LayoutUtilities": [],
+    "TemporaryPreviewClasses": [],
+    "StyleOnlyVars": [
+      {
+        "cssVar": "--style-card-radius",
+        "status": "style-only",
+        "reason": "Current dangoui schema does not expose a formal radius token."
+      }
+    ],
+    "ConfigTargets": {
+      "unoConfig": "uno.config.ts",
+      "preset": "uno-preset-echo",
+      "docsStack": "Nuxt 3 + Nuxt Content + UnoCSS"
+    }
+  },
+  "ReviewQueue": {
+    "$description": "需要用户或设计系统 owner 确认的事项。",
+    "askUser": [],
+    "missingTokens": [],
+    "missingComponents": [],
+    "futureMigrationCandidates": []
+  }
+}

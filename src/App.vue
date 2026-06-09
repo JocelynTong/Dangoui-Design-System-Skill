@@ -1,322 +1,404 @@
 <template>
-  <main class="shell" :style="themeVars">
+  <main class="shell" :class="`theme-${selectedStyleId}`" :style="themeVars">
     <aside class="panel" aria-label="Visual inspector">
-      <section class="section">
-        <p class="eyebrow">Visual Style Learning</p>
-        <h2>同一套命名，填不同风格值</h2>
-        <p class="inspector-note">这里模拟 AI 学习大品牌网站视觉后，只写入 dangoui 已有 --du-* token 的 value，不改命名地基。</p>
-        <div class="style-switcher" aria-label="brand style presets">
+      <div class="style-rail">
+        <p class="rail-label">Style</p>
+        <div class="style-switcher compact" aria-label="brand style presets">
           <button
             v-for="preset in stylePresets"
             :key="preset.id"
             class="style-button"
             :class="{ active: selectedStyleId === preset.id }"
             type="button"
-            @click="selectedStyleId = preset.id"
+            @click="selectStyle(preset.id)"
           >
+            <img class="site-icon" :src="preset.icon" :alt="`${preset.label} icon`" width="16" height="16" />
             <span>{{ preset.label }}</span>
-            <small>{{ preset.source }}</small>
           </button>
         </div>
-        <div class="brand-token-grid">
-          <div v-for="token in selectedStyle.tokens" :key="token.name" class="brand-token">
-            <span>{{ token.name }}</span>
-            <strong>{{ token.value }}</strong>
-          </div>
-        </div>
-        <div class="extraction-card">
-          <strong>高频风格信号 → dangoui token</strong>
-          <p>频次来自当前 demo 的“样式学习抽样”。只映射到 dangoui 已有 --du-* token；dangoui 没有的圆角/阴影不放进 token 表。</p>
-          <div class="mapping-list">
-            <div v-for="signal in selectedStyle.signals" :key="`${signal.raw}-${signal.target}`" class="mapping-row">
-              <span class="raw-signal">{{ signal.raw }}</span>
-              <span class="frequency">{{ signal.count }}x</span>
-              <span class="mapped-token">{{ signal.target }}</span>
-              <span class="mapping-value">{{ signal.value }}</span>
-            </div>
-          </div>
-        </div>
-        <div class="schema-card">
-          <details open>
-            <summary>当前风格 token JSON</summary>
-            <pre>{{ styleJson }}</pre>
-          </details>
-        </div>
-      </section>
+      </div>
 
-      <section class="section">
-        <p class="eyebrow">Universal Docs</p>
-        <h2>当前页面组件</h2>
-        <div class="stats">
-          <span class="stat">dangoui@3.6.16</span>
-          <span class="stat">{{ selectedStyle.label }}</span>
-          <span class="stat">{{ pageInstances.length }} rendered nodes</span>
-          <span class="stat">{{ uniqueComponentCount }} component names</span>
-        </div>
-        <p class="inspector-note">点击右侧页面模块，左侧会锚定到对应组件。</p>
-        <div class="component-list">
+      <div class="side-rail">
+        <p class="rail-label">Scene</p>
+        <nav class="side-tabs workflow-tabs" aria-label="business scenes">
+          <button
+            v-for="template in templatePages"
+            :key="template.id"
+            type="button"
+            :class="{ active: selectedTemplateId === template.id }"
+            @click="selectTemplate(template.id)"
+          >
+            {{ template.tab }}
+          </button>
+        </nav>
+
+        <template v-if="currentDemoPages.length">
+          <p class="rail-label demo-label">Demo</p>
+          <nav class="side-tabs demo-tabs" aria-label="brand demo rooms">
+            <button
+              v-for="template in currentDemoPages"
+              :key="template.id"
+              type="button"
+              :class="{ active: selectedTemplateId === template.id }"
+              @click="selectTemplate(template.id)"
+            >
+              {{ template.tab }}
+            </button>
+          </nav>
+        </template>
+
+        <p class="rail-label anchors-label">Nodes</p>
+        <div class="component-list rail-list">
           <div
             v-for="instance in pageInstances"
             :key="instance.id"
             class="component"
-            :class="{
-              active: selectedInstanceId === instance.id,
-              'instance-active': selectedInstanceId === instance.id,
-              missing: isMissing(instance.name),
-            }"
-            role="button"
-            tabindex="0"
+            :class="{ active: selectedInstanceId === instance.id, missing: isMissing(instance.name) }"
             :data-instance-id="instance.id"
-            @click="selectInstance(instance.id)"
-            @keydown.enter.prevent="selectInstance(instance.id)"
-            @keydown.space.prevent="selectInstance(instance.id)"
           >
-            <strong>
-              {{ instance.label }}
-              <span>{{ componentMeta(instance.name)?.className || missingMeta(instance.name)?.status || "unknown" }}</span>
-            </strong>
-            <span>{{ displayDescription(instance.name) }}</span>
-            <span class="component-token-row">
-              <i v-for="token in tokenPreview(instance.name)" :key="token" class="mini-token">{{ token }}</i>
-              <i v-if="extraTokenCount(instance.name) > 0" class="mini-token">+{{ extraTokenCount(instance.name) }}</i>
-            </span>
-            <a class="docs-link" :href="componentDocsUrl(instance.name)" target="_blank" rel="noreferrer" @click.stop>
-              查看 docs
-            </a>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <p class="eyebrow">Selected Node</p>
-        <h2>{{ selectedComponent }}</h2>
-        <div class="human-card">
-          <p><strong>这是什么：</strong>{{ humanDescription }}</p>
-          <div class="editable-list">
-            <span v-for="field in editableFields" :key="field" class="mini-token">可改：{{ field }}</span>
-          </div>
-          <a class="docs-link" :href="componentDocsUrl(selectedComponent)" target="_blank" rel="noreferrer">看规范指南</a>
-        </div>
-      </section>
-
-      <section class="section">
-        <h2>用到的 Tokens</h2>
-        <p class="inspector-note">默认只看关键几项；需要细节再展开或跳 docs。</p>
-        <div v-if="selectedTokens.length" class="token-grid">
-          <div v-for="token in visibleTokens" :key="token.name" class="token-card">
             <button
-              class="token"
-              :class="{ active: selectedTokenName === token.name }"
+              class="node-button"
               type="button"
-              @click="selectToken(token.name)"
+              @click="selectInstance(instance.id)"
             >
-              <i class="swatch" :style="{ background: token.value }"></i>
-              <span><strong>{{ token.name }}</strong><span>{{ token.usage }}</span></span>
-              <span>{{ token.value }}</span>
+              <strong>
+                {{ instance.label }} <em>{{ componentChineseName(instance.name) }}</em>
+                <span>{{ componentMeta(instance.name)?.className || missingMeta(instance.name)?.status || "unknown" }}</span>
+              </strong>
             </button>
-            <a class="docs-link" :href="tokenDocsUrl" target="_blank" rel="noreferrer">查看 token docs</a>
+            <div v-if="selectedInstanceId === instance.id" class="node-detail">
+              <p>
+                {{ humanDescription }}
+                <a class="inline-doc-link" :href="componentDocsUrl(selectedComponent)" target="_blank" rel="noreferrer">docs</a>
+              </p>
+              <div class="editable-list">
+                <span v-for="field in editableFields" :key="field" class="mini-token">可改：{{ field }}</span>
+              </div>
+
+              <details class="node-token-section">
+                <summary>展开 tokens</summary>
+                <p class="token-doc-row">
+                  <a class="inline-doc-link" :href="tokenDocsUrl" target="_blank" rel="noreferrer">token docs</a>
+                </p>
+                <div v-if="selectedTokens.length" class="token-grid rail-tokens">
+                  <button
+                    v-for="token in visibleTokens"
+                    :key="token.name"
+                    class="token"
+                    :class="{ active: selectedTokenName === token.name }"
+                    type="button"
+                    @click="selectToken(token.name)"
+                  >
+                    <i class="swatch" :style="{ background: token.value }"></i>
+                    <span><strong>{{ token.name }}</strong><span>{{ token.usage }}</span></span>
+                    <span>{{ token.value }}</span>
+                  </button>
+                  <button v-if="selectedTokens.length > tokenPreviewLimit" class="collapse-button" type="button" @click="tokensExpanded = !tokensExpanded">
+                    {{ tokensExpanded ? "收起 tokens" : `展开全部 ${selectedTokens.length} 个 tokens` }}
+                  </button>
+                </div>
+              </details>
+            </div>
           </div>
-          <button v-if="selectedTokens.length > tokenPreviewLimit" class="collapse-button" type="button" @click="tokensExpanded = !tokensExpanded">
-            {{ tokensExpanded ? "收起 tokens" : `展开全部 ${selectedTokens.length} 个 tokens` }}
-          </button>
         </div>
-        <div v-else class="notice">该节点没有 dangoui token schema，等待补充。</div>
-        <div class="schema-card">
-          <details>
-            <summary>高级 schema / 给研发和 AI 看</summary>
-            <pre>{{ schemaPreview }}</pre>
-          </details>
-        </div>
-      </section>
+      </div>
     </aside>
 
     <section class="workspace">
-      <header>
-        <h1>学习大品牌风格，填入同一套 design tokens</h1>
-        <p class="lead">命名保持稳定：同一套 dangoui `--du-*` tokens，只替换 value；右侧同一组 dangoui 组件会渲染出不同品牌气质。</p>
-      </header>
-
       <div class="demo-stage">
-        <article class="phone" aria-label="mobile demo">
-          <div class="phone-screen">
-            <div
-              class="click-target"
-              :class="{ selected: selectedInstanceId === 'node-navigation-bar' }"
-              data-component="NavigationBar"
-              data-node-id="node-navigation-bar"
-              tabindex="0"
-              @click="selectInstance('node-navigation-bar')"
-              @keydown.enter.prevent="selectInstance('node-navigation-bar')"
-              @keydown.space.prevent="selectInstance('node-navigation-bar')"
-            >
-              <span class="tag">NavigationBar</span>
-              <DuNavigationBar color="white" :back="false" :share="true">
-                <strong class="nav-title">{{ selectedStyle.hero }}</strong>
-              </DuNavigationBar>
-            </div>
+        <article class="component-showcase" aria-label="dangoui component showcase">
+          <section class="template-preview">
+            <div class="phone template-phone">
+              <div class="phone-screen">
+                <div
+                  class="click-target"
+                  :class="{ selected: selectedInstanceId === pageNodeId('NavigationBar') }"
+                  :data-node-id="pageNodeId('NavigationBar')"
+                  tabindex="0"
+                  @click="selectInstance(pageNodeId('NavigationBar'))"
+                  @keydown.enter.prevent="selectInstance(pageNodeId('NavigationBar'))"
+                >
+                  <span class="tag">NavigationBar</span>
+                  <DuNavigationBar color="white" :back="false" :share="true">
+                    <strong class="nav-title">{{ selectedTemplate.name }}</strong>
+                  </DuNavigationBar>
+                </div>
+                <div class="feed template-feed">
+                  <template v-if="selectedTemplateId === 'czn-home'">
+                    <div class="click-target czn-hero" :class="{ selected: selectedInstanceId === pageNodeId('Hero') }" :data-node-id="pageNodeId('Hero')" @click="selectInstance(pageNodeId('Hero'))">
+                      <span class="tag">Hero</span>
+                      <p>CHAOS ZERO NIGHTMARE</p>
+                      <strong>卡厄思梦境现已正式上线</strong>
+                      <span>角色群像、白色笔刷和亮橙行动入口承担官网首屏识别。</span>
+                    </div>
+                    <div class="click-target czn-download-panel" :class="{ selected: selectedInstanceId === pageNodeId('DownloadPanel') }" :data-node-id="pageNodeId('DownloadPanel')" @click="selectInstance(pageNodeId('DownloadPanel'))">
+                      <span class="tag">DownloadPanel</span>
+                      <strong>官网下载注册专属福利</strong>
+                      <div class="button-row">
+                        <DuButton text="PC 下载" type="primary" />
+                        <DuButton text="Android" type="outline" />
+                        <DuButton text="App Store" type="outline" />
+                      </div>
+                    </div>
+                    <div class="click-target czn-qr" :class="{ selected: selectedInstanceId === pageNodeId('QRCode') }" :data-node-id="pageNodeId('QRCode')" @click="selectInstance(pageNodeId('QRCode'))">
+                      <span class="tag">QRCode</span>
+                      <i></i>
+                      <div>
+                        <strong>扫码下载</strong>
+                        <p>移动端下载入口保留为独立模块，方便后续替换真实二维码。</p>
+                      </div>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Button') }" :data-node-id="pageNodeId('Button')" @click="selectInstance(pageNodeId('Button'))">
+                      <span class="tag">Button</span>
+                      <div class="button-row">
+                        <DuButton text="进入官网" type="primary" />
+                        <DuButton text="查看配置" type="outline" />
+                      </div>
+                    </div>
+                  </template>
 
-            <section class="feed" aria-label="feed">
-              <div
-                class="click-target"
-                :class="{ selected: selectedInstanceId === 'node-search' }"
-                data-component="Search"
-                data-node-id="node-search"
-                tabindex="0"
-                @click="selectInstance('node-search')"
-                @keydown.enter.prevent="selectInstance('node-search')"
-                @keydown.space.prevent="selectInstance('node-search')"
-              >
-                <span class="tag">Search</span>
-                <DuSearch readonly :placeholder="['搜索活动', '搜索内容卡片']" />
-              </div>
+                  <template v-else-if="selectedTemplateId === 'czn-forward'">
+                    <div class="click-target czn-forward-card" :class="{ selected: selectedInstanceId === pageNodeId('Swiper') }" :data-node-id="pageNodeId('Swiper')" @click="selectInstance(pageNodeId('Swiper'))">
+                      <span class="tag">Swiper</span>
+                      <div class="czn-swiper-frame" aria-hidden="true">
+                        <div class="czn-swiper-window">
+                          <div class="czn-swiper-track">
+                            <div class="czn-slide is-prev">
+                              <img src="https://vasd-cms.qq.com/vasd-cms/final_ecac332305.jpg" alt="" />
+                            </div>
+                            <div class="czn-slide is-active">
+                              <img src="https://vasd-cms.qq.com/vasd-cms/1920x1080_21_f5c8e03743.jpg" alt="" />
+                            </div>
+                            <div class="czn-slide is-next">
+                              <img src="https://vasd-cms.qq.com/vasd-cms/_68c3b0fcab.jpg" alt="" />
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <strong>公测内容一览</strong>
+                      <p>轮播位以白灰信息区、橙色描边和大图内容承载公测更新。</p>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Tag') }" :data-node-id="pageNodeId('Tag')" @click="selectInstance(pageNodeId('Tag'))">
+                      <span class="tag">Tag</span>
+                      <div class="tag-row">
+                        <DuTag color="primary" round>全新角色</DuTag>
+                        <DuTag color="primary" round>公测内容</DuTag>
+                        <DuTag color="default" round>限时活动</DuTag>
+                      </div>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Card') }" :data-node-id="pageNodeId('Card')" @click="selectInstance(pageNodeId('Card'))">
+                      <span class="tag">Card</span>
+                      <DuCard title="全新东方气质主战员「绯」" guide-text="" size="large">
+                        <p class="card-copy">服务端内容卡保留 dangoui Card 结构，品牌视觉由 token value 与 demo 资产共同承接。</p>
+                      </DuCard>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Button') }" :data-node-id="pageNodeId('Button')" @click="selectInstance(pageNodeId('Button'))">
+                      <span class="tag">Button</span>
+                      <DuButton text="查看详情 MORE" type="primary" />
+                    </div>
+                  </template>
 
-              <div
-                class="click-target"
-                :class="{ selected: selectedInstanceId === 'node-notice-bar' }"
-                data-component="NoticeBar"
-                data-node-id="node-notice-bar"
-                tabindex="0"
-                @click="selectInstance('node-notice-bar')"
-                @keydown.enter.prevent="selectInstance('node-notice-bar')"
-                @keydown.space.prevent="selectInstance('node-notice-bar')"
-              >
-                <span class="tag">NoticeBar</span>
-                <DuNoticeBar :text="selectedStyle.notice" link-text="查看" />
-              </div>
+                  <template v-else-if="selectedTemplateId === 'czn-character'">
+                    <div class="click-target czn-character-panel" :class="{ selected: selectedInstanceId === pageNodeId('CharacterPanel') }" :data-node-id="pageNodeId('CharacterPanel')" @click="selectInstance(pageNodeId('CharacterPanel'))">
+                      <span class="tag">CharacterPanel</span>
+                      <p>RENOA</p>
+                      <strong>蕾诺娅</strong>
+                      <span>黑玫瑰诗人。不会凋零的黑玫瑰，即将绽放。</span>
+                      <div class="button-row">
+                        <DuButton text="+ 查看更多 MORE" type="primary" />
+                      </div>
+                    </div>
+                    <div class="click-target display-summary czn-avatar-row" :class="{ selected: selectedInstanceId === pageNodeId('Avatar') }" :data-node-id="pageNodeId('Avatar')" @click="selectInstance(pageNodeId('Avatar'))">
+                      <span class="tag">Avatar</span>
+                      <DuAvatar type="primary" size="large" bordered>R</DuAvatar>
+                      <div>
+                        <strong>角色档案</strong>
+                        <p>头像、角色名和状态适合后续接入真实角色数据。</p>
+                      </div>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Card') }" :data-node-id="pageNodeId('Card')" @click="selectInstance(pageNodeId('Card'))">
+                      <span class="tag">Card</span>
+                      <DuCard title="CHARACTER VOICE" guide-text="" size="large">
+                        <div class="tag-row">
+                          <DuTag color="primary" round>技能卡</DuTag>
+                          <DuTag color="default" round>支援</DuTag>
+                        </div>
+                      </DuCard>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Tag') }" :data-node-id="pageNodeId('Tag')" @click="selectInstance(pageNodeId('Tag'))">
+                      <span class="tag">Tag</span>
+                      <div class="tag-row">
+                        <DuTag color="primary" round>危险人物</DuTag>
+                        <DuTag color="default" round>黑玫瑰</DuTag>
+                      </div>
+                    </div>
+                  </template>
 
-              <div
-                class="click-target"
-                :class="{ selected: selectedInstanceId === 'node-tabs' }"
-                data-component="Tabs"
-                data-node-id="node-tabs"
-                tabindex="0"
-                @click="selectInstance('node-tabs')"
-                @keydown.enter.prevent="selectInstance('node-tabs')"
-                @keydown.space.prevent="selectInstance('node-tabs')"
-              >
-                <span class="tag">Tabs</span>
-                <DuTabs value="hot" type="tag" size="normal">
-                  <DuTab name="hot">{{ selectedStyle.tabs[0] }}</DuTab>
-                  <DuTab name="new">{{ selectedStyle.tabs[1] }}</DuTab>
-                  <DuTab name="ops">{{ selectedStyle.tabs[2] }}</DuTab>
-                </DuTabs>
-              </div>
+                  <template v-else-if="selectedTemplateId === 'distribution'">
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Search') }" :data-node-id="pageNodeId('Search')" @click="selectInstance(pageNodeId('Search'))">
+                      <span class="tag">Search</span>
+                      <DuSearch readonly :placeholder="['搜索活动、商品、内容']" />
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('NoticeBar') }" :data-node-id="pageNodeId('NoticeBar')" @click="selectInstance(pageNodeId('NoticeBar'))">
+                      <span class="tag">NoticeBar</span>
+                      <DuNoticeBar text="运营位：本周重点活动上线" link-text="查看" />
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Tabs') }" :data-node-id="pageNodeId('Tabs')" @click="selectInstance(pageNodeId('Tabs'))">
+                      <span class="tag">Tabs</span>
+                      <DuTabs value="hot" type="tag" size="normal">
+                        <DuTab name="hot">推荐</DuTab>
+                        <DuTab name="new">最新</DuTab>
+                        <DuTab name="ops">运营</DuTab>
+                      </DuTabs>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Card') }" :data-node-id="pageNodeId('Card')" @click="selectInstance(pageNodeId('Card'))">
+                      <span class="tag">Card</span>
+                      <DuCard title="活动 Feed 卡片" guide-text="" size="large">
+                        <div class="media" aria-hidden="true"></div>
+                        <div class="card-meta">
+                          <DuTag type="success" size="small">主推</DuTag>
+                          <span class="meta">服务端推荐</span>
+                        </div>
+                        <p class="card-copy">分发侧样板间把搜索、分组、公告和内容卡片放在同一条用户路径里。</p>
+                      </DuCard>
+                    </div>
+                  </template>
+                  
+                  <template v-else-if="selectedTemplateId === 'display'">
+                    <div class="click-target display-summary" :class="{ selected: selectedInstanceId === pageNodeId('Avatar') }" :data-node-id="pageNodeId('Avatar')" @click="selectInstance(pageNodeId('Avatar'))">
+                      <span class="tag">Avatar</span>
+                      <DuAvatar type="primary" size="large" bordered>DU</DuAvatar>
+                      <div>
+                        <strong>服务器返回的用户信息</strong>
+                        <p>昵称、状态、数量和图片资源都属于展示侧。</p>
+                      </div>
+                      <DuBadge value="12" color="primary" always-show>
+                        <span class="badge-anchor">更新</span>
+                      </DuBadge>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Tag') }" :data-node-id="pageNodeId('Tag')" @click="selectInstance(pageNodeId('Tag'))">
+                      <span class="tag">Tag</span>
+                      <div class="tag-row">
+                        <DuTag color="primary" round>活跃</DuTag>
+                        <DuTag color="primary" round>已同步</DuTag>
+                        <DuTag color="default" round>服务端状态</DuTag>
+                      </div>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Image') }" :data-node-id="pageNodeId('Image')" @click="selectInstance(pageNodeId('Image'))">
+                      <span class="tag">Image</span>
+                      <DuImage :src="imagePreviewSrc" width="100%" height="160px" mode="aspectFill" radius="16" />
+                    </div>
+                    <div class="click-target placeholder-card" :class="{ selected: selectedInstanceId === pageNodeId('Swiper') }" :data-node-id="pageNodeId('Swiper')" @click="selectInstance(pageNodeId('Swiper'))">
+                      <span class="tag">Swiper</span>
+                      <strong>横滑图片 / Banner</strong>
+                      <p>展示侧常见多图输出，当前 demo 用占位表达轮播结构。</p>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Steps') }" :data-node-id="pageNodeId('Steps')" @click="selectInstance(pageNodeId('Steps'))">
+                      <span class="tag">Steps</span>
+                      <DuSteps :active-index="1" status="process" color="primary" :steps="[{ title: '提交' }, { title: '审核' }, { title: '完成' }]" />
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Rate') }" :data-node-id="pageNodeId('Rate')" @click="selectInstance(pageNodeId('Rate'))">
+                      <span class="tag">Rate</span>
+                      <DuRate :default-value="4" size="medium" color="primary" />
+                    </div>
+                  </template>
+                  <template v-else-if="selectedTemplateId === 'publish'">
+                    <div class="form-demo">
+                      <div class="click-target placeholder-card" :class="{ selected: selectedInstanceId === pageNodeId('Group') }" :data-node-id="pageNodeId('Group')" @click="selectInstance(pageNodeId('Group'))">
+                        <span class="tag">Group</span>
+                        <strong>基础信息</strong>
+                        <p>把标题、说明、时间、上传等字段组织成同一发布分组。</p>
+                      </div>
+                      <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Input') }" :data-node-id="pageNodeId('Input')" @click="selectInstance(pageNodeId('Input'))">
+                        <span class="tag">Input</span>
+                        <DuInput value="周末市集" prefix="标题" bordered allow-clear />
+                      </div>
+                      <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Textarea') }" :data-node-id="pageNodeId('Textarea')" @click="selectInstance(pageNodeId('Textarea'))">
+                        <span class="tag">Textarea</span>
+                        <DuTextarea value="用户输入内容后，发布侧负责校验并提交到服务器。" bordered show-count :maxlength="80" />
+                      </div>
+                      <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Select') }" :data-node-id="pageNodeId('Select')" @click="selectInstance(pageNodeId('Select'))">
+                        <span class="tag">Select</span>
+                        <DuSelect title="发布类型" :options="selectOptions" value="figma" />
+                      </div>
+                      <div class="click-target placeholder-card" :class="{ selected: selectedInstanceId === pageNodeId('DateTimePicker') }" :data-node-id="pageNodeId('DateTimePicker')" @click="selectInstance(pageNodeId('DateTimePicker'))">
+                        <span class="tag">DateTimePicker</span>
+                        <strong>2026-06-08 20:00</strong>
+                        <p>发布时间、预约时间、截止时间这类服务端字段。</p>
+                      </div>
+                      <div class="click-target placeholder-card" :class="{ selected: selectedInstanceId === pageNodeId('Upload') }" :data-node-id="pageNodeId('Upload')" @click="selectInstance(pageNodeId('Upload'))">
+                        <span class="tag">Upload</span>
+                        <strong>上传封面图</strong>
+                        <p>图片或附件提交到服务器，依赖文件选择和上传回调。</p>
+                      </div>
+                      <div class="click-target control-grid" :class="{ selected: selectedInstanceId === pageNodeId('Checkbox') }" :data-node-id="pageNodeId('Checkbox')" @click="selectInstance(pageNodeId('Checkbox'))">
+                        <span class="tag">Checkbox</span>
+                        <DuCheckbox checked label="同步到首页" />
+                        <DuCheckbox label="需要审核" />
+                      </div>
+                      <div class="click-target setting-row compact" :class="{ selected: selectedInstanceId === pageNodeId('Switch') }" :data-node-id="pageNodeId('Switch')" @click="selectInstance(pageNodeId('Switch'))">
+                        <span class="tag">Switch</span>
+                        <span>立即发布</span>
+                        <DuSwitch :on="true" />
+                      </div>
+                      <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Button') }" :data-node-id="pageNodeId('Button')" @click="selectInstance(pageNodeId('Button'))">
+                        <span class="tag">Button</span>
+                        <div class="button-row">
+                          <DuButton text="提交发布" type="primary" />
+                          <DuButton text="保存草稿" type="outline" />
+                        </div>
+                      </div>
+                    </div>
+                  </template>
 
-              <div
-                class="click-target"
-                :class="{ selected: selectedInstanceId === 'node-tags' }"
-                data-component="Tag"
-                data-node-id="node-tags"
-                tabindex="0"
-                @click="selectInstance('node-tags')"
-                @keydown.enter.prevent="selectInstance('node-tags')"
-                @keydown.space.prevent="selectInstance('node-tags')"
-              >
-                <span class="tag">Tag</span>
-                <div class="tag-row">
-                  <DuTag color="primary" round>主推</DuTag>
-                  <DuTag color="success" round>已配置</DuTag>
-                  <DuTag color="warning" round>待审核</DuTag>
+                  <template v-else>
+                    <div class="feedback-stack">
+                      <div class="click-target placeholder-card" :class="{ selected: selectedInstanceId === pageNodeId('Dialog') }" :data-node-id="pageNodeId('Dialog')" @click="selectInstance(pageNodeId('Dialog'))">
+                        <span class="tag">Dialog</span>
+                        <strong>模态重反馈：需要用户决策</strong>
+                        <p>确认、删除、付款等高风险动作再使用。</p>
+                      </div>
+                      <div class="click-target placeholder-card" :class="{ selected: selectedInstanceId === pageNodeId('Popup') }" :data-node-id="pageNodeId('Popup')" @click="selectInstance(pageNodeId('Popup'))">
+                        <span class="tag">Popup</span>
+                        <strong>模态中反馈：承载临时内容</strong>
+                        <p>适合筛选、说明、二次操作等底部或居中浮层。</p>
+                      </div>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Empty') }" :data-node-id="pageNodeId('Empty')" @click="selectInstance(pageNodeId('Empty'))">
+                      <span class="tag">Empty</span>
+                      <DuEmpty text="非模态中反馈：占据局部页面，给出下一步动作。" button-text="去创建" />
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('Skeleton') }" :data-node-id="pageNodeId('Skeleton')" @click="selectInstance(pageNodeId('Skeleton'))">
+                      <span class="tag">Skeleton</span>
+                      <DuSkeleton loading>
+                        <template #template>
+                          <div class="skeleton-demo">
+                            <div></div>
+                            <div></div>
+                            <div></div>
+                          </div>
+                        </template>
+                      </DuSkeleton>
+                    </div>
+                    <div class="click-target placeholder-card" :class="{ selected: selectedInstanceId === pageNodeId('Spin') }" :data-node-id="pageNodeId('Spin')" @click="selectInstance(pageNodeId('Spin'))">
+                      <span class="tag">Spin</span>
+                      <strong>非模态轻反馈：加载中</strong>
+                      <p>局部异步等待，打扰程度低于空状态和弹层。</p>
+                    </div>
+                    <div class="click-target" :class="{ selected: selectedInstanceId === pageNodeId('NoticeBar') }" :data-node-id="pageNodeId('NoticeBar')" @click="selectInstance(pageNodeId('NoticeBar'))">
+                      <span class="tag">NoticeBar</span>
+                      <DuNoticeBar text="非模态轻反馈：页面内提示，不打断用户操作。" link-text="知道了" />
+                    </div>
+                    <div class="click-target placeholder-card" :class="{ selected: selectedInstanceId === pageNodeId('Snackbar') }" :data-node-id="pageNodeId('Snackbar')" @click="selectInstance(pageNodeId('Snackbar'))">
+                      <span class="tag">Snackbar</span>
+                      <strong>非模态轻反馈：短提示</strong>
+                      <p>需要由动作触发，默认不常驻。</p>
+                    </div>
+                  </template>
                 </div>
               </div>
-
-              <div class="feed-section-title">
-                <strong>{{ selectedStyle.sectionTitle }}</strong>
-                <span>同一 schema 渲染</span>
-              </div>
-
-              <div
-                class="click-target"
-                :class="{ selected: selectedInstanceId === 'node-card-featured' }"
-                data-component="Card"
-                data-node-id="node-card-featured"
-                tabindex="0"
-                @click="selectInstance('node-card-featured')"
-                @keydown.enter.prevent="selectInstance('node-card-featured')"
-                @keydown.space.prevent="selectInstance('node-card-featured')"
-              >
-                <span class="tag">Card</span>
-                <DuCard :title="selectedStyle.cards[0].title" guide-text="" size="large">
-                  <div class="media" aria-hidden="true"></div>
-                  <div class="card-meta">
-                    <DuTag type="success" size="small">Featured</DuTag>
-                    <span class="meta">8 min read</span>
-                  </div>
-                  <p class="card-copy">{{ selectedStyle.cards[0].copy }}</p>
-                </DuCard>
-              </div>
-
-              <div
-                class="click-target"
-                :class="{ selected: selectedInstanceId === 'node-card-secondary' }"
-                data-component="Card"
-                data-node-id="node-card-secondary"
-                tabindex="0"
-                @click="selectInstance('node-card-secondary')"
-                @keydown.enter.prevent="selectInstance('node-card-secondary')"
-                @keydown.space.prevent="selectInstance('node-card-secondary')"
-              >
-                <span class="tag">Card</span>
-                <DuCard :title="selectedStyle.cards[1].title" guide-text="">
-                  <div class="media" aria-hidden="true"></div>
-                  <div class="card-meta">
-                    <DuTag type="success" size="small">New</DuTag>
-                    <span class="meta">4 min read</span>
-                  </div>
-                  <p class="card-copy">{{ selectedStyle.cards[1].copy }}</p>
-                </DuCard>
-              </div>
-
-              <div
-                class="click-target"
-                :class="{ selected: selectedInstanceId === 'node-controls-card' }"
-                data-component="Card"
-                data-node-id="node-controls-card"
-                tabindex="0"
-                @click="selectInstance('node-controls-card')"
-                @keydown.enter.prevent="selectInstance('node-controls-card')"
-                @keydown.space.prevent="selectInstance('node-controls-card')"
-              >
-                <span class="tag">Card</span>
-                <DuCard title="发布设置" subtitle="运营可见配置" guide-text="">
-                  <div class="setting-row">
-                    <span>首页展示</span>
-                    <DuSwitch :on="true" />
-                  </div>
-                  <div
-                    class="click-target inline-target"
-                    :class="{ selected: selectedInstanceId === 'node-primary-button' }"
-                    data-component="Button"
-                    data-node-id="node-primary-button"
-                    tabindex="0"
-                    @click.stop="selectInstance('node-primary-button')"
-                    @keydown.enter.prevent.stop="selectInstance('node-primary-button')"
-                    @keydown.space.prevent.stop="selectInstance('node-primary-button')"
-                  >
-                    <span class="tag">Button</span>
-                    <DuButton text="发布活动" full />
-                  </div>
-                </DuCard>
-              </div>
-            </section>
-
-            <nav
-              class="tab-bar click-target"
-              :class="{ selected: selectedInstanceId === 'node-tab-bar' }"
-              data-component="TabBar"
-              data-node-id="node-tab-bar"
-              tabindex="0"
-              aria-label="bottom tabs"
-              @click="selectInstance('node-tab-bar')"
-              @keydown.enter.prevent="selectInstance('node-tab-bar')"
-              @keydown.space.prevent="selectInstance('node-tab-bar')"
-            >
-              <span class="tag">TabBar</span>
-              <span class="tab-item active"><i class="tab-icon"></i>Feed</span>
-              <span class="tab-item"><i class="tab-icon circle"></i>Search</span>
-              <span class="tab-item"><i class="tab-icon"></i>Profile</span>
-            </nav>
-          </div>
+            </div>
+          </section>
         </article>
       </div>
     </section>
@@ -326,100 +408,225 @@
 <script setup>
 import { computed, nextTick, onMounted, ref } from "vue";
 import {
+  DuAvatar,
+  DuAvatarGroup,
+  DuBadge,
   DuButton,
   DuCard,
+  DuCheckbox,
+  DuDivider,
+  DuEmpty,
+  DuImage,
+  DuInput,
+  DuInputNumber,
   DuNavigationBar,
   DuNoticeBar,
+  DuRadio,
+  DuRate,
   DuSearch,
+  DuSelect,
+  DuSkeleton,
+  DuSkeletonAvatar,
+  DuSkeletonParagraph,
+  DuSkeletonRectangle,
+  DuSteps,
   DuSwitch,
   DuTab,
   DuTabs,
   DuTag,
+  DuTextarea,
 } from "dangoui";
 
 const docsBaseUrl = "https://dumpling.echo.tech";
+const introductionUrl = `${docsBaseUrl}/get-started/introduction`;
 const tokenDocsUrl = `${docsBaseUrl}/guide/theme`;
 const tokenPreviewLimit = 5;
-const selectedStyleId = ref("apple");
+const selectedStyleId = ref("czn");
+const starterTemplates = [
+  {
+    side: "分发侧",
+    name: "内容分发模板",
+    goal: "把服务端内容按推荐、搜索、分类和运营位送到用户面前，适合首页、活动列表、商品流和内容 feed。",
+    parts: "NavigationBar / Search / Tabs / NoticeBar / Card / Tag",
+  },
+  {
+    side: "展示侧",
+    name: "数据展示模板",
+    goal: "承接服务器数据输出，把用户、状态、图片、指标、进度和空结果展示清楚。",
+    parts: "NavigationBar / Card / Image / Avatar / Badge / Rate / Steps / Empty",
+  },
+  {
+    side: "发布侧",
+    name: "数据发布模板",
+    goal: "承接用户输入并提交到服务器，适合报名、资料编辑、配置发布和内容创建。",
+    parts: "Input / Select / Checkbox / Radio / Switch",
+  },
+  {
+    side: "通用反馈",
+    name: "轻量到重量反馈模板",
+    goal: "按打扰程度组织反馈：轻量提示常驻，中量状态占位，重量弹层需要用户决策。",
+    parts: "NoticeBar / Skeleton / Empty / Snackbar / Dialog / Popup",
+  },
+];
+const activeDocs = [
+  {
+    kind: "资产架构",
+    title: "长期资产怎么存",
+    file: "brand-dtcg-migration-asset-standard.md",
+  },
+  {
+    kind: "执行流程",
+    title: "Codex 什么时候做什么",
+    file: "skills/brand/SKILL.md",
+  },
+  {
+    kind: "判定规则",
+    title: "如何避免 AI 主观漂移",
+    file: "mapping-rules.md",
+  },
+  {
+    kind: "输出格式",
+    title: "交付给设计/研发/产品看什么",
+    file: "output-template.md",
+  },
+];
+const workflowSteps = ["看 docs 入口", "选模板", "查组件", "追 token chain", "生成 adapter", "demo 验证"];
 const stylePresets = [
   {
-    id: "apple",
-    label: "Apple-ish",
-    source: "large type / quiet surface",
-    hero: "Vision Notes",
-    notice: "大面积留白、克制中性色、柔和材质感被写入同一套 token value。",
-    sectionTitle: "Today",
-    tabs: ["精选", "产品", "体验"],
+    id: "czn",
+    label: "CZN",
+    icon: "https://czn.qq.com/favicon.ico",
+    source: "czn.qq.com / 待截图校准",
+    hero: "Combat Zone",
+    notice: "沉浸式游戏工具风格：橙色主行动、黑紫角色页、白灰资讯区和 HUD 式斜切边界。",
+    evidenceNote: "依据截图校准：导航激活、官网按钮、下载按钮和轮播描边高频使用亮橙；角色页大面积黑紫/深红，公测内容页使用白灰底和细线框。",
+    sectionTitle: "Game Toolkit",
+    tabs: ["任务", "战绩", "装备"],
     cards: [
-      { title: "Spatial Calm", copy: "同一张 Card 使用更轻的背景、空气感间距和低对比阴影，模拟 Apple 式的安静层级。" },
-      { title: "Human Interface", copy: "按钮、标签和信息层级仍然来自 dangoui 组件，只替换品牌风格 token 的值。" },
+      { title: "战术面板", copy: "保持 dangoui 组件结构，换成深色底、亮橙行动入口和高对比信息层级。" },
+      { title: "沉浸式工具", copy: "霓虹媒体面、HUD 边界和状态标签作为 demo 视觉控制，不伪装成正式 token。" },
+    ],
+    tokens: [
+      { name: "--du-bg-2", value: "#0b0710" },
+      { name: "--du-bg-1", value: "#17111f" },
+      { name: "--du-text-1", value: "#fff7f0" },
+      { name: "--du-text-3", value: "#a79daa" },
+      { name: "--du-border-1", value: "#3a2b3f" },
+      { name: "--du-primary-color", value: "#ff5a1f" },
+      { name: "--du-primary-border", value: "#ff5a1f" },
+      { name: "--du-primary-outline-color", value: "#ff5a1f" },
+      { name: "--du-primary-soft-bg", value: "#32180f" },
+      { name: "--du-primary-solid-bg", value: "#ff5a1f" },
+    ],
+    style: {
+      cardRadius: "10px",
+      controlRadius: "6px",
+      pageSpacing: "16px",
+      cardShadow: "0 20px 50px rgba(0,0,0,.45), 0 0 28px rgba(32,216,255,.16)",
+      media: "linear-gradient(135deg, transparent 0 18%, rgba(255,90,31,.92) 18% 20%, transparent 20% 58%, rgba(255,255,255,.28) 58% 59%, transparent 59%), radial-gradient(circle at 24% 18%, rgba(255,90,31,.95), transparent 25%), radial-gradient(circle at 76% 68%, rgba(151,71,255,.78), transparent 30%), repeating-linear-gradient(90deg, rgba(255,255,255,.08) 0 1px, transparent 1px 14px), linear-gradient(135deg,#12070b,#251038 48%,#5a0f1d)",
+    },
+    signals: [
+      { raw: "#ff5a1f", count: 6, percent: "约 30%", target: "--du-primary-color", value: "首页导航、官网按钮、下载 CTA、轮播描边" },
+      { raw: "#0b0710", count: 4, percent: "约 20%", target: "--du-bg-2", value: "角色页黑紫沉浸底" },
+      { raw: "#17111f", count: 4, percent: "约 20%", target: "--du-bg-1", value: "HUD / 卡片表面" },
+      { raw: "#fff7f0", count: 3, percent: "约 15%", target: "--du-text-1", value: "大标题、按钮文字、高对比文本" },
+      { raw: "#a79daa", count: 3, percent: "约 15%", target: "--du-text-3", value: "导航副文案、角色说明、弱信息" },
+    ],
+  },
+  {
+    id: "apple",
+    label: "Apple",
+    icon: "https://www.apple.com/apple-touch-icon.png",
+    source: "组件引用口径 / 46 次",
+    hero: "Apple Gallery",
+    notice: "按 DESIGN-apple.md 的组件颜色引用统计，把行动蓝、近黑文字、白/羊皮纸表面写入 dangoui token value。",
+    evidenceNote: "频次来自上游 DESIGN 文档 components: 对 colors.* 的引用次数，共 46 次；百分比 = 该颜色引用次数 / 46。圆角、阴影、摄影质感只作为 demo 视觉控制，不写入 dangoui token。",
+    sectionTitle: "Museum Feed",
+    tabs: ["产品", "故事", "购买"],
+    cards: [
+      { title: "产品展陈", copy: "Card 仍然是 dangoui 组件，但表面、文字和行动入口已经换成 Apple 迁移稿里的 token value。" },
+      { title: "安静控件", copy: "白色/羊皮纸表面承担主要氛围，行动蓝只负责链接、按钮和可点击信号。" },
     ],
     tokens: [
       { name: "--du-bg-2", value: "#f5f5f7" },
       { name: "--du-bg-1", value: "#ffffff" },
       { name: "--du-text-1", value: "#1d1d1f" },
-      { name: "--du-text-3", value: "#6e6e73" },
-      { name: "--du-primary-color", value: "#0071e3" },
+      { name: "--du-text-3", value: "#7a7a7a" },
+      { name: "--du-primary-color", value: "#0066cc" },
+      { name: "--du-primary-border", value: "#0066cc" },
+      { name: "--du-primary-outline-color", value: "#0066cc" },
       { name: "--du-primary-soft-bg", value: "#eaf3ff" },
-      { name: "--du-primary-solid-bg", value: "#0071e3" },
+      { name: "--du-primary-solid-bg", value: "#0066cc" },
     ],
     style: {
       cardRadius: "28px",
       controlRadius: "999px",
       pageSpacing: "20px",
       cardShadow: "0 18px 48px rgba(0,0,0,.08)",
-      media: "linear-gradient(145deg,#f8fbff,#d9e9ff 48%,#ffffff)",
+      media: "linear-gradient(145deg,#ffffff,#f5f5f7 48%,#d7e8ff)",
     },
     signals: [
-      { raw: "#f5f5f7", count: 18, target: "--du-bg-2", value: "#f5f5f7" },
-      { raw: "#1d1d1f", count: 15, target: "--du-text-1", value: "#1d1d1f" },
-      { raw: "#ffffff", count: 13, target: "--du-bg-1", value: "#ffffff" },
-      { raw: "#6e6e73", count: 10, target: "--du-text-3", value: "#6e6e73" },
-      { raw: "#0071e3", count: 6, target: "--du-primary-color", value: "#0071e3" },
+      { raw: "#1d1d1f", count: 10, percent: "21.7%", target: "--du-text-1", value: "文字层级 / colors.ink" },
+      { raw: "#ffffff", count: 6, percent: "13%", target: "--du-bg-1", value: "中性表面 / colors.canvas" },
+      { raw: "#ffffff", count: 6, percent: "13%", target: "--du-white-*", value: "暗底文字 / colors.on-dark" },
+      { raw: "#0066cc", count: 6, percent: "13%", target: "--du-primary-color", value: "品牌行动入口 / colors.primary" },
+      { raw: "#f5f5f7", count: 4, percent: "8.7%", target: "--du-bg-2", value: "羊皮纸表面 / colors.canvas-parchment" },
+      { raw: "#ffffff", count: 4, percent: "8.7%", target: "--du-white-*", value: "主按钮文字 / colors.on-primary" },
+      { raw: "#333333", count: 2, percent: "4.3%", target: "--du-text-2", value: "弱化文字 / colors.ink-muted-80" },
+      { raw: "#272729", count: 2, percent: "4.3%", target: "--du-bg-4", value: "暗色产品区块 / colors.surface-tile-1" },
     ],
   },
   {
     id: "figma",
-    label: "Figma-ish",
-    source: "editor energy / bright accents",
-    hero: "Design Jam",
-    notice: "高对比紫色、清晰边框和协作感色块被填入同一套 token value。",
-    sectionTitle: "Community Picks",
-    tabs: ["文件", "组件", "社区"],
+    label: "Figma",
+    icon: "https://static.figma.com/app/icon/1/favicon.ico",
+    source: "官网/品牌书口径",
+    hero: "Design Systems",
+    notice: "Figma 官网的白底黑字、清晰界面边界和多色协作资产，被拆成 dangoui token 与 demo 视觉控制两层。",
+    evidenceNote: "频次来自官网首页与官方品牌/开发者资料的 UI 颜色口径推演；黑白中性进入 dangoui token，多色品牌图形和协作画布色只作为品牌资产或 demo 视觉控制。",
+    sectionTitle: "Team Workspace",
+    tabs: ["设计", "组件", "变量"],
     cards: [
-      { title: "Multiplayer Canvas", copy: "相同组件结构呈现更强的工具感：紫色主色、紧凑圆角、清晰描边。" },
-      { title: "Variant Playground", copy: "命名没有变，只有 value 改变，所以 AI 后续仍能按同一个 schema 写代码。" },
+      { title: "协作画布", copy: "同一张 Card 保持 dangoui 结构，换成更像 Figma 的白色画布、黑色行动入口和清晰边框。" },
+      { title: "变量系统", copy: "品牌多色不污染 primary，而是作为图形资产留在 demo 视觉控制里。" },
     ],
     tokens: [
-      { name: "--du-bg-2", value: "#f7f2ff" },
+      { name: "--du-bg-2", value: "#f5f5f5" },
       { name: "--du-bg-1", value: "#ffffff" },
-      { name: "--du-text-1", value: "#1f1147" },
-      { name: "--du-text-3", value: "#6f5f92" },
-      { name: "--du-primary-color", value: "#7b61ff" },
-      { name: "--du-primary-soft-bg", value: "#eee8ff" },
-      { name: "--du-primary-solid-bg", value: "#7b61ff" },
+      { name: "--du-text-1", value: "#1e1e1e" },
+      { name: "--du-text-3", value: "#757575" },
+      { name: "--du-border-1", value: "#d9d9d9" },
+      { name: "--du-primary-color", value: "#1e1e1e" },
+      { name: "--du-primary-border", value: "#1e1e1e" },
+      { name: "--du-primary-outline-color", value: "#1e1e1e" },
+      { name: "--du-primary-soft-bg", value: "#f2f2f2" },
+      { name: "--du-primary-solid-bg", value: "#1e1e1e" },
     ],
     style: {
-      cardRadius: "18px",
-      controlRadius: "10px",
+      cardRadius: "14px",
+      controlRadius: "8px",
       pageSpacing: "16px",
-      cardShadow: "0 14px 34px rgba(79,49,155,.14)",
-      media: "linear-gradient(135deg,#ff7262,#a259ff 52%,#1abcfe)",
+      cardShadow: "0 10px 0 rgba(30,30,30,.04), 0 0 0 1px rgba(30,30,30,.10)",
+      media: "conic-gradient(from 180deg at 50% 50%, #ff3737 0 20%, #ff7237 0 40%, #24cb71 0 60%, #00b6ff 0 80%, #874fff 0 100%)",
     },
     signals: [
-      { raw: "#7b61ff", count: 16, target: "--du-primary-color", value: "#7b61ff" },
-      { raw: "#ffffff", count: 15, target: "--du-bg-1", value: "#ffffff" },
-      { raw: "#f7f2ff", count: 10, target: "--du-bg-2", value: "#f7f2ff" },
-      { raw: "#6f5f92", count: 8, target: "--du-text-3", value: "#6f5f92" },
-      { raw: "#eee8ff", count: 6, target: "--du-primary-soft-bg", value: "#eee8ff" },
+      { raw: "#ffffff", count: 36, percent: "32%", target: "--du-bg-1", value: "页面/画布表面" },
+      { raw: "#1e1e1e", count: 24, percent: "21%", target: "--du-text-1 / --du-primary-color", value: "文字与主要行动入口" },
+      { raw: "#f5f5f5", count: 16, percent: "14%", target: "--du-bg-2", value: "弱区块背景" },
+      { raw: "#757575", count: 12, percent: "11%", target: "--du-text-3", value: "二级文字" },
+      { raw: "#d9d9d9", count: 9, percent: "8%", target: "--du-border-1", value: "清晰界面边界" },
+      { raw: "#874fff", count: 8, percent: "7%", target: "承接缺口", value: "品牌图形/协作色" },
+      { raw: "#ff3737 / #24cb71 / #00b6ff", count: 8, percent: "7%", target: "承接缺口", value: "多色品牌资产" },
     ],
   },
   {
     id: "spotify",
-    label: "Spotify-ish",
-    source: "dark media / bold green",
+    label: "Spotify",
+    icon: "https://open.spotify.com/favicon.ico",
+    source: "DTCG 测试资产 / 108 次",
     hero: "Daily Mix",
     notice: "深色媒体界面、强品牌绿和更厚重卡片被填入同一套 token value。",
+    evidenceNote: "第三个 demo 例子：频次来自当前 Spotify-ish 抽样，共 108 次 UI color 统计；color 映射到 dangoui --du-*，radius/shadow/component pattern 进入 DTCG 迁移资产和 adapter。",
     sectionTitle: "Made For You",
     tabs: ["播放", "收藏", "新歌"],
     cards: [
@@ -432,6 +639,8 @@ const stylePresets = [
       { name: "--du-text-1", value: "#ffffff" },
       { name: "--du-text-3", value: "#b3b3b3" },
       { name: "--du-primary-color", value: "#1ed760" },
+      { name: "--du-primary-border", value: "#1ed760" },
+      { name: "--du-primary-outline-color", value: "#1ed760" },
       { name: "--du-primary-soft-bg", value: "#153b25" },
       { name: "--du-primary-solid-bg", value: "#1ed760" },
     ],
@@ -443,38 +652,74 @@ const stylePresets = [
       media: "linear-gradient(135deg,#1ed760,#1db954 32%,#302f6f)",
     },
     signals: [
-      { raw: "#121212", count: 28, target: "--du-bg-2", value: "#121212" },
-      { raw: "#181818", count: 22, target: "--du-bg-1", value: "#181818" },
-      { raw: "#ffffff", count: 19, target: "--du-text-1", value: "#ffffff" },
-      { raw: "#b3b3b3", count: 16, target: "--du-text-3", value: "#b3b3b3" },
-      { raw: "#1ed760", count: 14, target: "--du-primary-color", value: "#1ed760" },
-      { raw: "#153b25", count: 9, target: "--du-primary-soft-bg", value: "#153b25" },
+      { raw: "#121212", count: 28, percent: "25.9%", target: "--du-bg-2", value: "#121212" },
+      { raw: "#181818", count: 22, percent: "20.4%", target: "--du-bg-1", value: "#181818" },
+      { raw: "#ffffff", count: 19, percent: "17.6%", target: "--du-text-1", value: "#ffffff" },
+      { raw: "#b3b3b3", count: 16, percent: "14.8%", target: "--du-text-3", value: "#b3b3b3" },
+      { raw: "#1ed760", count: 14, percent: "13%", target: "--du-primary-color", value: "#1ed760" },
+      { raw: "#153b25", count: 9, percent: "8.3%", target: "--du-primary-soft-bg", value: "#153b25" },
     ],
   },
 ];
 const componentDocs = {
+  Avatar: `${docsBaseUrl}/data-display/avatar`,
+  Badge: `${docsBaseUrl}/data-display/badge`,
   NavigationBar: `${docsBaseUrl}/navigation/navigation-bar`,
   Card: `${docsBaseUrl}/data-display/card`,
+  Checkbox: `${docsBaseUrl}/form/checkbox`,
+  Divider: `${docsBaseUrl}/data-display/divider`,
+  Empty: `${docsBaseUrl}/feedback/empty`,
+  Input: `${docsBaseUrl}/form/input`,
   NoticeBar: `${docsBaseUrl}/feedback/notice-bar`,
+  Radio: `${docsBaseUrl}/form/radio`,
+  Rate: `${docsBaseUrl}/form/rate`,
   Search: `${docsBaseUrl}/form/search`,
+  Skeleton: `${docsBaseUrl}/feedback/skeleton`,
+  Popup: `${docsBaseUrl}/feedback/popup`,
+  Upload: `${docsBaseUrl}/form/upload`,
+  Steps: `${docsBaseUrl}/data-display/steps`,
   Tabs: `${docsBaseUrl}/data-display/tabs`,
   Tab: `${docsBaseUrl}/data-display/tabs`,
   Tag: `${docsBaseUrl}/data-display/tag`,
+  Textarea: `${docsBaseUrl}/form/textarea`,
   Button: `${docsBaseUrl}/general/button`,
   Switch: `${docsBaseUrl}/form/switch`,
 };
 const editableByComponent = {
+  Avatar: ["头像内容", "类型", "尺寸", "边框", "角标"],
+  Badge: ["数值", "颜色", "红点", "最大值"],
   NavigationBar: ["标题", "返回按钮", "右侧动作", "背景", "固定/透明状态"],
   Card: ["图片", "标题", "标签", "摘要", "圆角", "阴影"],
+  Checkbox: ["选中状态", "形状", "文案", "颜色", "禁用状态"],
+  Divider: ["方向", "长度", "颜色", "文案"],
+  Empty: ["空状态文案", "按钮文案", "插图", "动作"],
+  Input: ["值", "占位文案", "前缀", "后缀", "边框"],
+  Radio: ["选中状态", "文案", "颜色", "禁用状态"],
+  Rate: ["分值", "数量", "尺寸", "颜色", "半选"],
   Search: ["占位文案", "只读/输入态", "背景", "右侧动作"],
+  Skeleton: ["加载态", "骨架结构", "尺寸"],
+  Spin: ["加载状态", "尺寸", "文案", "局部/全局范围"],
+  Steps: ["步骤列表", "当前步骤", "状态", "颜色"],
   NoticeBar: ["提示文案", "链接文案", "色彩", "关闭按钮"],
   Tabs: ["标签项", "激活项", "样式类型", "激活色"],
   Tag: ["文案", "状态色", "圆角", "边框"],
   Button: ["按钮文案", "类型", "尺寸", "全宽", "禁用/加载状态"],
   Switch: ["开关状态", "颜色", "禁用状态"],
+  Textarea: ["值", "占位文案", "字数统计", "边框"],
+  DateTimePicker: ["日期", "时间", "最小/最大值", "确认文案"],
+  Group: ["标题", "分组说明", "字段列表", "间距"],
+  Popup: ["打开状态", "位置", "遮罩", "关闭方式"],
+  Swiper: ["图片列表", "当前项", "自动播放", "指示器"],
+  Upload: ["文件类型", "数量限制", "上传状态", "回调"],
+  Hero: ["主视觉", "标题", "行动按钮", "背景图"],
+  DownloadPanel: ["下载入口", "平台", "二维码", "福利信息"],
+  QRCode: ["二维码", "说明文案", "下载动作"],
+  CharacterPanel: ["角色名", "角色立绘", "语音", "档案卡片"],
   TabBar: ["选中项", "图标", "文字", "激活色", "底部分隔线"],
 };
 const friendlyDescriptions = {
+  Avatar: "头像组件，用来展示用户、团队或身份标识。",
+  Badge: "徽标组件，用来显示数量、红点或状态提醒。",
   NavigationBar: "页面顶部导航，负责标题、返回/分享等顶部动作。",
   Search: "搜索入口，让用户按关键词查找活动、内容或配置项。",
   NoticeBar: "页面公告条，用来提示运营状态、风险或待处理事项。",
@@ -482,28 +727,290 @@ const friendlyDescriptions = {
   Tag: "状态或分类标签，用短文案标记主推、已配置、待审核等状态。",
   Card: "内容承载容器，适合放图片、标题、摘要和操作信息。",
   Button: "主要操作入口，例如发布、保存、确认。",
+  Checkbox: "多选控件，用来表达多个可同时启用的选项。",
+  Divider: "分割线组件，用来组织区域和视觉层级。",
+  Empty: "空状态组件，用来表达暂无内容或未命中结果。",
+  Input: "单行输入控件，用来输入名称、关键词或配置值。",
+  Radio: "单选控件，用来表达互斥选项。",
+  Rate: "评分控件，用来展示满意度或反馈分数。",
+  Skeleton: "骨架屏组件，用来表达加载中的内容结构。",
+  Spin: "加载指示器，用于局部等待或轻量异步状态。",
+  Steps: "步骤组件，用来展示流程阶段和当前进度。",
   Switch: "开关设置，用来表达启用/关闭一类配置。",
+  Swiper: "轮播组件，用来展示多张图片、运营 Banner 或可横滑内容。",
+  Textarea: "多行文本输入控件，用来输入描述、说明或备注。",
+  DateTimePicker: "日期时间选择器，用来输入预约、发布、截止等时间字段。",
+  Group: "表单分组，用来把一组相关输入项组织在同一语义区域。",
+  Popup: "弹层组件，用来承载需要临时浮出的内容或操作。",
+  Upload: "上传组件，用来把图片、文件或素材提交到服务器。",
+  Hero: "游戏官网首屏主视觉，承载角色群像、核心标题和主要行动入口。",
+  DownloadPanel: "下载入口面板，聚合 PC、移动端、二维码和平台下载动作。",
+  QRCode: "扫码下载模块，用来承接移动端下载或预约转换。",
+  CharacterPanel: "角色详情面板，展示角色名、语音、立绘、技能卡片和查看更多动作。",
   TabBar: "页面底部一级导航。当前 dangoui 没有内置 TabBar，需要后续补 schema。",
+};
+const componentChineseNames = {
+  Avatar: "头像",
+  Badge: "徽标",
+  Button: "按钮",
+  Card: "内容卡片",
+  Checkbox: "复选框",
+  Dialog: "弹窗",
+  Empty: "空状态",
+  Image: "图片",
+  Input: "输入框",
+  NavigationBar: "顶部导航",
+  NoticeBar: "公告条",
+  Rate: "评分",
+  Search: "搜索",
+  Select: "选择器",
+  Skeleton: "骨架屏",
+  Spin: "加载",
+  Snackbar: "轻提示",
+  Steps: "步骤条",
+  Switch: "开关",
+  Swiper: "轮播",
+  Tabs: "标签切换",
+  Tag: "标签",
+  Textarea: "多行输入",
+  DateTimePicker: "日期时间",
+  Group: "分组",
+  Popup: "弹层",
+  Upload: "上传",
+  Hero: "首屏主视觉",
+  DownloadPanel: "下载面板",
+  QRCode: "二维码",
+  CharacterPanel: "角色详情",
 };
 
 const catalog = ref({ source: {}, tokens: [], components: [], missingComponents: [] });
-const selectedInstanceId = ref("node-navigation-bar");
+const selectedInstanceId = ref("node-distribution-navigation-bar");
 const selectedComponent = ref("NavigationBar");
 const selectedTokenName = ref("");
 const tokensExpanded = ref(false);
+const selectedTemplateId = ref("distribution");
 
-const pageInstances = [
-  { id: "node-navigation-bar", name: "NavigationBar", label: "NavigationBar" },
-  { id: "node-search", name: "Search", label: "Search" },
-  { id: "node-notice-bar", name: "NoticeBar", label: "NoticeBar" },
-  { id: "node-tabs", name: "Tabs", label: "Tabs" },
-  { id: "node-tags", name: "Tag", label: "Tag Group" },
-  { id: "node-card-featured", name: "Card", label: "Card #1" },
-  { id: "node-card-secondary", name: "Card", label: "Card #2" },
-  { id: "node-controls-card", name: "Card", label: "Card #3" },
-  { id: "node-primary-button", name: "Button", label: "Button" },
-  { id: "node-tab-bar", name: "TabBar", label: "TabBar" },
+const imagePreviewSrc =
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' rx='24' fill='%23f5f5f5'/%3E%3Ccircle cx='92' cy='76' r='44' fill='%23874fff' fill-opacity='.82'/%3E%3Ccircle cx='160' cy='92' r='48' fill='%2300b6ff' fill-opacity='.72'/%3E%3Ccircle cx='224' cy='82' r='38' fill='%23ff7237' fill-opacity='.78'/%3E%3C/svg%3E";
+const selectOptions = [
+  { label: "Figma", value: "figma" },
+  { label: "Apple", value: "apple" },
+  { label: "Spotify", value: "spotify" },
 ];
+const avatarImages = [imagePreviewSrc, imagePreviewSrc, imagePreviewSrc, imagePreviewSrc];
+const defaultPlaceholderReason = "该组件依赖弹层、上下文、运行时 API 或特定父子结构，当前静态目录先保留入口，避免误以为 dangoui 没有这个组件。";
+const placeholderReasons = {
+  ActionButton: "需要稳定的 icon/name 配置和具体业务动作，静态页先不硬造图标。",
+  ActionSheet: "动作面板需要通过点击唤起弹层；静态目录保留入口，避免默认遮挡页面。",
+  Calendar: "日历适合弹层或完整选择流程，静态铺开会吞掉大量视口，先保留入口。",
+  Cascader: "级联选择依赖选项数据和弹层交互，当前只记录组件存在。",
+  CheckboxGroup: "组合容器需要表达一组绑定关系，已用 Checkbox 展示视觉基础。",
+  CheckboxIcon: "这是 Checkbox 的内部图标组件，通常不作为运营可点选模块单独出现。",
+  Dialog: "确认弹窗需要由动作触发，默认打开会打断组件目录浏览。",
+  Dropdown: "下拉筛选依赖选项组和展开态，静态页先保留入口。",
+  Form: "表单容器主要负责校验和布局，视觉效果由 Input、Select、Checkbox 等子组件承接。",
+  FormField: "表单字段上下文组件，通常由 Form/FormItem 调用，不单独静态展示。",
+  FormItem: "表单行布局组件，视觉基础已在 Input/Select 等控件里展示。",
+  Icon: "需要明确 icon 字库 name；当前 demo 先不假设业务图标。",
+  IconButton: "依赖明确 icon name 和动作语义，静态页先保留入口。",
+  NavigationBarRight: "NavigationBar 的右侧插槽/子结构，已在 NavigationBar 示例中体现。",
+  Picker: "选择器需要打开态和滚动选择交互，静态页先保留入口。",
+  PickerView: "滚动选择视图更适合在选择器内部展示，当前不单独铺开。",
+  Popup: "底部/居中弹层需要触发态，默认显示会覆盖组件目录。",
+  RadioGroup: "组合容器需要表达互斥绑定关系，已用 Radio 展示视觉基础。",
+  RadioIcon: "这是 Radio 的内部图标组件，通常不作为独立运营模块。",
+  RootPortal: "这是挂载容器能力，不是可见组件。",
+  SearchRight: "Search 的右侧动作插槽/子结构，已在 Search 示例中体现。",
+  Snackbar: "轻提示条通常由动作触发，不适合默认常驻。",
+  StepCheck: "Steps 的内部检查态元素，已由 Steps 组件承接。",
+  Sticky: "吸顶需要滚动容器和临界状态，静态目录只保留入口。",
+  Swiper: "轮播需要尺寸、图片资源和滑动运行态，当前先记录组件存在。",
+  SwiperItem: "Swiper 子项必须放在 Swiper 内部使用，不单独静态展示。",
+  Tab: "Tab 必须作为 Tabs 子组件使用，已在 Tabs 示例中展示。",
+  TabPane: "TabPane 依赖 Tabs 上下文，当前目录只记录组件存在。",
+  TabsRight: "Tabs 的右侧扩展区域，已由 Tabs 组件承接。",
+  TagsPanel: "标签面板通常需要可选列表和展开/收起交互，当前先保留入口。",
+  Theme: "主题提供器不直接产出可见 UI，风格切换已通过 token value 演示。",
+  ToastProvider: "Toast 上下文提供器不直接产出可见 UI，需要动作触发 toast。",
+  Tooltip: "悬浮提示依赖 hover/focus 触发，静态目录先不默认打开。",
+  Transition: "过渡组件需要进入/离开状态，静态页无法单独表达稳定视觉。",
+  Upload: "上传依赖文件选择和权限能力，当前先保留入口。",
+};
+const categorySpecs = [
+  {
+    name: "分发侧：内容送达",
+    description: "面向首页、活动页、内容流和搜索分发，重点是导航、筛选、公告、卡片与标签。",
+    components: ["NavigationBar", "NavigationBarRight", "Search", "SearchRight", "Tabs", "Tab", "TabPane", "TabsRight", "NoticeBar", "Card", "Tag", "TagsPanel", "Swiper", "SwiperItem", "Sticky"],
+  },
+  {
+    name: "展示侧：服务器数据输出",
+    description: "面向详情、列表、用户信息和状态展示，把服务端返回的数据组织成可读界面。",
+    components: [
+      "Avatar",
+      "AvatarGroup",
+      "Badge",
+      "Image",
+      "Rate",
+      "Steps",
+      "StepCheck",
+      "Divider",
+      "Empty",
+      "Skeleton",
+      "SkeletonAvatar",
+      "SkeletonParagraph",
+      "SkeletonRectangle",
+    ],
+  },
+  {
+    name: "发布侧：用户数据输入",
+    description: "面向创建、编辑、报名和配置发布，把用户输入校验后提交给服务器。",
+    components: [
+      "Input",
+      "InputNumber",
+      "Textarea",
+      "Select",
+      "Checkbox",
+      "CheckboxGroup",
+      "CheckboxIcon",
+      "Radio",
+      "RadioGroup",
+      "RadioIcon",
+      "Switch",
+      "Upload",
+      "Form",
+      "FormItem",
+      "FormField",
+      "Cascader",
+      "Calendar",
+      "Picker",
+      "PickerView",
+      "Button",
+      "ActionButton",
+    ],
+  },
+  {
+    name: "通用反馈：从轻到重",
+    description: "从轻量信息提示到重量决策弹层，帮助开发者判断什么时候该打扰用户。",
+    components: ["NoticeBar", "Skeleton", "Empty", "Snackbar", "Tooltip", "Dropdown", "ActionSheet", "Dialog", "Popup", "ToastProvider", "RootPortal"],
+  },
+  {
+    name: "通用基础：动作与系统能力",
+    description: "跨分发、展示、发布都可能使用的基础动作、图标、主题与过渡能力。",
+    components: ["Button", "Icon", "IconButton", "Divider", "Theme", "Transition"],
+  },
+];
+const staticallyRenderedComponents = new Set([
+  "Avatar",
+  "AvatarGroup",
+  "Badge",
+  "Button",
+  "Card",
+  "Checkbox",
+  "Divider",
+  "Empty",
+  "Image",
+  "Input",
+  "InputNumber",
+  "NavigationBar",
+  "NoticeBar",
+  "Radio",
+  "Rate",
+  "Search",
+  "Select",
+  "Skeleton",
+  "SkeletonAvatar",
+  "SkeletonParagraph",
+  "SkeletonRectangle",
+  "Steps",
+  "Switch",
+  "Tabs",
+  "Tag",
+  "Textarea",
+]);
+
+function kebabName(name) {
+  return name.replace(/([a-z0-9])([A-Z])/g, "$1-$2").toLowerCase();
+}
+
+function pageNodeId(name) {
+  return `node-${selectedTemplateId.value}-${kebabName(name)}`;
+}
+
+const componentGroups = categorySpecs.map((group, groupIndex) => ({
+  ...group,
+  items: group.components.map((name) => ({
+    id: `node-${groupIndex}-${kebabName(name)}`,
+    name,
+    label: name,
+    rendered: staticallyRenderedComponents.has(name),
+    reason: placeholderReasons[name] || defaultPlaceholderReason,
+  })),
+}));
+const templatePages = [
+  {
+    id: "distribution",
+    tab: "分发侧",
+    name: "内容分发页",
+    description: "把服务端内容通过搜索、分组、公告和 Feed 卡片送到用户面前。",
+    components: ["NavigationBar", "Search", "NoticeBar", "Tabs", "Card", "Tag"],
+  },
+  {
+    id: "display",
+    tab: "展示侧",
+    name: "数据展示页",
+    description: "承接服务器数据输出，展示用户信息、图片资源、进度和评价状态。",
+    components: ["NavigationBar", "Avatar", "Badge", "Tag", "Image", "Swiper", "Steps", "Rate"],
+  },
+  {
+    id: "publish",
+    tab: "发布侧",
+    name: "数据发布页",
+    description: "承接用户输入，把表单、选项、开关和提交动作组合成发布路径。",
+    components: ["NavigationBar", "Group", "Input", "Textarea", "Select", "DateTimePicker", "Upload", "Checkbox", "Switch", "Button"],
+  },
+  {
+    id: "feedback",
+    tab: "反馈",
+    name: "反馈状态页",
+    description: "从轻量提示到重量弹层，按打扰程度组织页面状态和用户决策。",
+    components: ["NavigationBar", "Dialog", "Popup", "Empty", "Skeleton", "Spin", "NoticeBar", "Snackbar"],
+  },
+];
+const cznTemplatePages = [
+  {
+    id: "czn-home",
+    tab: "官网首页",
+    name: "卡厄思梦境官网首页",
+    description: "对应 CZN 首页首屏：大主视觉、下载面板、二维码和强 CTA。",
+    components: ["NavigationBar", "Hero", "DownloadPanel", "QRCode", "Button"],
+  },
+  {
+    id: "czn-forward",
+    tab: "公测内容",
+    name: "公测内容一览",
+    description: "对应 CZN 公测内容区：白灰资讯底、橙色轮播描边、内容卡和状态标签。",
+    components: ["NavigationBar", "Swiper", "Tag", "Card", "Button"],
+  },
+  {
+    id: "czn-character",
+    tab: "角色详情",
+    name: "角色详情页",
+    description: "对应 CZN 角色页：黑紫沉浸底、角色档案、语音面板和技能卡片。",
+    components: ["NavigationBar", "CharacterPanel", "Avatar", "Card", "Tag"],
+  },
+];
+const currentDemoPages = computed(() => (selectedStyleId.value === "czn" ? cznTemplatePages : []));
+const currentTemplatePages = computed(() => [...templatePages, ...currentDemoPages.value]);
+const selectedTemplate = computed(() => currentTemplatePages.value.find((template) => template.id === selectedTemplateId.value) || currentTemplatePages.value[0]);
+const pageInstances = computed(() =>
+  selectedTemplate.value.components.map((name) => ({
+    id: pageNodeId(name),
+    name,
+    label: name,
+    rendered: staticallyRenderedComponents.has(name),
+    reason: placeholderReasons[name] || defaultPlaceholderReason,
+  })),
+);
 
 const componentsByName = computed(() =>
   Object.fromEntries(catalog.value.components.map((component) => [component.name, component])),
@@ -511,7 +1018,7 @@ const componentsByName = computed(() =>
 const missingByName = computed(() =>
   Object.fromEntries((catalog.value.missingComponents || []).map((component) => [component.name, component])),
 );
-const uniqueComponentCount = computed(() => new Set(pageInstances.map((item) => item.name)).size);
+const uniqueComponentCount = computed(() => new Set(pageInstances.value.map((item) => item.name)).size);
 const selectedStyle = computed(() => stylePresets.find((preset) => preset.id === selectedStyleId.value) || stylePresets[0]);
 const selectedStyleTokenMap = computed(() =>
   Object.fromEntries(selectedStyle.value.tokens.map((token) => [token.name, token.value])),
@@ -521,7 +1028,10 @@ const themeVars = computed(() => ({
   "--du-bg-1": selectedStyleTokenMap.value["--du-bg-1"],
   "--du-text-1": selectedStyleTokenMap.value["--du-text-1"],
   "--du-text-3": selectedStyleTokenMap.value["--du-text-3"],
+  "--du-border-1": selectedStyleTokenMap.value["--du-border-1"],
   "--du-primary-color": selectedStyleTokenMap.value["--du-primary-color"],
+  "--du-primary-border": selectedStyleTokenMap.value["--du-primary-border"],
+  "--du-primary-outline-color": selectedStyleTokenMap.value["--du-primary-outline-color"],
   "--du-primary-soft-bg": selectedStyleTokenMap.value["--du-primary-soft-bg"],
   "--du-primary-solid-bg": selectedStyleTokenMap.value["--du-primary-solid-bg"],
   "--style-page-bg": selectedStyleTokenMap.value["--du-bg-2"],
@@ -530,17 +1040,26 @@ const themeVars = computed(() => ({
   "--style-muted": selectedStyleTokenMap.value["--du-text-3"],
   "--style-accent": selectedStyleTokenMap.value["--du-primary-color"],
   "--style-accent-soft": selectedStyleTokenMap.value["--du-primary-soft-bg"],
-  "--style-card-radius": selectedStyle.value.style.cardRadius,
-  "--style-control-radius": selectedStyle.value.style.controlRadius,
-  "--style-page-spacing": selectedStyle.value.style.pageSpacing,
-  "--style-card-shadow": selectedStyle.value.style.cardShadow,
+  "--style-card-radius": "14px",
+  "--style-control-radius": "8px",
+  "--style-page-spacing": "16px",
+  "--style-card-shadow": "0 12px 30px rgba(31,31,35,.08)",
   "--style-media": selectedStyle.value.style.media,
 }));
 const styleJson = computed(() =>
   JSON.stringify(
     {
       source: selectedStyle.value.label,
-      lockedSchema: "dangoui-existing-css-token-names",
+      docsEntry: introductionUrl,
+      activeDocs: activeDocs.map((doc) => doc.file),
+      supportingFiles: {
+        archive: "历史上下文，不参与规则判断",
+        references: "demo-only token snapshot，正式 dangoui 项目中废弃",
+        migrations: "案例产物，不反向定义规则",
+      },
+      lockedSchema: "dangoui-existing-css-token-names-and-components",
+      starterTemplates,
+      workflow: workflowSteps,
       extractedSignals: selectedStyle.value.signals,
       dangouiTokens: selectedStyle.value.tokens.reduce((acc, token) => {
         acc[token.name] = token.value;
@@ -593,6 +1112,10 @@ function displayDescription(name) {
   return friendlyDescriptions[name] || componentMeta(name)?.description || missingMeta(name)?.reason || "未在 dangoui catalog 中找到。";
 }
 
+function componentChineseName(name) {
+  return componentChineseNames[name] || "组件";
+}
+
 function missingMeta(name) {
   return missingByName.value[name];
 }
@@ -632,7 +1155,7 @@ function getToken(tokenName) {
 }
 
 function selectInstance(instanceId) {
-  const instance = pageInstances.find((item) => item.id === instanceId);
+  const instance = pageInstances.value.find((item) => item.id === instanceId);
   if (!instance) return;
   selectedInstanceId.value = instance.id;
   selectedComponent.value = instance.name;
@@ -642,6 +1165,26 @@ function selectInstance(instanceId) {
     document
       .querySelector(`[data-instance-id="${selectedInstanceId.value}"]`)
       ?.scrollIntoView({ block: "center", behavior: "smooth" });
+  });
+}
+
+function selectTemplate(templateId) {
+  selectedTemplateId.value = templateId;
+  nextTick(() => {
+    const first = pageInstances.value[0];
+    if (first) selectInstance(first.id);
+  });
+}
+
+function selectStyle(styleId) {
+  selectedStyleId.value = styleId;
+  const pages = styleId === "czn" ? [...templatePages, ...cznTemplatePages] : templatePages;
+  if (!pages.some((template) => template.id === selectedTemplateId.value)) {
+    selectedTemplateId.value = "distribution";
+  }
+  nextTick(() => {
+    const first = pageInstances.value[0];
+    if (first) selectInstance(first.id);
   });
 }
 

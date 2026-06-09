@@ -1,0 +1,21 @@
+{
+  "brand": "czn",
+  "tokens": {
+    "--du-bg-2": { "value": "#0b0710", "source": "Color/DarkImmersiveBackground", "status": "mapped" },
+    "--du-bg-1": { "value": "#17111f", "source": "Color/DarkHudSurface", "status": "mapped" },
+    "--du-text-1": { "value": "#fff7f0", "source": "Color/TextPrimaryOnDark", "status": "mapped" },
+    "--du-text-3": { "value": "#a79daa", "source": "Color/TextSecondaryOnDark", "status": "mapped" },
+    "--du-border-1": { "value": "#3a2b3f", "source": "Color/HudBorder", "status": "mapped" },
+    "--du-primary-color": { "value": "#ff5a1f", "source": "Color/OrangePrimaryAction", "status": "mapped" },
+    "--du-primary-border": { "value": "#ff5a1f", "source": "Color/OrangePrimaryAction", "status": "mapped" },
+    "--du-primary-outline-color": { "value": "#ff5a1f", "source": "Color/OrangePrimaryAction", "status": "mapped" },
+    "--du-primary-soft-bg": { "value": "#32180f", "source": "Color/OrangeSoftActionBg", "status": "mapped" },
+    "--du-primary-solid-bg": { "value": "#ff5a1f", "source": "Color/OrangePrimaryAction", "status": "mapped" },
+    "--style-media": {
+      "value": "radial-gradient(circle at 24% 18%, rgba(255,90,31,.95), transparent 25%), radial-gradient(circle at 76% 68%, rgba(151,71,255,.78), transparent 30%), linear-gradient(135deg,#12070b,#251038 48%,#5a0f1d)",
+      "source": "Visual/CharacterEnergyBackdrop",
+      "status": "style-only",
+      "reason": "角色插画、能量光效和斜切 HUD 背景属于 demo 视觉控制，不进入 dangoui color token。"
+    }
+  }
+}

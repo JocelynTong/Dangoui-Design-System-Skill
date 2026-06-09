@@ -1,0 +1,24 @@
+{
+  "brand": "czn",
+  "source": "https://czn.qq.com/ plus user-provided screenshots",
+  "status": "selected",
+  "note": "当前环境无法解析 czn.qq.com，正式分析以用户提供的 4 张截图作为视觉证据。",
+  "previews": [
+    {
+      "id": "preview-a",
+      "name": "冷蓝科幻工具",
+      "mood": "深色、冷蓝、科幻 HUD",
+      "decision": "rejected",
+      "reason": "第一版过冷，和截图中高频橙色 CTA、黑紫角色页、白灰公测内容页不一致。"
+    },
+    {
+      "id": "preview-b",
+      "name": "橙色主行动 + 黑紫沉浸",
+      "mood": "亮橙行动入口、黑紫/深红角色页、斜切 HUD 边界、强角色视觉",
+      "decision": "selected",
+      "reason": "更贴近截图中的首页导航激活、官网按钮、下载按钮、轮播边框和角色页色彩。"
+    }
+  ],
+  "selectedDirection": "preview-b",
+  "nextStep": "进入 DTCG / Echo / dangoui 迁移；待可访问站点或更多截图后校准真实统计。"
+}

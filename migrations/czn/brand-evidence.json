@@ -1,0 +1,90 @@
+{
+  "brand": "czn",
+  "scopeNote": "证据来自用户提供的 4 张 czn.qq.com 截图：官网首页、公测内容、紫色角色页、红色角色页。统计为截图目测抽样，用于 demo 迁移，不声明为完整生产统计。",
+  "statistics": {
+    "color": {
+      "scope": "截图中的 UI 颜色：导航、按钮、下载入口、卡片边框、标题、正文、背景和 HUD 装饰。",
+      "formula": "percent = count / total count in this screenshot sampling scope",
+      "total": 20,
+      "frequency": [
+        {
+          "value": "#ff5a1f",
+          "count": 6,
+          "percent": "30%",
+          "contexts": ["active navigation", "official site button", "download CTA", "carousel border", "section title accent", "side arrow"],
+          "role": "primary action and brand accent"
+        },
+        {
+          "value": "#0b0710",
+          "count": 4,
+          "percent": "20%",
+          "contexts": ["character page background", "modal depth", "dark illustration overlay"],
+          "role": "immersive dark page background"
+        },
+        {
+          "value": "#17111f",
+          "count": 4,
+          "percent": "20%",
+          "contexts": ["HUD panels", "dark content surface", "download area"],
+          "role": "dark surface"
+        },
+        {
+          "value": "#fff7f0",
+          "count": 3,
+          "percent": "15%",
+          "contexts": ["hero title", "button label", "high-contrast text"],
+          "role": "primary text on dark"
+        },
+        {
+          "value": "#a79daa",
+          "count": 3,
+          "percent": "15%",
+          "contexts": ["navigation secondary label", "character description", "muted text"],
+          "role": "secondary text on dark"
+        }
+      ]
+    },
+    "componentPattern": {
+      "scope": "截图中的页面组件模式：官网首页、公测内容轮播、角色展示页、下载入口。",
+      "formula": "percent = count / total component-pattern count in this screenshot sampling scope",
+      "total": 13,
+      "frequency": [
+        {
+          "pattern": "immersive-hero-visual",
+          "count": 3,
+          "percent": "23.1%",
+          "contexts": ["home hero", "character pages"],
+          "role": "full-bleed character/artwork stage"
+        },
+        {
+          "pattern": "orange-primary-cta",
+          "count": 3,
+          "percent": "23.1%",
+          "contexts": ["enter official site", "PC download", "more button"],
+          "role": "primary action"
+        },
+        {
+          "pattern": "slanted-hud-card",
+          "count": 3,
+          "percent": "23.1%",
+          "contexts": ["content carousel", "character cards", "download blocks"],
+          "role": "game HUD container"
+        },
+        {
+          "pattern": "character-selector",
+          "count": 2,
+          "percent": "15.4%",
+          "contexts": ["purple character page", "red character page"],
+          "role": "vertical thumbnail selector"
+        },
+        {
+          "pattern": "light-gray-news-section",
+          "count": 2,
+          "percent": "15.4%",
+          "contexts": ["public test content section"],
+          "role": "informational contrast section"
+        }
+      ]
+    }
+  }
+}

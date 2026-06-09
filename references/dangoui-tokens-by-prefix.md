@@ -1,5 +1,7 @@
 # Dangoui Tokens By --du-* Prefix
 
+> Demo-only snapshot. 迁移到正式 dangoui 项目后，本文件废弃；正式流程应直接读取 dangoui 项目内真实 token source，不使用本文件作为 fallback。
+
 Source: data/dangoui.design-system.json
 Total: 455
 
@@ -577,4 +579,3 @@ Total: 455
 | token | value | usage |
 |---|---|---|
 | `--du-empty-padding` | `calc(100vw * (120 / 375)) 0` | dangoui token |
-

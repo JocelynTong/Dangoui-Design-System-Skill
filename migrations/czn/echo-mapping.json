@@ -1,0 +1,33 @@
+{
+  "brand": "czn",
+  "mappings": [
+    {
+      "intent": "primary action / active state",
+      "rawValues": ["#ff5a1f"],
+      "echoCandidate": "primary/solidBg",
+      "dangouiTarget": ["--du-primary-color", "--du-primary-solid-bg", "--du-primary-border"],
+      "status": "mapped"
+    },
+    {
+      "intent": "immersive dark page background",
+      "rawValues": ["#0b0710"],
+      "echoCandidate": "bg/2",
+      "dangouiTarget": ["--du-bg-2"],
+      "status": "mapped"
+    },
+    {
+      "intent": "dark HUD surface",
+      "rawValues": ["#17111f"],
+      "echoCandidate": "bg/1",
+      "dangouiTarget": ["--du-bg-1"],
+      "status": "mapped"
+    },
+    {
+      "intent": "slanted HUD borders and character artwork",
+      "rawValues": ["diagonal frame", "character artwork", "energy glow"],
+      "echoCandidate": "future visual asset / component pattern",
+      "dangouiTarget": ["--style-media"],
+      "status": "style-only"
+    }
+  ]
+}

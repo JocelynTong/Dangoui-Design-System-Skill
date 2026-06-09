@@ -1,0 +1,13 @@
+{
+  "brand": "czn",
+  "status": "demo-only",
+  "notes": [
+    "当前 demo 未引入 uno-preset-echo；CZN 迁移通过 CSS variables 直接落到 Vue demo。",
+    "未来迁移到正式项目时，颜色 token 应由 Echo/dangoui source 输出，UnoCSS 只消费 token utility。",
+    "斜切 HUD、角色全屏图、能量光效属于 preview/demo-only class，不应直接写成正式 token。"
+  ],
+  "utilities": {
+    "tokenUtilities": ["bg-token", "text-token", "border-token"],
+    "demoOnly": ["hud-frame", "immersive-media", "character-stage"]
+  }
+}

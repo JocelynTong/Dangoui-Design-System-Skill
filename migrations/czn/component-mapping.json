@@ -1,0 +1,38 @@
+{
+  "brand": "czn",
+  "patterns": [
+    {
+      "brandPattern": "immersive-hero-visual",
+      "status": "style-only",
+      "echoComponentCandidate": "HeroStage",
+      "dangouiComponents": ["NavigationBar", "Image", "Card"],
+      "props": {},
+      "slots": ["media", "title", "cta"],
+      "usesTokens": ["--du-bg-2", "--du-text-1", "--du-primary-color"],
+      "unsupported": ["full-bleed character artwork", "animated background", "parallax"],
+      "tokenChain": ["page style", "--style-media", "--du-bg-2", "--du-primary-color"]
+    },
+    {
+      "brandPattern": "orange-primary-cta",
+      "status": "mapped",
+      "echoComponentCandidate": "Button/Primary",
+      "dangouiComponents": ["Button", "Tag", "NoticeBar"],
+      "props": { "type": "primary" },
+      "slots": ["label"],
+      "usesTokens": ["--du-primary-color", "--du-primary-solid-bg", "--du-primary-border"],
+      "unsupported": [],
+      "tokenChain": ["DuButton", "du-c-primary-bt", "--du-bt-border", "--du-primary-border"]
+    },
+    {
+      "brandPattern": "slanted-hud-card",
+      "status": "style-only",
+      "echoComponentCandidate": "Card/GameHud",
+      "dangouiComponents": ["Card", "Image", "Tag"],
+      "props": {},
+      "slots": ["image", "metadata", "title"],
+      "usesTokens": ["--du-bg-1", "--du-border-1", "--du-primary-color"],
+      "unsupported": ["slanted clipping", "animated frame", "character thumbnail rail"],
+      "tokenChain": ["DuCard", "--du-bg-1", "--du-border-1", "--style-media"]
+    }
+  ]
+}
