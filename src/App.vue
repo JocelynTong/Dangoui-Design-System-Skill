@@ -2,7 +2,7 @@
   <main class="shell" :class="`theme-${selectedStyleId}`" :style="themeVars">
     <aside class="panel" aria-label="Visual inspector">
       <div class="style-rail">
-        <p class="rail-label">Style</p>
+        <p class="section-heading"><strong>Style <em>风格</em></strong></p>
         <div class="style-switcher compact" aria-label="brand style presets">
           <button
             v-for="preset in stylePresets"
@@ -25,7 +25,7 @@
         </nav>
 
         <template v-if="selectedInspectorTab === 'style'">
-          <p class="rail-label">Color Palette</p>
+          <p class="section-heading"><strong>Color <em>颜色</em></strong></p>
           <div class="extraction-card style-evidence-card">
             <p>{{ selectedStyle.evidenceNote }}</p>
             <p class="evidence-method">次数 = 出现次数；占比 = 出现次数 / 统计总次数。</p>
@@ -63,7 +63,7 @@
             </button>
           </nav>
 
-          <p class="rail-label">Nodes</p>
+          <p class="section-heading"><strong>Nodes <em>节点</em></strong></p>
           <div class="component-list rail-list">
             <div
               v-for="instance in pageInstances"

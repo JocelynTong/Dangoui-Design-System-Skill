@@ -94,6 +94,30 @@ a {
   text-transform: uppercase;
 }
 
+.section-heading {
+  margin: 0 0 8px;
+  min-width: 0;
+}
+
+.section-heading strong {
+  display: block;
+  color: var(--text);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.section-heading em {
+  display: inline;
+  margin-left: 3px;
+  color: #606069;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 650;
+  line-height: 1.25;
+}
+
 .anchors-label {
   margin-top: 16px;
 }
