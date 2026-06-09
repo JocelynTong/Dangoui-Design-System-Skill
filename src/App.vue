@@ -29,7 +29,7 @@
           <div class="extraction-card style-evidence-card">
             <strong>{{ selectedStyle.label }} Token 学习证据</strong>
             <p>{{ selectedStyle.evidenceNote }}</p>
-            <p class="evidence-method">次数 = 该视觉值在本次统计口径中的出现次数；占比 = 出现次数 / 本次统计总次数。</p>
+            <p class="evidence-method">次数 = 出现次数；占比 = 出现次数 / 统计总次数。</p>
             <div class="mapping-list compact-evidence">
               <div
                 v-for="signal in selectedStyle.signals"

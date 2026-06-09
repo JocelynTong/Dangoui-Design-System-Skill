@@ -517,10 +517,13 @@ a {
 }
 
 .extraction-card p {
+  min-width: 0;
   margin-bottom: 0;
   color: var(--muted);
   font-size: 11px;
   line-height: 1.45;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .mapping-list {
@@ -614,9 +617,12 @@ a {
 }
 
 .evidence-method {
+  max-width: 100%;
   padding: 7px 8px;
   border-radius: 7px;
   background: color-mix(in srgb, var(--style-page-bg) 76%, var(--style-card-bg));
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .mapping-value {
