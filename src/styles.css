@@ -220,28 +220,33 @@ a {
   }
 }
 
-.component-list.rail-list {
+.component-list.rail-list,
+.token-category-list.rail-list {
   display: grid;
   gap: 4px;
 }
 
-.component-list.rail-list .component {
+.component-list.rail-list .component,
+.token-category-list .token-category {
   padding: 0;
   border: 0;
   background: transparent;
 }
 
-.component-list.rail-list .component.active {
+.component-list.rail-list .component.active,
+.token-category-list .token-category.active {
   background: #f2f2f4;
   border-radius: 8px;
 }
 
-.component-list.rail-list .component strong {
+.component-list.rail-list .component strong,
+.token-category-list .token-category strong {
   display: block;
   min-width: 0;
 }
 
-.component-list.rail-list .component.active .node-button {
+.component-list.rail-list .component.active .node-button,
+.token-category-list .token-category.active .node-button {
   color: #25252a;
 }
 
@@ -270,7 +275,8 @@ a {
   transition: transform 140ms ease, color 140ms ease;
 }
 
-.component-list.rail-list .component.active .node-button::after {
+.component-list.rail-list .component.active .node-button::after,
+.token-category-list .token-category.active .node-button::after {
   color: #55555d;
   transform: translateY(-50%) rotate(90deg);
 }
@@ -298,6 +304,14 @@ a {
   font-style: normal;
   font-weight: 650;
   line-height: 1.25;
+}
+
+.token-category-list {
+  margin-bottom: 8px;
+}
+
+.token-category-button {
+  cursor: default;
 }
 
 .node-detail {

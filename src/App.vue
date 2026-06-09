@@ -25,7 +25,13 @@
         </nav>
 
         <template v-if="selectedInspectorTab === 'style'">
-          <p class="section-heading"><strong>Color <em>颜色</em></strong></p>
+          <div class="token-category-list rail-list" aria-label="token categories">
+            <div class="token-category active">
+              <button class="node-button token-category-button" type="button">
+                <strong>Color <em>颜色</em><span>dangoui token</span></strong>
+              </button>
+            </div>
+          </div>
           <div class="extraction-card style-evidence-card">
             <p>{{ selectedStyle.evidenceNote }}</p>
             <p class="evidence-method">次数 = 出现次数；占比 = 出现次数 / 统计总次数。</p>
