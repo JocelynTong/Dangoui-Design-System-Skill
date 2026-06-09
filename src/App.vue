@@ -63,7 +63,6 @@
             </button>
           </nav>
 
-          <p class="section-heading"><strong>Nodes <em>节点</em></strong></p>
           <div class="component-list rail-list">
             <div
               v-for="instance in pageInstances"
