@@ -2,7 +2,7 @@
   <main class="shell" :class="`theme-${selectedStyleId}`" :style="themeVars">
     <aside class="panel" aria-label="Visual inspector">
       <div class="style-rail">
-        <p class="section-heading"><strong>Style <em>风格</em></strong></p>
+        <p class="section-heading"><strong>参考站</strong></p>
         <div class="style-switcher compact" aria-label="brand style presets">
           <button
             v-for="preset in stylePresets"
@@ -33,7 +33,6 @@
               <div class="token-category-detail">
                 <div class="extraction-card style-evidence-card">
                   <p>{{ selectedStyle.evidenceNote }}</p>
-                  <p class="evidence-method">次数 = 出现次数；占比 = 出现次数 / 统计总次数。</p>
                   <div class="palette-list">
                     <div
                       v-for="signal in selectedStyle.signals"

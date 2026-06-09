@@ -672,17 +672,6 @@ a {
   line-height: 1.25;
 }
 
-.evidence-method {
-  max-width: 100%;
-  padding: 7px 8px;
-  border-radius: 7px;
-  background: color-mix(in srgb, var(--style-page-bg) 76%, var(--style-card-bg));
-  color: color-mix(in srgb, var(--style-text) 82%, var(--style-muted));
-  line-height: 1.45;
-  overflow-wrap: anywhere;
-  word-break: break-word;
-}
-
 .palette-list {
   display: grid;
   gap: 6px;
