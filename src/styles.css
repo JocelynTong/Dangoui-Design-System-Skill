@@ -53,43 +53,57 @@ a {
   background: rgba(255, 255, 255, 0.78);
 }
 
-.inspector-tabs {
+.inspector-tabs,
+.side-tabs {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 6px;
-  margin-bottom: 14px;
   padding: 3px;
   border: 1px solid var(--line);
   border-radius: 10px;
   background: color-mix(in srgb, var(--panel-soft) 82%, var(--panel));
 }
 
-.inspector-tabs button {
+.inspector-tabs {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 14px;
+}
+
+.side-tabs {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.inspector-tabs button,
+.side-tabs button {
   min-height: 30px;
+  padding: 0 8px;
   border: 1px solid transparent;
   border-radius: 8px;
   background: transparent;
   color: var(--muted);
   font-size: 12px;
   font-weight: 820;
+  text-align: center;
   cursor: pointer;
   transition: background 140ms ease, border-color 140ms ease, color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
 }
 
-.inspector-tabs button:hover {
-  background: color-mix(in srgb, var(--panel) 70%, transparent);
-  color: var(--text);
+.inspector-tabs button:hover,
+.side-tabs button:hover {
+  background: color-mix(in srgb, var(--style-accent-soft) 34%, var(--panel));
+  color: color-mix(in srgb, var(--style-accent) 78%, var(--text));
 }
 
-.inspector-tabs button:active {
+.inspector-tabs button:active,
+.side-tabs button:active {
   transform: translateY(1px);
 }
 
-.inspector-tabs button.active {
-  background: var(--panel);
-  color: var(--text);
-  border-color: color-mix(in srgb, var(--text) 10%, var(--line));
-  box-shadow: 0 1px 2px rgba(17, 17, 20, 0.08), 0 0 0 1px rgba(255, 255, 255, 0.68) inset;
+.inspector-tabs button.active,
+.side-tabs button.active {
+  background: color-mix(in srgb, var(--style-accent-soft) 76%, var(--panel));
+  color: var(--style-accent);
+  border-color: color-mix(in srgb, var(--style-accent) 26%, var(--line));
+  box-shadow: 0 1px 2px rgba(17, 17, 20, 0.08), 0 0 0 1px color-mix(in srgb, var(--style-accent) 12%, transparent) inset;
 }
 
 .style-rail,
@@ -191,30 +205,6 @@ a {
   background: color-mix(in srgb, var(--style-accent-soft) 72%, #fff);
 }
 
-.side-tabs {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-}
-
-.side-tabs button {
-  min-height: 28px;
-  padding: 0 8px;
-  border: 0;
-  border-radius: 8px;
-  background: transparent;
-  color: var(--muted);
-  font-size: 11px;
-  font-weight: 820;
-  text-align: center;
-  cursor: pointer;
-}
-
-.side-tabs button.active {
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-
 @media (min-width: 1025px) {
   .workflow-tabs {
     display: grid;
@@ -227,7 +217,6 @@ a {
   }
 
   .side-tabs button {
-    padding: 0 4px;
     white-space: nowrap;
   }
 }
@@ -1670,8 +1659,7 @@ pre {
   background: #ff5a1f;
 }
 
-.theme-czn .style-button.active,
-.theme-czn .side-tabs button.active {
+.theme-czn .style-button.active {
   background: rgba(255, 90, 31, 0.12);
   color: #d94213;
 }
@@ -1939,8 +1927,7 @@ pre {
   color: #0075de;
 }
 
-.theme-notion .style-button.active,
-.theme-notion .side-tabs button.active {
+.theme-notion .style-button.active {
   background: #f6f5f4;
   color: #000000;
   box-shadow: inset 0 0 0 1px #e6e6e6;
