@@ -307,11 +307,15 @@ a {
 }
 
 .token-category-list {
-  margin-bottom: 8px;
+  margin-bottom: 0;
 }
 
 .token-category-button {
   cursor: default;
+}
+
+.token-category-detail {
+  margin: 0 8px 8px;
 }
 
 .node-detail {
@@ -1115,8 +1119,7 @@ pre {
 }
 
 .context-section + .context-section {
-  padding-top: 14px;
-  border-top: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
+  padding-top: 4px;
 }
 
 .context-heading {

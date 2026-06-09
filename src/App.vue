@@ -30,26 +30,28 @@
               <button class="node-button token-category-button" type="button">
                 <strong>Color <em>颜色</em><span>dangoui token</span></strong>
               </button>
-            </div>
-          </div>
-          <div class="extraction-card style-evidence-card">
-            <p>{{ selectedStyle.evidenceNote }}</p>
-            <p class="evidence-method">次数 = 出现次数；占比 = 出现次数 / 统计总次数。</p>
-            <div class="palette-list">
-              <div
-                v-for="signal in selectedStyle.signals"
-                :key="`${selectedStyle.id}-${signal.raw}-${signal.target}`"
-                class="palette-row"
-                :class="{ primary: signal.target.includes('primary') }"
-              >
-                <i class="palette-swatch" :style="{ background: signalSwatch(signal) }"></i>
-                <div class="palette-meta">
-                  <div>
-                    <strong>{{ signal.raw }}</strong>
-                    <span>{{ signal.count }} 次 · {{ signal.percent }}</span>
+              <div class="token-category-detail">
+                <div class="extraction-card style-evidence-card">
+                  <p>{{ selectedStyle.evidenceNote }}</p>
+                  <p class="evidence-method">次数 = 出现次数；占比 = 出现次数 / 统计总次数。</p>
+                  <div class="palette-list">
+                    <div
+                      v-for="signal in selectedStyle.signals"
+                      :key="`${selectedStyle.id}-${signal.raw}-${signal.target}`"
+                      class="palette-row"
+                      :class="{ primary: signal.target.includes('primary') }"
+                    >
+                      <i class="palette-swatch" :style="{ background: signalSwatch(signal) }"></i>
+                      <div class="palette-meta">
+                        <div>
+                          <strong>{{ signal.raw }}</strong>
+                          <span>{{ signal.count }} 次 · {{ signal.percent }}</span>
+                        </div>
+                        <em>{{ signal.target }}</em>
+                        <p>{{ signal.value }}</p>
+                      </div>
+                    </div>
                   </div>
-                  <em>{{ signal.target }}</em>
-                  <p>{{ signal.value }}</p>
                 </div>
               </div>
             </div>
@@ -133,26 +135,21 @@
             <aside class="workspace-context" aria-label="Brand learning evidence">
               <div class="context-card brand-summary-card">
                 <div class="context-section">
-                  <span>Current Style</span>
                   <strong>{{ selectedStyle.label }}</strong>
                   <p>{{ selectedStyle.notice }}</p>
                 </div>
 
                 <div v-if="currentDemoPages.length" class="context-section">
-                  <div class="context-heading">
-                    <span>Demo</span>
-                    <strong>品牌场景</strong>
-                  </div>
-                <nav class="workspace-demo-tabs" aria-label="brand demo rooms">
-                  <button
-                    v-for="template in currentDemoPages"
-                    :key="template.id"
-                    type="button"
-                    :class="{ active: selectedTemplateId === template.id }"
-                    @click="selectTemplate(template.id)"
-                  >
-                    <span>{{ template.tab }}</span>
-                    <small>{{ template.name }}</small>
+                  <nav class="workspace-demo-tabs" aria-label="brand demo rooms">
+                    <button
+                      v-for="template in currentDemoPages"
+                      :key="template.id"
+                      type="button"
+                      :class="{ active: selectedTemplateId === template.id }"
+                      @click="selectTemplate(template.id)"
+                    >
+                      <span>{{ template.tab }}</span>
+                      <small>{{ template.name }}</small>
                     </button>
                   </nav>
                 </div>
