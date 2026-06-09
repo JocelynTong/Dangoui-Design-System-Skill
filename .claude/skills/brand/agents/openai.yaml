@@ -1,0 +1,4 @@
+interface:
+  display_name: "Brand to Dangoui"
+  short_description: "将品牌风格档案迁移到 dangoui token 和 demo。"
+  default_prompt: "将这个品牌 DESIGN.md 按 dangoui 的 --du-* token 体系生成迁移文档，并应用到 demo 验证。"

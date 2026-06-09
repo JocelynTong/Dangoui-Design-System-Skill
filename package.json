@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1",
     "build": "vite build",
-    "create:mapping": "node scripts/create-dangoui-mapping-doc.mjs"
+    "create:mapping": "node scripts/create-dangoui-mapping-doc.mjs",
+    "sync:skills": "node scripts/sync-agent-skills.mjs"
   },
   "keywords": [],
   "author": "",
