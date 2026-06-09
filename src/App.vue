@@ -125,6 +125,7 @@
                   <strong>{{ selectedStyle.label }} 学习证据</strong>
                 </div>
                 <p>{{ selectedStyle.evidenceNote }}</p>
+                <p class="evidence-method">次数 = 该视觉值在本次统计口径中的出现次数；占比 = 出现次数 / 本次统计总次数。</p>
                 <div class="mapping-list compact-evidence">
                   <div
                     v-for="signal in selectedStyle.signals"
@@ -136,7 +137,7 @@
                       <i v-if="isColorSignal(signal.raw)" class="swatch" :style="{ background: signal.raw }"></i>
                       {{ signal.raw }}
                     </span>
-                    <span class="frequency">{{ signal.count }}x</span>
+                    <span class="frequency">{{ signal.count }} 次</span>
                     <span class="percent">{{ signal.percent }}</span>
                     <span class="mapped-token">
                       {{ signal.target }}

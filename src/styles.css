@@ -518,7 +518,7 @@ a {
 }
 
 .compact-evidence .mapping-row {
-  grid-template-columns: minmax(78px, 0.72fr) 34px 46px minmax(120px, 1.08fr);
+  grid-template-columns: minmax(78px, 0.72fr) 46px 46px minmax(120px, 1.08fr);
   padding: 7px;
 }
 
@@ -576,6 +576,12 @@ a {
   font-style: normal;
   font-weight: 650;
   line-height: 1.25;
+}
+
+.evidence-method {
+  padding: 7px 8px;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--style-page-bg) 76%, var(--style-card-bg));
 }
 
 .mapping-value {
