@@ -20,25 +20,12 @@
 
       <div class="side-rail">
         <nav class="inspector-tabs" aria-label="inspector sections">
-          <button type="button" :class="{ active: selectedInspectorTab === 'base' }" @click="selectedInspectorTab = 'base'">基础</button>
+          <button type="button" :class="{ active: selectedInspectorTab === 'style' }" @click="selectedInspectorTab = 'style'">风格</button>
           <button type="button" :class="{ active: selectedInspectorTab === 'components' }" @click="selectedInspectorTab = 'components'">组件</button>
         </nav>
 
-        <template v-if="selectedInspectorTab === 'base'">
-          <p class="rail-label">设计系统</p>
-          <nav class="side-tabs workflow-tabs" aria-label="design system scenes">
-            <button
-              v-for="template in templatePages"
-              :key="template.id"
-              type="button"
-              :class="{ active: selectedTemplateId === template.id }"
-              @click="selectTemplate(template.id)"
-            >
-              {{ template.tab }}
-            </button>
-          </nav>
-
-          <p class="rail-label evidence-label">Token</p>
+        <template v-if="selectedInspectorTab === 'style'">
+          <p class="rail-label">Token</p>
           <div class="extraction-card style-evidence-card">
             <strong>{{ selectedStyle.label }} Token 学习证据</strong>
             <p>{{ selectedStyle.evidenceNote }}</p>
@@ -66,6 +53,18 @@
         </template>
 
         <template v-else>
+          <nav class="side-tabs workflow-tabs component-page-tabs" aria-label="component pages">
+            <button
+              v-for="template in templatePages"
+              :key="template.id"
+              type="button"
+              :class="{ active: selectedTemplateId === template.id }"
+              @click="selectTemplate(template.id)"
+            >
+              {{ template.tab }}
+            </button>
+          </nav>
+
           <p class="rail-label">Nodes</p>
           <div class="component-list rail-list">
             <div
@@ -963,7 +962,7 @@ const selectedComponent = ref("NavigationBar");
 const selectedTokenName = ref("");
 const tokensExpanded = ref(false);
 const selectedTemplateId = ref("distribution");
-const selectedInspectorTab = ref("base");
+const selectedInspectorTab = ref("style");
 
 const imagePreviewSrc =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' rx='24' fill='%23f5f5f5'/%3E%3Ccircle cx='92' cy='76' r='44' fill='%23874fff' fill-opacity='.82'/%3E%3Ccircle cx='160' cy='92' r='48' fill='%2300b6ff' fill-opacity='.72'/%3E%3Ccircle cx='224' cy='82' r='38' fill='%23ff7237' fill-opacity='.78'/%3E%3C/svg%3E";
