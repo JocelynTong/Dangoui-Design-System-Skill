@@ -9,6 +9,7 @@
   --accent-soft: #f2f0ff;
   --orange: #fc7e22;
   --shadow: 0 18px 60px rgba(29, 29, 31, 0.12);
+  --mockup-radius: 30px;
 }
 
 * {
@@ -929,7 +930,7 @@ pre {
   gap: 10px;
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--style-text) 12%, transparent);
-  border-radius: var(--style-control-radius);
+  border-radius: var(--mockup-radius);
   background: color-mix(in srgb, var(--style-card-bg) 92%, var(--style-page-bg));
   color: var(--style-text);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
@@ -1365,7 +1366,7 @@ pre {
 
 .theme-czn .template-phone {
   border-color: #121015;
-  border-radius: 30px;
+  border-radius: var(--mockup-radius);
   box-shadow: 0 22px 70px rgba(0, 0, 0, 0.48), 0 0 0 1px rgba(255, 90, 31, 0.26);
 }
 
@@ -1709,7 +1710,7 @@ pre {
 
 .theme-notion .template-phone {
   border-color: #dfddda;
-  border-radius: 30px;
+  border-radius: var(--mockup-radius);
   box-shadow: 0 20px 54px rgba(33, 49, 131, 0.12), 0 0 0 1px rgba(0, 0, 0, 0.04);
 }
 
