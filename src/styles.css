@@ -1165,7 +1165,7 @@ pre {
   min-height: 42px;
   padding: 8px 10px;
   border: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
-  border-radius: var(--style-control-radius);
+  border-radius: calc(var(--mockup-radius) * 0.4);
   background: var(--style-card-bg);
   color: var(--style-text);
   cursor: pointer;
