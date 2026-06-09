@@ -47,6 +47,31 @@
           </nav>
         </template>
 
+        <p class="rail-label evidence-label">Evidence</p>
+        <div class="extraction-card style-evidence-card">
+          <strong>{{ selectedStyle.label }} 学习证据</strong>
+          <p>{{ selectedStyle.evidenceNote }}</p>
+          <div class="mapping-list compact-evidence">
+            <div
+              v-for="signal in selectedStyle.signals"
+              :key="`${selectedStyle.id}-${signal.raw}-${signal.target}`"
+              class="mapping-row"
+              :class="{ primary: signal.target.includes('primary') }"
+            >
+              <span class="raw-signal">
+                <i v-if="isColorSignal(signal.raw)" class="swatch" :style="{ background: signal.raw }"></i>
+                {{ signal.raw }}
+              </span>
+              <span class="frequency">{{ signal.count }}x</span>
+              <span class="percent">{{ signal.percent }}</span>
+              <span class="mapped-token">
+                {{ signal.target }}
+                <em>{{ signal.value }}</em>
+              </span>
+            </div>
+          </div>
+        </div>
+
         <p class="rail-label anchors-label">Nodes</p>
         <div class="component-list rail-list">
           <div
@@ -706,8 +731,8 @@ const stylePresets = [
     icon: "https://www.notion.so/images/favicon.ico",
     source: "DESIGN-notion.md / 组件引用口径",
     hero: "Notion Workspace",
-    notice: "暖白纸面、近黑 Inter 字体、单一可信蓝和多色贴纸被拆成 dangoui token 与 demo-only 视觉控制。",
-    evidenceNote: "频次来自 DESIGN-notion.md 的 components: 对 colors.*、rounded.*、spacing.* 的引用统计；UI chrome 只用中性和蓝色，贴纸多色不进入 primary。",
+    notice: "暖白纸面、近黑 Inter 字体、蓝色 primary action 和多色贴纸被拆成 dangoui token 与 demo-only 视觉控制。",
+    evidenceNote: "频次来自 DESIGN-notion.md 的 components: 对 colors.* 的引用统计；#0075de 出现 3/33 次，占 9.1%，只承接 primary CTA、badge 和 active indicator，不代表整体主题色。",
     sectionTitle: "Paper-Calm Docs",
     tabs: ["文档", "知识库", "团队"],
     cards: [
@@ -1274,6 +1299,10 @@ function missingMeta(name) {
 
 function isMissing(name) {
   return Boolean(missingMeta(name));
+}
+
+function isColorSignal(value) {
+  return /^#[0-9a-f]{3,8}$/i.test(String(value));
 }
 
 function componentDocsUrl(name) {
