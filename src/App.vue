@@ -25,28 +25,25 @@
         </nav>
 
         <template v-if="selectedInspectorTab === 'style'">
-          <p class="rail-label">Token</p>
+          <p class="rail-label">Color Palette</p>
           <div class="extraction-card style-evidence-card">
-            <strong>{{ selectedStyle.label }} Token 学习证据</strong>
+            <strong>{{ selectedStyle.label }} Color Palette</strong>
             <p>{{ selectedStyle.evidenceNote }}</p>
             <p class="evidence-method">次数 = 出现次数；占比 = 出现次数 / 统计总次数。</p>
-            <div class="mapping-list compact-evidence">
+            <div class="palette-grid">
               <div
                 v-for="signal in selectedStyle.signals"
                 :key="`${selectedStyle.id}-${signal.raw}-${signal.target}`"
-                class="mapping-row"
+                class="palette-card"
                 :class="{ primary: signal.target.includes('primary') }"
               >
-                <span class="raw-signal">
-                  <i v-if="isColorSignal(signal.raw)" class="swatch" :style="{ background: signal.raw }"></i>
-                  {{ signal.raw }}
-                </span>
-                <span class="frequency">{{ signal.count }} 次</span>
-                <span class="percent">{{ signal.percent }}</span>
-                <span class="mapped-token">
-                  {{ signal.target }}
-                  <em>{{ signal.value }}</em>
-                </span>
+                <i class="palette-swatch" :style="{ background: signalSwatch(signal) }"></i>
+                <div class="palette-meta">
+                  <strong>{{ signal.raw }}</strong>
+                  <span>{{ signal.count }} 次 · {{ signal.percent }}</span>
+                  <em>{{ signal.target }}</em>
+                  <p>{{ signal.value }}</p>
+                </div>
               </div>
             </div>
           </div>
@@ -1327,6 +1324,15 @@ function isMissing(name) {
 
 function isColorSignal(value) {
   return /^#[0-9a-f]{3,8}$/i.test(String(value));
+}
+
+function signalSwatch(signal) {
+  if (isColorSignal(signal.raw)) return signal.raw;
+  if (String(signal.raw).includes("/")) {
+    return `linear-gradient(135deg, ${String(signal.raw).split("/").map((item) => item.trim()).join(", ")})`;
+  }
+  if (String(signal.raw).includes("palette")) return selectedStyle.value.style.media;
+  return "linear-gradient(135deg, #f6f5f4, #e6e6e6)";
 }
 
 function componentDocsUrl(name) {

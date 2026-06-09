@@ -640,6 +640,77 @@ a {
   word-break: break-word;
 }
 
+.palette-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  min-width: 0;
+}
+
+.palette-card {
+  min-width: 0;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--panel);
+  overflow: hidden;
+}
+
+.palette-card.primary {
+  border-color: color-mix(in srgb, var(--style-accent) 32%, var(--line));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--style-accent) 14%, transparent);
+}
+
+.palette-swatch {
+  display: block;
+  width: 100%;
+  height: 54px;
+  background: var(--panel-soft);
+}
+
+.palette-meta {
+  display: grid;
+  gap: 3px;
+  padding: 7px;
+  min-width: 0;
+}
+
+.palette-meta strong,
+.palette-meta span,
+.palette-meta em,
+.palette-meta p {
+  min-width: 0;
+  margin: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.palette-meta strong {
+  color: var(--text);
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+.palette-meta span {
+  color: var(--style-accent);
+  font-size: 10px;
+  font-weight: 780;
+  line-height: 1.2;
+}
+
+.palette-meta em {
+  color: var(--muted);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.palette-meta p {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.3;
+}
+
 .mapping-value {
   grid-column: 1 / -1;
   color: var(--text);
