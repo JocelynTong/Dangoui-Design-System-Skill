@@ -920,20 +920,30 @@ pre {
   position: sticky;
   top: 0;
   display: grid;
-  gap: 12px;
   min-width: 0;
   overflow: visible;
 }
 
 .context-card {
   display: grid;
-  gap: 10px;
-  padding: 12px;
+  gap: 14px;
+  padding: 14px;
   border: 1px solid color-mix(in srgb, var(--style-text) 12%, transparent);
   border-radius: var(--mockup-radius);
   background: color-mix(in srgb, var(--style-card-bg) 92%, var(--style-page-bg));
   color: var(--style-text);
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.03);
+}
+
+.context-section {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+}
+
+.context-section + .context-section {
+  padding-top: 14px;
+  border-top: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
 }
 
 .context-heading {
@@ -942,6 +952,7 @@ pre {
 }
 
 .context-card > span,
+.context-section > span,
 .context-heading span {
   color: var(--style-muted);
   font-size: 10px;
