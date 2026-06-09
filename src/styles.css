@@ -529,13 +529,17 @@ a {
 .mapping-list {
   display: grid;
   gap: 6px;
+  min-width: 0;
+  max-width: 100%;
 }
 
 .mapping-row {
   display: grid;
-  grid-template-columns: minmax(64px, 0.9fr) 38px 46px minmax(108px, 1.2fr);
+  grid-template-columns: minmax(0, 0.92fr) minmax(36px, auto) minmax(42px, auto) minmax(0, 1.28fr);
   gap: 8px;
   align-items: center;
+  min-width: 0;
+  max-width: 100%;
   padding: 8px;
   border-radius: 7px;
   background: var(--panel-soft);
@@ -551,7 +555,11 @@ a {
 }
 
 .style-evidence-card p {
+  min-width: 0;
+  max-width: 100%;
   margin: 0;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
 .compact-evidence {
@@ -559,7 +567,7 @@ a {
 }
 
 .compact-evidence .mapping-row {
-  grid-template-columns: minmax(86px, 0.7fr) 46px 46px minmax(168px, 1.12fr);
+  grid-template-columns: minmax(0, 0.72fr) minmax(40px, auto) minmax(42px, auto) minmax(0, 1.18fr);
   padding: 7px;
 }
 
@@ -574,7 +582,9 @@ a {
 .mapped-token,
 .mapping-value {
   min-width: 0;
+  max-width: 100%;
   font-size: 11px;
+  overflow-wrap: anywhere;
   word-break: break-word;
 }
 
@@ -598,12 +608,14 @@ a {
   color: var(--style-accent);
   font-weight: 800;
   text-align: center;
+  white-space: normal;
 }
 
 .percent {
   color: var(--text);
   font-weight: 800;
   text-align: right;
+  white-space: normal;
 }
 
 .mapped-token {
