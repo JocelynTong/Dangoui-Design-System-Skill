@@ -57,9 +57,9 @@ a {
 .side-tabs {
   display: grid;
   gap: 6px;
-  padding: 3px;
+  padding: 2px;
   border-radius: 10px;
-  background: color-mix(in srgb, var(--style-accent-soft) 24%, var(--panel-soft));
+  background: transparent;
 }
 
 .inspector-tabs {
@@ -77,8 +77,8 @@ a {
   padding: 0 8px;
   border: 0;
   border-radius: 8px;
-  background: color-mix(in srgb, var(--style-accent-soft) 18%, transparent);
-  color: color-mix(in srgb, var(--style-accent) 58%, var(--muted));
+  background: transparent;
+  color: color-mix(in srgb, var(--style-accent) 68%, var(--muted));
   font-size: 12px;
   font-weight: 820;
   text-align: center;
