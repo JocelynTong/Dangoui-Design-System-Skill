@@ -181,8 +181,8 @@ a {
 }
 
 .component-list.rail-list .component strong {
-  display: grid;
-  gap: 2px;
+  display: block;
+  min-width: 0;
 }
 
 .component-list.rail-list .component.active .node-button {
@@ -222,9 +222,12 @@ a {
 .node-button strong {
   font-size: 11px;
   line-height: 1.25;
+  white-space: normal;
 }
 
 .node-button span {
+  display: block;
+  margin-top: 2px;
   color: var(--muted);
   font-size: 10px;
   font-weight: 700;
