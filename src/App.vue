@@ -747,7 +747,7 @@ const stylePresets = [
   {
     id: "spotify",
     label: "Spotify",
-    icon: "/assets/style-icons/spotify.svg",
+    icon: "/assets/style-icons/spotify.svg?v=square",
     source: "DTCG 测试资产 / 108 次",
     hero: "Daily Mix",
     notice: "深色媒体界面、强品牌绿和更厚重卡片被填入同一套 token value。",
