@@ -544,7 +544,10 @@ a {
 .style-evidence-card {
   display: grid;
   gap: 8px;
-  padding: 9px;
+  margin-bottom: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
 }
 
 .style-evidence-card p {
