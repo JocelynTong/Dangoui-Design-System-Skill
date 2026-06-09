@@ -576,7 +576,7 @@ const stylePresets = [
   {
     id: "czn",
     label: "CZN",
-    icon: "https://czn.qq.com/favicon.ico",
+    icon: "/assets/style-icons/czn.svg",
     source: "czn.qq.com / 待截图校准",
     hero: "Combat Zone",
     notice: "沉浸式游戏工具风格：橙色主行动、黑紫角色页、白灰资讯区和 HUD 式斜切边界。",
@@ -617,7 +617,7 @@ const stylePresets = [
   {
     id: "apple",
     label: "Apple",
-    icon: "https://www.apple.com/apple-touch-icon.png",
+    icon: "/assets/style-icons/apple.svg",
     source: "组件引用口径 / 46 次",
     hero: "Apple Gallery",
     notice: "按 DESIGN-apple.md 的组件颜色引用统计，把行动蓝、近黑文字、白/羊皮纸表面写入 dangoui token value。",
@@ -660,7 +660,7 @@ const stylePresets = [
   {
     id: "figma",
     label: "Figma",
-    icon: "https://static.figma.com/app/icon/1/favicon.ico",
+    icon: "/assets/style-icons/figma.svg",
     source: "官网/品牌书口径",
     hero: "Design Systems",
     notice: "Figma 官网的白底黑字、清晰界面边界和多色协作资产，被拆成 dangoui token 与 demo 视觉控制两层。",
@@ -703,7 +703,7 @@ const stylePresets = [
   {
     id: "notion",
     label: "Notion",
-    icon: "https://www.notion.so/images/favicon.ico",
+    icon: "/assets/style-icons/notion.svg",
     source: "DESIGN-notion.md / 组件引用口径",
     hero: "Notion Workspace",
     notice: "暖白纸面、近黑 Inter 字体、单一可信蓝和多色贴纸被拆成 dangoui token 与 demo-only 视觉控制。",
@@ -747,7 +747,7 @@ const stylePresets = [
   {
     id: "spotify",
     label: "Spotify",
-    icon: "https://open.spotify.com/favicon.ico",
+    icon: "/assets/style-icons/spotify.svg",
     source: "DTCG 测试资产 / 108 次",
     hero: "Daily Mix",
     notice: "深色媒体界面、强品牌绿和更厚重卡片被填入同一套 token value。",
