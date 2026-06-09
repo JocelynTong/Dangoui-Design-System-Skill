@@ -30,17 +30,19 @@
             <strong>{{ selectedStyle.label }} Color Palette</strong>
             <p>{{ selectedStyle.evidenceNote }}</p>
             <p class="evidence-method">次数 = 出现次数；占比 = 出现次数 / 统计总次数。</p>
-            <div class="palette-grid">
+            <div class="palette-list">
               <div
                 v-for="signal in selectedStyle.signals"
                 :key="`${selectedStyle.id}-${signal.raw}-${signal.target}`"
-                class="palette-card"
+                class="palette-row"
                 :class="{ primary: signal.target.includes('primary') }"
               >
                 <i class="palette-swatch" :style="{ background: signalSwatch(signal) }"></i>
                 <div class="palette-meta">
-                  <strong>{{ signal.raw }}</strong>
-                  <span>{{ signal.count }} 次 · {{ signal.percent }}</span>
+                  <div>
+                    <strong>{{ signal.raw }}</strong>
+                    <span>{{ signal.count }} 次 · {{ signal.percent }}</span>
+                  </div>
                   <em>{{ signal.target }}</em>
                   <p>{{ signal.value }}</p>
                 </div>
