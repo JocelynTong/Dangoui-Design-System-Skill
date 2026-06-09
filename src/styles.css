@@ -98,9 +98,10 @@ a {
   height: 16px;
   display: block;
   flex: 0 0 auto;
-  object-fit: cover;
+  object-fit: contain;
   border: 0;
-  border-radius: 0;
+  border-radius: 0 !important;
+  clip-path: none;
 }
 
 .style-button span {
