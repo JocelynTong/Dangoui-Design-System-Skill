@@ -58,7 +58,6 @@ a {
   display: grid;
   gap: 6px;
   padding: 3px;
-  border: 1px solid var(--line);
   border-radius: 10px;
   background: color-mix(in srgb, var(--panel-soft) 82%, var(--panel));
 }
@@ -76,7 +75,7 @@ a {
 .side-tabs button {
   min-height: 30px;
   padding: 0 8px;
-  border: 1px solid transparent;
+  border: 0;
   border-radius: 8px;
   background: transparent;
   color: var(--muted);
@@ -84,7 +83,7 @@ a {
   font-weight: 820;
   text-align: center;
   cursor: pointer;
-  transition: background 140ms ease, border-color 140ms ease, color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
+  transition: background 140ms ease, color 140ms ease, box-shadow 140ms ease, transform 140ms ease;
 }
 
 .inspector-tabs button:hover,
@@ -102,8 +101,7 @@ a {
 .side-tabs button.active {
   background: color-mix(in srgb, var(--style-accent-soft) 76%, var(--panel));
   color: var(--style-accent);
-  border-color: color-mix(in srgb, var(--style-accent) 26%, var(--line));
-  box-shadow: 0 1px 2px rgba(17, 17, 20, 0.08), 0 0 0 1px color-mix(in srgb, var(--style-accent) 12%, transparent) inset;
+  box-shadow: 0 1px 2px rgba(17, 17, 20, 0.06);
 }
 
 .style-rail,
