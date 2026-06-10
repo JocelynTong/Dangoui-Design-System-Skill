@@ -1506,6 +1506,34 @@ pre {
   min-width: 112px;
 }
 
+.evidence-scale-panel .spacing-scale-item,
+.evidence-scale-panel .radius-scale-card {
+  width: 128px;
+  min-width: 128px;
+}
+
+.evidence-scale-item small,
+.evidence-scale-item b,
+.evidence-scale-item p {
+  margin: 0;
+  font-size: 10px;
+  line-height: 1.35;
+  overflow-wrap: anywhere;
+}
+
+.evidence-scale-item small {
+  color: var(--style-muted);
+}
+
+.evidence-scale-item b {
+  color: var(--style-accent);
+  font-weight: 760;
+}
+
+.evidence-scale-item p {
+  color: var(--style-muted);
+}
+
 .workspace-demo-tabs {
   display: grid;
   gap: 7px;

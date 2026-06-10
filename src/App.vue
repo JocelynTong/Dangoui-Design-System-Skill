@@ -160,53 +160,10 @@
                       <p>{{ currentStyleCategoryDescription }}</p>
                     </section>
 
-                    <section v-if="showStylePreviewCard" class="style-mockup-preview" aria-label="style preview">
-                      <div class="style-preview-heading">
-                        <span>{{ selectedStyleCategory?.label }}</span>
-                        <strong>{{ selectedStyleCategory?.zh }}</strong>
-                      </div>
-
-                      <div v-if="selectedStyleCategoryId === 'spacing'" class="recipe-scale-panel mockup-scale-panel spacing-scale" aria-label="spacing scale">
-                        <strong>Spacing scale</strong>
-                        <small>色块宽度 = spacing value</small>
-                        <div class="spacing-scale-track">
-                          <div
-                            v-for="item in spacingScaleRows"
-                            :key="`page-spacing-${item.title}`"
-                            class="spacing-scale-item"
-                            :style="{ '--scale-width': `${item.width}px` }"
-                          >
-                            <i></i>
-                            <span>{{ item.title }} · {{ item.label }}</span>
-                            <em>{{ item.stat }}</em>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div v-else-if="selectedStyleCategoryId === 'radius'" class="recipe-scale-panel mockup-scale-panel radius-scale" aria-label="radius scale">
-                        <strong>Border radius scale</strong>
-                        <small>形状圆角 = radius value</small>
-                        <div class="radius-scale-track">
-                          <div
-                            v-for="item in radiusScaleRows"
-                            :key="`page-radius-${item.title}`"
-                            class="radius-scale-card"
-                            :style="{ '--recipe-radius': item.radius }"
-                          >
-                            <i></i>
-                            <span>{{ item.label }}</span>
-                            <em>{{ item.stat }}</em>
-                          </div>
-                        </div>
-                      </div>
-
-                      <p v-else>{{ selectedStyleCategory?.description }}</p>
-                    </section>
-
                     <section class="style-evidence-mockup-card" aria-label="style evidence">
                       <div class="style-preview-heading">
-                        <span>{{ selectedStyleCategoryId === 'typography' ? 'Specimen' : 'Evidence' }}</span>
-                        <strong>{{ selectedStyleCategoryId === 'typography' ? '展示与频次映射' : '频次与映射' }}</strong>
+                        <span>{{ styleEvidenceHeading.eyebrow }}</span>
+                        <strong>{{ styleEvidenceHeading.title }}</strong>
                       </div>
                       <div v-if="selectedStyleCategoryId === 'color'" class="palette-list">
                         <div
@@ -237,6 +194,44 @@
                           <em>{{ item.target }}</em>
                           <small>{{ item.value }}</small>
                           <p>{{ item.note }}</p>
+                        </div>
+                      </div>
+                      <div v-else-if="selectedStyleCategoryId === 'spacing' && spacingScaleRows.length" class="recipe-scale-panel mockup-scale-panel evidence-scale-panel spacing-scale" aria-label="spacing evidence">
+                        <strong>Spacing scale</strong>
+                        <small>色块宽度 = spacing value；下方保留次数、映射和值。</small>
+                        <div class="spacing-scale-track">
+                          <div
+                            v-for="item in spacingScaleRows"
+                            :key="`page-spacing-evidence-${item.title}`"
+                            class="spacing-scale-item evidence-scale-item"
+                            :style="{ '--scale-width': `${item.width}px` }"
+                          >
+                            <i></i>
+                            <span>{{ item.title }} · {{ item.label }}</span>
+                            <em>{{ item.stat }}</em>
+                            <small>{{ item.target }}</small>
+                            <b>{{ item.value }}</b>
+                            <p>{{ item.note }}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-else-if="selectedStyleCategoryId === 'radius' && radiusScaleRows.length" class="recipe-scale-panel mockup-scale-panel evidence-scale-panel radius-scale" aria-label="radius evidence">
+                        <strong>Border radius scale</strong>
+                        <small>形状圆角 = radius value；下方保留次数、映射和值。</small>
+                        <div class="radius-scale-track">
+                          <div
+                            v-for="item in radiusScaleRows"
+                            :key="`page-radius-evidence-${item.title}`"
+                            class="radius-scale-card evidence-scale-item"
+                            :style="{ '--recipe-radius': item.radius }"
+                          >
+                            <i></i>
+                            <span>{{ item.label }}</span>
+                            <em>{{ item.stat }}</em>
+                            <small>{{ item.target }}</small>
+                            <b>{{ item.value }}</b>
+                            <p>{{ item.note }}</p>
+                          </div>
                         </div>
                       </div>
                       <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
@@ -1511,7 +1506,12 @@ const selectedStyleCategory = computed(() =>
 const currentStyleCategoryDescription = computed(() =>
   selectedStyleCategoryId.value === "color" ? selectedStyle.value.evidenceNote : selectedStyleCategory.value?.description || "",
 );
-const showStylePreviewCard = computed(() => !["color", "typography"].includes(selectedStyleCategoryId.value));
+const styleEvidenceHeading = computed(() => {
+  if (selectedStyleCategoryId.value === "typography") return { eyebrow: "Specimen", title: "展示与频次映射" };
+  if (selectedStyleCategoryId.value === "spacing") return { eyebrow: "Scale", title: "间距与频次映射" };
+  if (selectedStyleCategoryId.value === "radius") return { eyebrow: "Scale", title: "圆角与频次映射" };
+  return { eyebrow: "Evidence", title: "频次与映射" };
+});
 const recipeSwatchClass = computed(() => `recipe-swatch-${selectedStyleCategoryId.value}`);
 const selectedStyleRecipeRows = computed(() => {
   const recipe = styleRecipeDetails[selectedStyle.value.id];
@@ -1531,6 +1531,8 @@ const spacingScaleRows = computed(() =>
       size: Math.min(size, 28),
       width: Math.max(8, Math.min(size * 4, 96)),
       stat: item.stat,
+      target: item.target,
+      value: item.value,
       note: item.note,
     };
   }),
@@ -1544,6 +1546,8 @@ const radiusScaleRows = computed(() =>
       label: recipeSwatchText(item),
       radius: isPill ? "999px" : `${size}px`,
       stat: item.stat,
+      target: item.target,
+      value: item.value,
       note: item.note,
     };
   }),
