@@ -30,7 +30,7 @@
               v-for="category in styleCategories"
               :key="category.id"
               class="token-category"
-              :class="{ active: selectedStyleCategoryId === category.id }"
+              :class="{ active: selectedWorkspaceMode === 'style' && selectedStyleCategoryId === category.id }"
             >
               <button class="node-button token-category-button" type="button" @click="selectStyleCategory(category.id)">
                 <strong>{{ category.label }} <em>{{ category.zh }}</em><span>{{ category.meta }}</span></strong>
@@ -160,32 +160,13 @@
                       <p>{{ currentStyleCategoryDescription }}</p>
                     </section>
 
-                    <section class="style-mockup-preview" aria-label="style preview">
+                    <section v-if="showStylePreviewCard" class="style-mockup-preview" aria-label="style preview">
                       <div class="style-preview-heading">
                         <span>{{ selectedStyleCategory?.label }}</span>
                         <strong>{{ selectedStyleCategory?.zh }}</strong>
                       </div>
 
-                      <div v-if="selectedStyleCategoryId === 'color'" class="mockup-color-strip">
-                        <i
-                          v-for="signal in selectedStyle.signals"
-                          :key="`${selectedStyle.id}-page-${signal.raw}-${signal.target}`"
-                          :style="{ background: signalSwatch(signal) }"
-                        ></i>
-                      </div>
-
-                      <div v-else-if="selectedStyleCategoryId === 'typography'" class="mockup-type-specimens">
-                        <div
-                          v-for="item in selectedStyleRecipeRows"
-                          :key="`page-type-${item.title}`"
-                          :style="recipeSwatchStyle(item)"
-                        >
-                          <span>{{ item.title }}</span>
-                          <strong>Design system rhythm</strong>
-                        </div>
-                      </div>
-
-                      <div v-else-if="selectedStyleCategoryId === 'spacing'" class="recipe-scale-panel mockup-scale-panel spacing-scale" aria-label="spacing scale">
+                      <div v-if="selectedStyleCategoryId === 'spacing'" class="recipe-scale-panel mockup-scale-panel spacing-scale" aria-label="spacing scale">
                         <strong>Spacing scale</strong>
                         <small>色块宽度 = spacing value</small>
                         <div class="spacing-scale-track">
@@ -224,8 +205,8 @@
 
                     <section class="style-evidence-mockup-card" aria-label="style evidence">
                       <div class="style-preview-heading">
-                        <span>Evidence</span>
-                        <strong>频次与映射</strong>
+                        <span>{{ selectedStyleCategoryId === 'typography' ? 'Specimen' : 'Evidence' }}</span>
+                        <strong>{{ selectedStyleCategoryId === 'typography' ? '展示与频次映射' : '频次与映射' }}</strong>
                       </div>
                       <div v-if="selectedStyleCategoryId === 'color'" class="palette-list">
                         <div
@@ -1069,7 +1050,7 @@ const tokensExpanded = ref(false);
 const selectedTemplateId = ref("czn-home");
 const selectedInspectorTab = ref("style");
 const selectedWorkspaceMode = ref("components");
-const selectedStyleCategoryId = ref("color");
+const selectedStyleCategoryId = ref("");
 
 const styleCategories = [
   {
@@ -1515,8 +1496,9 @@ const selectedStyleCategory = computed(() =>
   styleCategories.find((category) => category.id === selectedStyleCategoryId.value),
 );
 const currentStyleCategoryDescription = computed(() =>
-  selectedStyleCategoryId.value === "color" ? selectedStyle.value.evidenceNote : selectedStyleCategory.value?.description,
+  selectedStyleCategoryId.value === "color" ? selectedStyle.value.evidenceNote : selectedStyleCategory.value?.description || "",
 );
+const showStylePreviewCard = computed(() => !["color", "typography"].includes(selectedStyleCategoryId.value));
 const recipeSwatchClass = computed(() => `recipe-swatch-${selectedStyleCategoryId.value}`);
 const selectedStyleRecipeRows = computed(() => {
   const recipe = styleRecipeDetails[selectedStyle.value.id];
@@ -1768,6 +1750,7 @@ function selectStyle(styleId) {
   selectedStyleId.value = styleId;
   selectedInspectorTab.value = "style";
   selectedWorkspaceMode.value = "components";
+  selectedStyleCategoryId.value = "";
   selectedTemplateId.value = demoPagesByStyle[styleId]?.[0]?.id || "distribution";
   nextTick(() => {
     const first = pageInstances.value[0];
@@ -1777,7 +1760,6 @@ function selectStyle(styleId) {
 
 function showStyleMenu() {
   selectedInspectorTab.value = "style";
-  selectedWorkspaceMode.value = "style";
 }
 
 function showComponentMenu() {
