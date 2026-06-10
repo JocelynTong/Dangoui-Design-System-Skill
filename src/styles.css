@@ -712,15 +712,15 @@ a {
   gap: 8px;
   align-items: stretch;
   min-width: 0;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--panel);
+  padding: 8px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--style-text) 8%, transparent);
+  background: transparent;
   overflow: hidden;
 }
 
 .palette-row.primary {
-  border-color: color-mix(in srgb, var(--style-accent) 32%, var(--line));
-  box-shadow: 0 0 0 1px color-mix(in srgb, var(--style-accent) 14%, transparent);
+  border-color: color-mix(in srgb, var(--style-accent) 18%, transparent);
+  box-shadow: none;
 }
 
 .palette-swatch {
@@ -1423,10 +1423,7 @@ pre {
   display: grid;
   gap: 10px;
   min-width: 0;
-  padding: 12px;
-  border-radius: var(--style-card-radius);
-  background: color-mix(in srgb, var(--style-card-bg) 94%, var(--style-page-bg));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 8%, transparent);
+  padding: 4px 0 0;
 }
 
 .mockup-color-strip {
@@ -1453,10 +1450,8 @@ pre {
   display: grid;
   gap: 4px;
   min-width: 0;
-  padding: 10px;
-  border-radius: var(--style-card-radius);
-  background: var(--style-card-bg);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 8%, transparent);
+  padding: 10px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--style-text) 8%, transparent);
 }
 
 .mockup-type-specimens span {
@@ -1496,8 +1491,13 @@ pre {
 }
 
 .mockup-scale-panel {
-  background: var(--style-card-bg);
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 8%, transparent);
+  background: transparent;
+  box-shadow: none;
+}
+
+.style-evidence-mockup-card .recipe-scale-panel {
+  padding: 0;
+  border-radius: 0;
 }
 
 .mockup-scale-panel .spacing-scale-item,
@@ -1529,10 +1529,8 @@ pre {
   grid-template-columns: auto minmax(0, 1fr);
   align-items: center;
   justify-items: stretch;
-  padding: 10px;
-  border-radius: var(--style-card-radius);
-  background: color-mix(in srgb, var(--style-card-bg) 94%, var(--style-page-bg));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 8%, transparent);
+  padding: 10px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--style-text) 8%, transparent);
 }
 
 .evidence-scale-item i {
