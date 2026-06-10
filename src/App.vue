@@ -226,6 +226,19 @@
                           </div>
                         </div>
                       </div>
+                      <div v-else-if="selectedStyleCategoryId === 'typography' && selectedStyleRecipeRows.length" class="mockup-type-specimens type-evidence-specimens">
+                        <div
+                          v-for="item in selectedStyleRecipeRows"
+                          :key="`page-type-evidence-${item.title}`"
+                          :style="recipeSwatchStyle(item)"
+                        >
+                          <span>{{ item.title }} · {{ item.stat }}</span>
+                          <strong>Design system rhythm</strong>
+                          <em>{{ item.target }}</em>
+                          <small>{{ item.value }}</small>
+                          <p>{{ item.note }}</p>
+                        </div>
+                      </div>
                       <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
                         <div
                           v-for="item in selectedStyleRecipeRows"
