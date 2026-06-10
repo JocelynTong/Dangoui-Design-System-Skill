@@ -199,7 +199,7 @@
                       <div v-else-if="selectedStyleCategoryId === 'spacing' && spacingScaleRows.length" class="recipe-scale-panel mockup-scale-panel evidence-scale-panel spacing-scale" aria-label="spacing evidence">
                         <strong>Spacing scale</strong>
                         <small>色块宽度 = spacing value；下方保留次数、映射和值。</small>
-                        <div class="spacing-scale-track">
+                        <div class="spacing-scale-track evidence-scale-list">
                           <div
                             v-for="item in spacingScaleRows"
                             :key="`page-spacing-evidence-${item.title}`"
@@ -218,7 +218,7 @@
                       <div v-else-if="selectedStyleCategoryId === 'radius' && radiusScaleRows.length" class="recipe-scale-panel mockup-scale-panel evidence-scale-panel radius-scale" aria-label="radius evidence">
                         <strong>Border radius scale</strong>
                         <small>形状圆角 = radius value；下方保留次数、映射和值。</small>
-                        <div class="radius-scale-track">
+                        <div class="radius-scale-track evidence-scale-list">
                           <div
                             v-for="item in radiusScaleRows"
                             :key="`page-radius-evidence-${item.title}`"
