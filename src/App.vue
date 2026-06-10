@@ -26,14 +26,19 @@
 
         <template v-if="selectedInspectorTab === 'style'">
           <div class="token-category-list rail-list" aria-label="token categories">
-            <div class="token-category active">
-              <button class="node-button token-category-button" type="button">
-                <strong>Color <em>颜色</em><span>dangoui token</span></strong>
+            <div
+              v-for="category in styleCategories"
+              :key="category.id"
+              class="token-category"
+              :class="{ active: selectedStyleCategoryId === category.id }"
+            >
+              <button class="node-button token-category-button" type="button" @click="selectedStyleCategoryId = category.id">
+                <strong>{{ category.label }} <em>{{ category.zh }}</em><span>{{ category.meta }}</span></strong>
               </button>
-              <div class="token-category-detail">
+              <div v-if="selectedStyleCategoryId === category.id" class="token-category-detail">
                 <div class="extraction-card style-evidence-card">
-                  <p>{{ selectedStyle.evidenceNote }}</p>
-                  <div class="palette-list">
+                  <p>{{ category.id === 'color' ? selectedStyle.evidenceNote : category.description }}</p>
+                  <div v-if="category.id === 'color'" class="palette-list">
                     <div
                       v-for="signal in selectedStyle.signals"
                       :key="`${selectedStyle.id}-${signal.raw}-${signal.target}`"
@@ -50,6 +55,11 @@
                         <p>{{ signal.value }}</p>
                       </div>
                     </div>
+                  </div>
+                  <div v-else class="recipe-placeholder">
+                    <span>{{ category.status }}</span>
+                    <strong>{{ category.nextStep }}</strong>
+                    <p>{{ category.scope }}</p>
                   </div>
                 </div>
               </div>
@@ -962,6 +972,96 @@ const selectedTokenName = ref("");
 const tokensExpanded = ref(false);
 const selectedTemplateId = ref("distribution");
 const selectedInspectorTab = ref("style");
+const selectedStyleCategoryId = ref("color");
+
+const styleCategories = [
+  {
+    id: "color",
+    label: "Color",
+    zh: "颜色",
+    meta: "dangoui token",
+  },
+  {
+    id: "typography",
+    label: "Typography",
+    zh: "字体",
+    meta: "recipe",
+    description: "提取字体族、字号层级、字重、行高和标题/正文/辅助文字的使用节奏。",
+    status: "待提取",
+    nextStep: "先补 display / title / body / caption 四级文字样式。",
+    scope: "保留 dangoui 组件结构，优先映射到文本 token；品牌字体气质只作为风格配方说明。",
+  },
+  {
+    id: "icon",
+    label: "Icon",
+    zh: "图标",
+    meta: "recipe",
+    description: "记录图标线宽、填充方式、圆角、尺寸和图标在按钮/导航/状态中的角色。",
+    status: "待提取",
+    nextStep: "先判断参考站偏线性、填充、品牌符号还是系统图标。",
+    scope: "不新造 icon name；缺失图标只记录为 demo-only 或 ask-user。",
+  },
+  {
+    id: "divider",
+    label: "Divider",
+    zh: "分割线",
+    meta: "token",
+    description: "提取 hairline、卡片边界、列表分割、模块分区的颜色、透明度和粗细。",
+    status: "待提取",
+    nextStep: "先补 border / divider / hairline 三类证据。",
+    scope: "优先映射到 dangoui border token；特殊装饰线保留为 style-only。",
+  },
+  {
+    id: "layout",
+    label: "Layout",
+    zh: "布局",
+    meta: "recipe",
+    description: "记录页面宽度、单双列关系、内容密度、首屏比例和信息分组方式。",
+    status: "待提取",
+    nextStep: "先补页面节奏：顶部、主体、卡片流、底部模块的结构规则。",
+    scope: "布局是风格配方，不伪装成 dangoui token；落地时由模板和组件组合承接。",
+  },
+  {
+    id: "spacing",
+    label: "Spacing",
+    zh: "间距",
+    meta: "token",
+    description: "提取模块外边距、卡片内边距、控件间距、列表行距和栅格间距。",
+    status: "待提取",
+    nextStep: "优先统计 4 / 8 / 12 / 16 / 20 / 24 等高频 spacing。",
+    scope: "可匹配 primitives 则 mapped；只能近似表达则 fallback。",
+  },
+  {
+    id: "radius",
+    label: "Radius",
+    zh: "圆角",
+    meta: "token",
+    description: "提取卡片、按钮、图片、输入框、标签和容器的圆角比例。",
+    status: "待提取",
+    nextStep: "先补 card / control / media / tag 四类圆角。",
+    scope: "准确匹配 2 / 4 / 8 / 12 / 16 等 primitives；超大 pill 记录为控制形态。",
+  },
+  {
+    id: "shadow",
+    label: "Shadow",
+    zh: "阴影",
+    meta: "token",
+    description: "提取卡片层级、悬浮、媒体容器、弹层和暗色发光效果。",
+    status: "待提取",
+    nextStep: "先区分真实 elevation、边框替代和品牌氛围光。",
+    scope: "dangoui 缺少精确 shadow 时标记 style-only，不新造正式 --du-*。",
+  },
+  {
+    id: "motion",
+    label: "Motion",
+    zh: "动效",
+    meta: "recipe",
+    description: "记录 hover、press、展开、切换、滚动和反馈的速度、缓动和打扰程度。",
+    status: "待提取",
+    nextStep: "先补点击反馈、tab 切换、卡片 hover 三类交互节奏。",
+    scope: "当前 demo 只做轻量交互验证；复杂动效进入 ReviewQueue。",
+  },
+];
 
 const imagePreviewSrc =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' rx='24' fill='%23f5f5f5'/%3E%3Ccircle cx='92' cy='76' r='44' fill='%23874fff' fill-opacity='.82'/%3E%3Ccircle cx='160' cy='92' r='48' fill='%2300b6ff' fill-opacity='.72'/%3E%3Ccircle cx='224' cy='82' r='38' fill='%23ff7237' fill-opacity='.78'/%3E%3C/svg%3E";

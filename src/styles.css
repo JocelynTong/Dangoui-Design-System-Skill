@@ -310,7 +310,7 @@ a {
 }
 
 .token-category-button {
-  cursor: default;
+  cursor: pointer;
 }
 
 .token-category-detail {
@@ -676,6 +676,34 @@ a {
   display: grid;
   gap: 6px;
   min-width: 0;
+}
+
+.recipe-placeholder {
+  display: grid;
+  gap: 5px;
+  min-width: 0;
+  padding: 8px;
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--panel-soft) 78%, var(--style-accent-soft));
+}
+
+.recipe-placeholder span {
+  color: var(--style-accent);
+  font-size: 10px;
+  font-weight: 820;
+  line-height: 1.2;
+}
+
+.recipe-placeholder strong {
+  color: var(--text);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.recipe-placeholder p {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.45;
 }
 
 .palette-row {
