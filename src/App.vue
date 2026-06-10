@@ -57,14 +57,27 @@
                     </div>
                   </div>
                   <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
+                    <div v-if="selectedStyleCategoryId === 'spacing'" class="spacing-scale" aria-label="spacing scale">
+                      <div
+                        v-for="item in spacingScaleRows"
+                        :key="item.title"
+                        class="spacing-scale-row"
+                        :style="{ '--recipe-gap': `${item.size}px` }"
+                      >
+                        <span>{{ item.title }}</span>
+                        <div>
+                          <i></i>
+                          <i></i>
+                        </div>
+                        <strong>{{ item.label }}</strong>
+                      </div>
+                    </div>
                     <div
                       v-for="item in selectedStyleRecipeRows"
                       :key="item.title"
                       class="palette-row"
-                      :class="{ 'spacing-row': selectedStyleCategoryId === 'spacing' }"
                     >
                       <i
-                        v-if="selectedStyleCategoryId !== 'spacing'"
                         class="palette-swatch recipe-swatch"
                         :class="recipeSwatchClass"
                         :style="recipeSwatchStyle(item)"
@@ -78,15 +91,6 @@
                         </div>
                         <em>{{ item.target }}</em>
                         <span class="recipe-value">{{ item.value }}</span>
-                        <div
-                          v-if="selectedStyleCategoryId === 'spacing'"
-                          class="spacing-preview"
-                          :style="recipeSwatchStyle(item)"
-                        >
-                          <i></i>
-                          <span>{{ recipeSwatchText(item) }}</span>
-                          <i></i>
-                        </div>
                         <p>{{ item.note }}</p>
                       </div>
                     </div>
@@ -1462,6 +1466,16 @@ const selectedStyleRecipeRows = computed(() => {
     target: item.target || selectedStyleCategory.value?.meta || "recipe",
   }));
 });
+const spacingScaleRows = computed(() =>
+  selectedStyleRecipeRows.value.map((item) => {
+    const size = firstNumber(item.value, 8);
+    return {
+      title: item.title,
+      label: recipeSwatchText(item),
+      size: Math.min(size, 28),
+    };
+  }),
+);
 const selectedStyleTokenMap = computed(() =>
   Object.fromEntries(selectedStyle.value.tokens.map((token) => [token.name, token.value])),
 );
