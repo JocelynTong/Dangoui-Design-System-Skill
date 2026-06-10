@@ -1073,12 +1073,12 @@ const componentChineseNames = {
 };
 
 const catalog = ref({ source: {}, tokens: [], components: [], missingComponents: [] });
-const selectedInstanceId = ref("node-distribution-navigation-bar");
+const selectedInstanceId = ref("node-czn-home-navigation-bar");
 const selectedComponent = ref("NavigationBar");
 const selectedTokenName = ref("");
 const tokensExpanded = ref(false);
-const selectedTemplateId = ref("distribution");
-const selectedInspectorTab = ref("style");
+const selectedTemplateId = ref("czn-home");
+const selectedInspectorTab = ref("components");
 const selectedStyleCategoryId = ref("color");
 
 const styleCategories = [
@@ -1774,10 +1774,8 @@ function selectTemplate(templateId) {
 
 function selectStyle(styleId) {
   selectedStyleId.value = styleId;
-  const pages = [...templatePages, ...(demoPagesByStyle[styleId] || [])];
-  if (!pages.some((template) => template.id === selectedTemplateId.value)) {
-    selectedTemplateId.value = "distribution";
-  }
+  selectedInspectorTab.value = "components";
+  selectedTemplateId.value = demoPagesByStyle[styleId]?.[0]?.id || "distribution";
   nextTick(() => {
     const first = pageInstances.value[0];
     if (first) selectInstance(first.id);
