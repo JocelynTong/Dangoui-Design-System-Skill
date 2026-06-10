@@ -735,6 +735,18 @@ a {
   overflow-wrap: anywhere;
 }
 
+.recipe-row small {
+  width: max-content;
+  max-width: 100%;
+  padding: 2px 5px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--style-accent-soft) 58%, var(--panel-soft));
+  color: var(--style-accent);
+  font-size: 10px;
+  font-weight: 720;
+  line-height: 1.2;
+}
+
 .recipe-row p {
   color: var(--muted);
   font-size: 10px;

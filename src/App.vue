@@ -60,6 +60,7 @@
                     <div v-for="item in selectedStyleRecipeRows" :key="item.title" class="recipe-row">
                       <strong>{{ item.title }}</strong>
                       <span>{{ item.value }}</span>
+                      <small>{{ item.stat }}</small>
                       <p>{{ item.note }}</p>
                     </div>
                   </div>
@@ -1158,6 +1159,12 @@ const styleRecipeDetails = {
   },
 };
 
+const recipeStatsByCategory = {
+  typography: ["4 次 · 40%", "4 次 · 40%", "2 次 · 20%"],
+  spacing: ["5 次 · 45%", "3 次 · 27%", "3 次 · 27%"],
+  radius: ["4 次 · 40%", "4 次 · 40%", "2 次 · 20%"],
+};
+
 const imagePreviewSrc =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' rx='24' fill='%23f5f5f5'/%3E%3Ccircle cx='92' cy='76' r='44' fill='%23874fff' fill-opacity='.82'/%3E%3Ccircle cx='160' cy='92' r='48' fill='%2300b6ff' fill-opacity='.72'/%3E%3Ccircle cx='224' cy='82' r='38' fill='%23ff7237' fill-opacity='.78'/%3E%3C/svg%3E";
 const selectOptions = [
@@ -1417,7 +1424,11 @@ const uniqueComponentCount = computed(() => new Set(pageInstances.value.map((ite
 const selectedStyle = computed(() => stylePresets.find((preset) => preset.id === selectedStyleId.value) || stylePresets[0]);
 const selectedStyleRecipeRows = computed(() => {
   const recipe = styleRecipeDetails[selectedStyle.value.id];
-  return recipe?.[selectedStyleCategoryId.value] || [];
+  const stats = recipeStatsByCategory[selectedStyleCategoryId.value] || [];
+  return (recipe?.[selectedStyleCategoryId.value] || []).map((item, index) => ({
+    ...item,
+    stat: item.stat || stats[index] || "待统计",
+  }));
 });
 const selectedStyleTokenMap = computed(() =>
   Object.fromEntries(selectedStyle.value.tokens.map((token) => [token.name, token.value])),
