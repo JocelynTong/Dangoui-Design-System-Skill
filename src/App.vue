@@ -35,58 +35,6 @@
               <button class="node-button token-category-button" type="button" @click="selectedStyleCategoryId = category.id">
                 <strong>{{ category.label }} <em>{{ category.zh }}</em><span>{{ category.meta }}</span></strong>
               </button>
-              <div v-if="selectedStyleCategoryId === category.id" class="token-category-detail">
-                <div class="extraction-card style-evidence-card">
-                  <p>{{ category.id === 'color' ? selectedStyle.evidenceNote : category.description }}</p>
-                  <div v-if="category.id === 'color'" class="palette-list">
-                    <div
-                      v-for="signal in selectedStyle.signals"
-                      :key="`${selectedStyle.id}-${signal.raw}-${signal.target}`"
-                      class="palette-row"
-                      :class="{ primary: signal.target.includes('primary') }"
-                    >
-                      <i class="palette-swatch" :style="{ background: signalSwatch(signal) }"></i>
-                      <div class="palette-meta">
-                        <div>
-                          <strong>{{ signal.raw }}</strong>
-                          <span>{{ signal.count }} 次 · {{ signal.percent }}</span>
-                        </div>
-                        <em>{{ signal.target }}</em>
-                        <p>{{ signal.value }}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
-                    <div
-                      v-for="item in selectedStyleRecipeRows"
-                      :key="item.title"
-                      class="palette-row"
-                    >
-                      <i
-                        class="palette-swatch recipe-swatch"
-                        :class="recipeSwatchClass"
-                        :style="recipeSwatchStyle(item)"
-                      >
-                        <span>{{ recipeSwatchText(item) }}</span>
-                      </i>
-                      <div class="palette-meta">
-                        <div>
-                          <strong>{{ item.title }}</strong>
-                          <span>{{ item.stat }}</span>
-                        </div>
-                        <em>{{ item.target }}</em>
-                        <span class="recipe-value">{{ item.value }}</span>
-                        <p>{{ item.note }}</p>
-                      </div>
-                    </div>
-                  </div>
-                  <div v-else class="recipe-placeholder">
-                    <span>{{ category.status }}</span>
-                    <strong>{{ category.nextStep }}</strong>
-                    <p>{{ category.scope }}</p>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </template>
@@ -205,7 +153,14 @@
                   </DuNavigationBar>
                 </div>
                 <div class="feed template-feed">
-                  <section v-if="selectedInspectorTab === 'style'" class="style-mockup-preview" aria-label="style preview">
+                  <template v-if="selectedInspectorTab === 'style'">
+                    <section class="style-mockup-page" aria-label="style preview page">
+                      <div class="style-page-kicker">Style recipe</div>
+                      <h2>{{ selectedStyleCategory?.label }} <span>{{ selectedStyleCategory?.zh }}</span></h2>
+                      <p>{{ currentStyleCategoryDescription }}</p>
+                    </section>
+
+                    <section class="style-mockup-preview" aria-label="style preview">
                     <div class="style-preview-heading">
                       <span>{{ selectedStyleCategory?.label }}</span>
                       <strong>{{ selectedStyleCategory?.zh }}</strong>
@@ -265,9 +220,64 @@
                     </div>
 
                     <p v-else>{{ selectedStyleCategory?.description }}</p>
-                  </section>
+                    </section>
 
-                  <template v-if="selectedTemplateId === 'czn-home'">
+                    <section class="style-evidence-mockup-card" aria-label="style evidence">
+                      <div class="style-preview-heading">
+                        <span>Evidence</span>
+                        <strong>频次与映射</strong>
+                      </div>
+                      <div v-if="selectedStyleCategoryId === 'color'" class="palette-list">
+                        <div
+                          v-for="signal in selectedStyle.signals"
+                          :key="`${selectedStyle.id}-mockup-evidence-${signal.raw}-${signal.target}`"
+                          class="palette-row"
+                          :class="{ primary: signal.target.includes('primary') }"
+                        >
+                          <i class="palette-swatch" :style="{ background: signalSwatch(signal) }"></i>
+                          <div class="palette-meta">
+                            <div>
+                              <strong>{{ signal.raw }}</strong>
+                              <span>{{ signal.count }} 次 · {{ signal.percent }}</span>
+                            </div>
+                            <em>{{ signal.target }}</em>
+                            <p>{{ signal.value }}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
+                        <div
+                          v-for="item in selectedStyleRecipeRows"
+                          :key="`mockup-evidence-${item.title}`"
+                          class="palette-row"
+                        >
+                          <i
+                            class="palette-swatch recipe-swatch"
+                            :class="recipeSwatchClass"
+                            :style="recipeSwatchStyle(item)"
+                          >
+                            <span>{{ recipeSwatchText(item) }}</span>
+                          </i>
+                          <div class="palette-meta">
+                            <div>
+                              <strong>{{ item.title }}</strong>
+                              <span>{{ item.stat }}</span>
+                            </div>
+                            <em>{{ item.target }}</em>
+                            <span class="recipe-value">{{ item.value }}</span>
+                            <p>{{ item.note }}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-else class="recipe-placeholder">
+                        <span>{{ selectedStyleCategory?.status }}</span>
+                        <strong>{{ selectedStyleCategory?.nextStep }}</strong>
+                        <p>{{ selectedStyleCategory?.scope }}</p>
+                      </div>
+                    </section>
+                  </template>
+
+                  <template v-else-if="selectedTemplateId === 'czn-home'">
                     <div class="click-target czn-hero" :class="{ selected: selectedInstanceId === pageNodeId('Hero') }" :data-node-id="pageNodeId('Hero')" @click="selectInstance(pageNodeId('Hero'))">
                       <span class="tag">Hero</span>
                       <p>CHAOS ZERO NIGHTMARE</p>
@@ -1502,6 +1512,9 @@ const uniqueComponentCount = computed(() => new Set(pageInstances.value.map((ite
 const selectedStyle = computed(() => stylePresets.find((preset) => preset.id === selectedStyleId.value) || stylePresets[0]);
 const selectedStyleCategory = computed(() =>
   styleCategories.find((category) => category.id === selectedStyleCategoryId.value),
+);
+const currentStyleCategoryDescription = computed(() =>
+  selectedStyleCategoryId.value === "color" ? selectedStyle.value.evidenceNote : selectedStyleCategory.value?.description,
 );
 const recipeSwatchClass = computed(() => `recipe-swatch-${selectedStyleCategoryId.value}`);
 const selectedStyleRecipeRows = computed(() => {
