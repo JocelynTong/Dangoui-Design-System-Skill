@@ -1510,7 +1510,7 @@ const selectedStyleRecipeRows = computed(() => {
   return (recipe?.[selectedStyleCategoryId.value] || []).map((item, index) => ({
     ...item,
     stat: item.stat || stats[index] || "待统计",
-    target: item.target || selectedStyleCategory.value?.meta || "recipe",
+    target: item.target || styleRecipeMappingTarget(selectedStyleCategoryId.value, item),
   }));
 });
 const spacingScaleRows = computed(() =>
@@ -1663,6 +1663,42 @@ function signalSwatch(signal) {
 function firstNumber(value, fallback) {
   const match = String(value).match(/\d+/);
   return match ? Number(match[0]) : fallback;
+}
+
+function closestPrimitive(value, type) {
+  const primitives = [
+    { label: `${type}/Mini`, value: 2 },
+    { label: `${type}/Small`, value: 4 },
+    { label: `${type}/Normal`, value: 8 },
+    { label: `${type}/Medium`, value: 12 },
+    { label: `${type}/Large`, value: 16 },
+  ];
+  const number = firstNumber(value, 8);
+  const exact = primitives.find((item) => item.value === number);
+  if (exact) return { ...exact, status: "mapped" };
+  const nearest = primitives.reduce((best, item) =>
+    Math.abs(item.value - number) < Math.abs(best.value - number) ? item : best,
+  primitives[0]);
+  return { ...nearest, status: "fallback" };
+}
+
+function styleRecipeMappingTarget(category, item) {
+  if (category === "typography") {
+    return "dangoui missing: typography token · style-only";
+  }
+  if (category === "spacing") {
+    const primitive = closestPrimitive(item.value, "Spacing");
+    const adapter = item.title === "Page" ? "--style-page-spacing" : "demo layout CSS";
+    return `Echo ${primitive.label} (${primitive.status}) · dangoui style-only: ${adapter}`;
+  }
+  if (category === "radius") {
+    const primitive = item.value.includes("999")
+      ? { label: "Radius/Pill", status: "fallback" }
+      : closestPrimitive(item.value, "Radius");
+    const adapter = item.title === "Control" ? "--style-control-radius" : "--style-card-radius";
+    return `Echo ${primitive.label} (${primitive.status}) · dangoui style-only: ${adapter}`;
+  }
+  return selectedStyleCategory.value?.meta || "style-only";
 }
 
 function recipeSwatchText(item) {
