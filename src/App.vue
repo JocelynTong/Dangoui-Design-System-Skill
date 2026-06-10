@@ -111,142 +111,7 @@
 
     <section class="workspace">
       <div class="demo-stage">
-        <section v-if="selectedInspectorTab === 'style'" class="style-workspace-page" aria-label="style page">
-          <div class="style-workspace-grid">
-            <div class="phone template-phone style-phone" aria-label="style phone mockup">
-              <div class="phone-screen">
-                <DuNavigationBar color="white" :back="false" :share="true">
-                  <strong class="nav-title">{{ selectedStyleCategory?.label }} {{ selectedStyleCategory?.zh }}</strong>
-                </DuNavigationBar>
-                <div class="feed template-feed style-phone-feed">
-                  <section class="style-mockup-page" aria-label="style preview page">
-                    <div class="style-page-kicker">Style recipe</div>
-                    <h2>{{ selectedStyleCategory?.label }} <span>{{ selectedStyleCategory?.zh }}</span></h2>
-                    <p>{{ currentStyleCategoryDescription }}</p>
-                  </section>
-
-                  <section class="style-mockup-preview" aria-label="style preview">
-                    <div class="style-preview-heading">
-                      <span>{{ selectedStyleCategory?.label }}</span>
-                      <strong>{{ selectedStyleCategory?.zh }}</strong>
-                    </div>
-
-                    <div v-if="selectedStyleCategoryId === 'color'" class="mockup-color-strip">
-                      <i
-                        v-for="signal in selectedStyle.signals"
-                        :key="`${selectedStyle.id}-page-${signal.raw}-${signal.target}`"
-                        :style="{ background: signalSwatch(signal) }"
-                      ></i>
-                    </div>
-
-                    <div v-else-if="selectedStyleCategoryId === 'typography'" class="mockup-type-specimens">
-                      <div
-                        v-for="item in selectedStyleRecipeRows"
-                        :key="`page-type-${item.title}`"
-                        :style="recipeSwatchStyle(item)"
-                      >
-                        <span>{{ item.title }}</span>
-                        <strong>Design system rhythm</strong>
-                      </div>
-                    </div>
-
-                    <div v-else-if="selectedStyleCategoryId === 'spacing'" class="recipe-scale-panel mockup-scale-panel spacing-scale" aria-label="spacing scale">
-                      <strong>Spacing scale</strong>
-                      <small>色块宽度 = spacing value</small>
-                      <div class="spacing-scale-track">
-                        <div
-                          v-for="item in spacingScaleRows"
-                          :key="`page-spacing-${item.title}`"
-                          class="spacing-scale-item"
-                          :style="{ '--scale-width': `${item.width}px` }"
-                        >
-                          <i></i>
-                          <span>{{ item.title }} · {{ item.label }}</span>
-                          <em>{{ item.stat }}</em>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div v-else-if="selectedStyleCategoryId === 'radius'" class="recipe-scale-panel mockup-scale-panel radius-scale" aria-label="radius scale">
-                      <strong>Border radius scale</strong>
-                      <small>形状圆角 = radius value</small>
-                      <div class="radius-scale-track">
-                        <div
-                          v-for="item in radiusScaleRows"
-                          :key="`page-radius-${item.title}`"
-                          class="radius-scale-card"
-                          :style="{ '--recipe-radius': item.radius }"
-                        >
-                          <i></i>
-                          <span>{{ item.label }}</span>
-                          <em>{{ item.stat }}</em>
-                        </div>
-                      </div>
-                    </div>
-
-                    <p v-else>{{ selectedStyleCategory?.description }}</p>
-                  </section>
-
-                  <section class="style-evidence-mockup-card" aria-label="style evidence">
-                    <div class="style-preview-heading">
-                      <span>Evidence</span>
-                      <strong>频次与映射</strong>
-                    </div>
-                    <div v-if="selectedStyleCategoryId === 'color'" class="palette-list">
-                      <div
-                        v-for="signal in selectedStyle.signals"
-                        :key="`${selectedStyle.id}-page-evidence-${signal.raw}-${signal.target}`"
-                        class="palette-row"
-                        :class="{ primary: signal.target.includes('primary') }"
-                      >
-                        <i class="palette-swatch" :style="{ background: signalSwatch(signal) }"></i>
-                        <div class="palette-meta">
-                          <div>
-                            <strong>{{ signal.raw }}</strong>
-                            <span>{{ signal.count }} 次 · {{ signal.percent }}</span>
-                          </div>
-                          <em>{{ signal.target }}</em>
-                          <p>{{ signal.value }}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
-                      <div
-                        v-for="item in selectedStyleRecipeRows"
-                        :key="`page-evidence-${item.title}`"
-                        class="palette-row"
-                      >
-                        <i
-                          class="palette-swatch recipe-swatch"
-                          :class="recipeSwatchClass"
-                          :style="recipeSwatchStyle(item)"
-                        >
-                          <span>{{ recipeSwatchText(item) }}</span>
-                        </i>
-                        <div class="palette-meta">
-                          <div>
-                            <strong>{{ item.title }}</strong>
-                            <span>{{ item.stat }}</span>
-                          </div>
-                          <em>{{ item.target }}</em>
-                          <span class="recipe-value">{{ item.value }}</span>
-                          <p>{{ item.note }}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div v-else class="recipe-placeholder">
-                      <span>{{ selectedStyleCategory?.status }}</span>
-                      <strong>{{ selectedStyleCategory?.nextStep }}</strong>
-                      <p>{{ selectedStyleCategory?.scope }}</p>
-                    </div>
-                  </section>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <article v-else class="component-showcase" aria-label="dangoui component showcase">
+        <article class="component-showcase" aria-label="dangoui component showcase">
           <section class="template-preview">
             <aside class="workspace-context" aria-label="Brand learning evidence">
               <div class="context-card brand-summary-card">
@@ -284,11 +149,135 @@
                 >
                   <span class="tag">NavigationBar</span>
                   <DuNavigationBar color="white" :back="false" :share="true">
-                    <strong class="nav-title">{{ selectedTemplate.name }}</strong>
+                    <strong class="nav-title">{{ selectedInspectorTab === 'style' ? `${selectedStyleCategory?.label} ${selectedStyleCategory?.zh}` : selectedTemplate.name }}</strong>
                   </DuNavigationBar>
                 </div>
-                <div class="feed template-feed">
-                  <template v-if="selectedTemplateId === 'czn-home'">
+                <div class="feed template-feed" :class="{ 'style-phone-feed': selectedInspectorTab === 'style' }">
+                  <template v-if="selectedInspectorTab === 'style'">
+                    <section class="style-mockup-page" aria-label="style preview page">
+                      <div class="style-page-kicker">Style recipe</div>
+                      <h2>{{ selectedStyleCategory?.label }} <span>{{ selectedStyleCategory?.zh }}</span></h2>
+                      <p>{{ currentStyleCategoryDescription }}</p>
+                    </section>
+
+                    <section class="style-mockup-preview" aria-label="style preview">
+                      <div class="style-preview-heading">
+                        <span>{{ selectedStyleCategory?.label }}</span>
+                        <strong>{{ selectedStyleCategory?.zh }}</strong>
+                      </div>
+
+                      <div v-if="selectedStyleCategoryId === 'color'" class="mockup-color-strip">
+                        <i
+                          v-for="signal in selectedStyle.signals"
+                          :key="`${selectedStyle.id}-page-${signal.raw}-${signal.target}`"
+                          :style="{ background: signalSwatch(signal) }"
+                        ></i>
+                      </div>
+
+                      <div v-else-if="selectedStyleCategoryId === 'typography'" class="mockup-type-specimens">
+                        <div
+                          v-for="item in selectedStyleRecipeRows"
+                          :key="`page-type-${item.title}`"
+                          :style="recipeSwatchStyle(item)"
+                        >
+                          <span>{{ item.title }}</span>
+                          <strong>Design system rhythm</strong>
+                        </div>
+                      </div>
+
+                      <div v-else-if="selectedStyleCategoryId === 'spacing'" class="recipe-scale-panel mockup-scale-panel spacing-scale" aria-label="spacing scale">
+                        <strong>Spacing scale</strong>
+                        <small>色块宽度 = spacing value</small>
+                        <div class="spacing-scale-track">
+                          <div
+                            v-for="item in spacingScaleRows"
+                            :key="`page-spacing-${item.title}`"
+                            class="spacing-scale-item"
+                            :style="{ '--scale-width': `${item.width}px` }"
+                          >
+                            <i></i>
+                            <span>{{ item.title }} · {{ item.label }}</span>
+                            <em>{{ item.stat }}</em>
+                          </div>
+                        </div>
+                      </div>
+
+                      <div v-else-if="selectedStyleCategoryId === 'radius'" class="recipe-scale-panel mockup-scale-panel radius-scale" aria-label="radius scale">
+                        <strong>Border radius scale</strong>
+                        <small>形状圆角 = radius value</small>
+                        <div class="radius-scale-track">
+                          <div
+                            v-for="item in radiusScaleRows"
+                            :key="`page-radius-${item.title}`"
+                            class="radius-scale-card"
+                            :style="{ '--recipe-radius': item.radius }"
+                          >
+                            <i></i>
+                            <span>{{ item.label }}</span>
+                            <em>{{ item.stat }}</em>
+                          </div>
+                        </div>
+                      </div>
+
+                      <p v-else>{{ selectedStyleCategory?.description }}</p>
+                    </section>
+
+                    <section class="style-evidence-mockup-card" aria-label="style evidence">
+                      <div class="style-preview-heading">
+                        <span>Evidence</span>
+                        <strong>频次与映射</strong>
+                      </div>
+                      <div v-if="selectedStyleCategoryId === 'color'" class="palette-list">
+                        <div
+                          v-for="signal in selectedStyle.signals"
+                          :key="`${selectedStyle.id}-page-evidence-${signal.raw}-${signal.target}`"
+                          class="palette-row"
+                          :class="{ primary: signal.target.includes('primary') }"
+                        >
+                          <i class="palette-swatch" :style="{ background: signalSwatch(signal) }"></i>
+                          <div class="palette-meta">
+                            <div>
+                              <strong>{{ signal.raw }}</strong>
+                              <span>{{ signal.count }} 次 · {{ signal.percent }}</span>
+                            </div>
+                            <em>{{ signal.target }}</em>
+                            <p>{{ signal.value }}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
+                        <div
+                          v-for="item in selectedStyleRecipeRows"
+                          :key="`page-evidence-${item.title}`"
+                          class="palette-row"
+                        >
+                          <i
+                            class="palette-swatch recipe-swatch"
+                            :class="recipeSwatchClass"
+                            :style="recipeSwatchStyle(item)"
+                          >
+                            <span>{{ recipeSwatchText(item) }}</span>
+                          </i>
+                          <div class="palette-meta">
+                            <div>
+                              <strong>{{ item.title }}</strong>
+                              <span>{{ item.stat }}</span>
+                            </div>
+                            <em>{{ item.target }}</em>
+                            <span class="recipe-value">{{ item.value }}</span>
+                            <p>{{ item.note }}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div v-else class="recipe-placeholder">
+                        <span>{{ selectedStyleCategory?.status }}</span>
+                        <strong>{{ selectedStyleCategory?.nextStep }}</strong>
+                        <p>{{ selectedStyleCategory?.scope }}</p>
+                      </div>
+                    </section>
+                  </template>
+
+                  <template v-else-if="selectedTemplateId === 'czn-home'">
                     <div class="click-target czn-hero" :class="{ selected: selectedInstanceId === pageNodeId('Hero') }" :data-node-id="pageNodeId('Hero')" @click="selectInstance(pageNodeId('Hero'))">
                       <span class="tag">Hero</span>
                       <p>CHAOS ZERO NIGHTMARE</p>

@@ -1360,31 +1360,6 @@ pre {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 8%, transparent);
 }
 
-.style-workspace-page {
-  display: grid;
-  width: min(100%, 980px);
-  min-width: 0;
-  padding: 0;
-  border-radius: 18px;
-  color: var(--style-text);
-}
-
-.style-workspace-grid {
-  display: grid;
-  justify-items: center;
-  min-width: 0;
-}
-
-.style-phone {
-  width: min(100%, 390px);
-  height: min(74vh, 812px);
-  min-height: 620px;
-}
-
-.style-phone .phone-screen {
-  background: var(--style-page-bg);
-}
-
 .style-phone-feed {
   min-height: 0;
   overflow-y: auto;
@@ -2779,10 +2754,6 @@ pre {
     height: auto;
     overflow: visible;
     padding: 22px 16px;
-  }
-
-  .style-workspace-page {
-    border-radius: 14px;
   }
 
   .demo-stage {
