@@ -706,6 +706,41 @@ a {
   line-height: 1.45;
 }
 
+.recipe-list {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
+
+.recipe-row {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 8px;
+  border-radius: 8px;
+  background: var(--panel);
+}
+
+.recipe-row strong {
+  color: var(--text);
+  font-size: 11px;
+  line-height: 1.25;
+}
+
+.recipe-row span {
+  color: var(--style-accent);
+  font-size: 10px;
+  font-weight: 760;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
+.recipe-row p {
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.45;
+}
+
 .palette-row {
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr);

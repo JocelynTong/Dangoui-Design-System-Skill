@@ -56,6 +56,13 @@
                       </div>
                     </div>
                   </div>
+                  <div v-else-if="selectedStyleRecipeRows.length" class="recipe-list">
+                    <div v-for="item in selectedStyleRecipeRows" :key="item.title" class="recipe-row">
+                      <strong>{{ item.title }}</strong>
+                      <span>{{ item.value }}</span>
+                      <p>{{ item.note }}</p>
+                    </div>
+                  </div>
                   <div v-else class="recipe-placeholder">
                     <span>{{ category.status }}</span>
                     <strong>{{ category.nextStep }}</strong>
@@ -1063,6 +1070,94 @@ const styleCategories = [
   },
 ];
 
+const styleRecipeDetails = {
+  czn: {
+    typography: [
+      { title: "Display", value: "24-28px / 850", note: "用于角色名、官网首屏标题，保持高对比和游戏宣发气势。" },
+      { title: "Body", value: "12-13px / 650", note: "正文偏紧凑，服务资讯流和角色说明，避免大段文字削弱沉浸感。" },
+      { title: "Caption", value: "10-11px / 700", note: "状态、标签、HUD 信息可略加粗，形成工具面板感。" },
+    ],
+    spacing: [
+      { title: "Page", value: "16px", note: "页面内距保持中等密度，适合游戏内容卡和下载入口并排出现。" },
+      { title: "Card gap", value: "10-14px", note: "卡片之间不宜过松，保留活动页的资讯密度。" },
+      { title: "CTA", value: "8-12px", note: "按钮、二维码、下载块之间用紧凑间距强化行动入口。" },
+    ],
+    radius: [
+      { title: "Card", value: "10px", note: "卡片圆角较克制，配合斜切/HUD 边界，不走柔和卡片风。" },
+      { title: "Control", value: "6px", note: "按钮和输入类控件更硬朗，强调游戏工具属性。" },
+      { title: "Media", value: "10-12px", note: "媒体容器可略大，但避免全 pill。" },
+    ],
+  },
+  apple: {
+    typography: [
+      { title: "Display", value: "28-34px / 760", note: "大标题留白充分，语气像产品展陈，不靠重描边制造冲击。" },
+      { title: "Body", value: "13-15px / 500", note: "正文清爽，行高更松，适合产品说明和故事型卡片。" },
+      { title: "Link", value: "12-13px / 650", note: "行动文字保持蓝色清晰入口，避免过多粗体。" },
+    ],
+    spacing: [
+      { title: "Page", value: "20px", note: "页面留白更松，给产品图和大标题呼吸感。" },
+      { title: "Section", value: "20-28px", note: "模块之间用明显间距，而不是依赖分割线。" },
+      { title: "Card inner", value: "16-20px", note: "卡片内部留白偏大，承接产品展陈气质。" },
+    ],
+    radius: [
+      { title: "Card", value: "28px", note: "大圆角是主要识别点，只作为 demo 视觉控制，不强行写入 dangoui token。" },
+      { title: "Control", value: "999px", note: "主要行动和标签倾向 pill 形态。" },
+      { title: "Media", value: "24-28px", note: "产品图容器跟随大圆角，形成柔和展示面。" },
+    ],
+  },
+  figma: {
+    typography: [
+      { title: "Display", value: "24-30px / 760", note: "标题清晰但不过度品牌化，适合工具和协作页面。" },
+      { title: "Body", value: "12-14px / 520", note: "正文偏理性，强调说明、状态和团队协作语境。" },
+      { title: "Label", value: "10-12px / 700", note: "标签、变量名、组件名需要更清楚的扫描性。" },
+    ],
+    spacing: [
+      { title: "Page", value: "16px", note: "中等密度，贴近设计工具工作区。" },
+      { title: "Grid", value: "8px", note: "控件和标签之间使用 8px 基准，便于形成系统感。" },
+      { title: "Panel", value: "12-16px", note: "面板内距清楚但不松散，适合属性面板与列表。" },
+    ],
+    radius: [
+      { title: "Card", value: "14px", note: "卡片圆角中等，配合清晰边界。" },
+      { title: "Control", value: "8px", note: "按钮、输入和 tab 更像工具控件，避免过强拟物。" },
+      { title: "Asset", value: "8-14px", note: "协作图形可保留更丰富形状，但不进入正式 token。" },
+    ],
+  },
+  notion: {
+    typography: [
+      { title: "Display", value: "24-30px / 760", note: "近黑 Inter 风格，标题清楚但保持文档气质。" },
+      { title: "Body", value: "13-14px / 500", note: "正文可读性优先，适合知识库、说明和列表。" },
+      { title: "Caption", value: "11-12px / 520", note: "辅助文字偏中性，避免让蓝色 primary 过度扩散。" },
+    ],
+    spacing: [
+      { title: "Page", value: "16px", note: "页面密度适中，像文档工作区而不是营销页。" },
+      { title: "Row", value: "8-12px", note: "列表、表格、卡片行之间保持清楚但不松散。" },
+      { title: "Block", value: "12-16px", note: "内容块之间用稳定留白承接文档节奏。" },
+    ],
+    radius: [
+      { title: "Card", value: "12px", note: "卡片圆角温和，贴近纸面容器。" },
+      { title: "Control", value: "999px", note: "按钮和 badge 可用 pill，作为轻量行动入口。" },
+      { title: "Surface", value: "8-12px", note: "表格、抽屉、文档块可保持较小圆角。" },
+    ],
+  },
+  spotify: {
+    typography: [
+      { title: "Display", value: "24-32px / 850", note: "标题更厚重，服务媒体封面和播放场景。" },
+      { title: "Body", value: "12-14px / 650", note: "正文高对比，暗底上保持清晰扫描。" },
+      { title: "Meta", value: "10-12px / 700", note: "歌单、状态和辅助信息可更紧凑。" },
+    ],
+    spacing: [
+      { title: "Page", value: "18px", note: "页面内距略大于常规，给深色卡片和封面留空间。" },
+      { title: "Media gap", value: "12-16px", note: "封面、标题、按钮之间保持清晰分组。" },
+      { title: "Stack", value: "8-12px", note: "列表和推荐流使用紧凑堆叠，保留音乐 App 密度。" },
+    ],
+    radius: [
+      { title: "Card", value: "12px", note: "暗色卡片保持中等圆角，主要质感来自阴影和表面色。" },
+      { title: "Control", value: "999px", note: "播放、收藏、筛选等控件倾向 pill。" },
+      { title: "Media", value: "8-12px", note: "封面图圆角克制，不抢品牌绿。" },
+    ],
+  },
+};
+
 const imagePreviewSrc =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='180' viewBox='0 0 320 180'%3E%3Crect width='320' height='180' rx='24' fill='%23f5f5f5'/%3E%3Ccircle cx='92' cy='76' r='44' fill='%23874fff' fill-opacity='.82'/%3E%3Ccircle cx='160' cy='92' r='48' fill='%2300b6ff' fill-opacity='.72'/%3E%3Ccircle cx='224' cy='82' r='38' fill='%23ff7237' fill-opacity='.78'/%3E%3C/svg%3E";
 const selectOptions = [
@@ -1320,6 +1415,10 @@ const missingByName = computed(() =>
 );
 const uniqueComponentCount = computed(() => new Set(pageInstances.value.map((item) => item.name)).size);
 const selectedStyle = computed(() => stylePresets.find((preset) => preset.id === selectedStyleId.value) || stylePresets[0]);
+const selectedStyleRecipeRows = computed(() => {
+  const recipe = styleRecipeDetails[selectedStyle.value.id];
+  return recipe?.[selectedStyleCategoryId.value] || [];
+});
 const selectedStyleTokenMap = computed(() =>
   Object.fromEntries(selectedStyle.value.tokens.map((token) => [token.name, token.value])),
 );
