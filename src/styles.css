@@ -800,10 +800,17 @@ a {
   text-transform: uppercase;
 }
 
+.recipe-scale-panel > small {
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.25;
+}
+
 .spacing-scale-track,
 .radius-scale-track {
   display: flex;
-  gap: 12px;
+  gap: 10px;
   min-width: 0;
   overflow-x: auto;
   padding-bottom: 2px;
@@ -811,10 +818,12 @@ a {
 
 .spacing-scale-item {
   display: grid;
-  gap: 7px;
-  justify-items: center;
+  gap: 5px;
+  align-content: start;
+  justify-items: start;
   flex: 0 0 auto;
-  min-width: 52px;
+  width: 92px;
+  min-width: 92px;
 }
 
 .spacing-scale-item i {
@@ -831,14 +840,33 @@ a {
   font-weight: 760;
   line-height: 1.2;
   text-align: center;
-  white-space: nowrap;
+}
+
+.spacing-scale-item em,
+.radius-scale-card em {
+  color: var(--style-accent);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 720;
+  line-height: 1.2;
+}
+
+.spacing-scale-item p,
+.radius-scale-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 10px;
+  line-height: 1.35;
 }
 
 .radius-scale-card {
   display: grid;
   gap: 6px;
   justify-items: center;
-  min-width: 0;
+  align-content: start;
+  flex: 0 0 auto;
+  width: 92px;
+  min-width: 92px;
 }
 
 .radius-scale-card i {

@@ -59,6 +59,7 @@
                   <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
                     <div v-if="selectedStyleCategoryId === 'spacing'" class="recipe-scale-panel spacing-scale" aria-label="spacing scale">
                       <strong>Spacing scale</strong>
+                      <small>色块宽度 = spacing value</small>
                       <div class="spacing-scale-track">
                         <div
                           v-for="item in spacingScaleRows"
@@ -68,11 +69,14 @@
                         >
                           <i></i>
                           <span>{{ item.title }} · {{ item.label }}</span>
+                          <em>{{ item.stat }}</em>
+                          <p>{{ item.note }}</p>
                         </div>
                       </div>
                     </div>
                     <div v-if="selectedStyleCategoryId === 'radius'" class="recipe-scale-panel radius-scale" aria-label="radius scale">
                       <strong>Border radius scale</strong>
+                      <small>形状圆角 = radius value</small>
                       <div class="radius-scale-track">
                         <div
                           v-for="item in radiusScaleRows"
@@ -82,31 +86,35 @@
                         >
                           <i></i>
                           <span>{{ item.label }}</span>
+                          <em>{{ item.stat }}</em>
+                          <p>{{ item.note }}</p>
                         </div>
                       </div>
                     </div>
-                    <div
-                      v-for="item in selectedStyleRecipeRows"
-                      :key="item.title"
-                      class="palette-row"
-                    >
-                      <i
-                        class="palette-swatch recipe-swatch"
-                        :class="recipeSwatchClass"
-                        :style="recipeSwatchStyle(item)"
+                    <template v-if="selectedStyleCategoryId !== 'spacing' && selectedStyleCategoryId !== 'radius'">
+                      <div
+                        v-for="item in selectedStyleRecipeRows"
+                        :key="item.title"
+                        class="palette-row"
                       >
-                        <span>{{ recipeSwatchText(item) }}</span>
-                      </i>
-                      <div class="palette-meta">
-                        <div>
-                          <strong>{{ item.title }}</strong>
-                          <span>{{ item.stat }}</span>
+                        <i
+                          class="palette-swatch recipe-swatch"
+                          :class="recipeSwatchClass"
+                          :style="recipeSwatchStyle(item)"
+                        >
+                          <span>{{ recipeSwatchText(item) }}</span>
+                        </i>
+                        <div class="palette-meta">
+                          <div>
+                            <strong>{{ item.title }}</strong>
+                            <span>{{ item.stat }}</span>
+                          </div>
+                          <em>{{ item.target }}</em>
+                          <span class="recipe-value">{{ item.value }}</span>
+                          <p>{{ item.note }}</p>
                         </div>
-                        <em>{{ item.target }}</em>
-                        <span class="recipe-value">{{ item.value }}</span>
-                        <p>{{ item.note }}</p>
                       </div>
-                    </div>
+                    </template>
                   </div>
                   <div v-else class="recipe-placeholder">
                     <span>{{ category.status }}</span>
@@ -1487,6 +1495,8 @@ const spacingScaleRows = computed(() =>
       label: recipeSwatchText(item),
       size: Math.min(size, 28),
       width: Math.max(8, Math.min(size * 4, 96)),
+      stat: item.stat,
+      note: item.note,
     };
   }),
 );
@@ -1498,6 +1508,8 @@ const radiusScaleRows = computed(() =>
       title: item.title,
       label: recipeSwatchText(item),
       radius: isPill ? "999px" : `${size}px`,
+      stat: item.stat,
+      note: item.note,
     };
   }),
 );
