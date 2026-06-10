@@ -1,0 +1,47 @@
+{
+  "brand": "hpma",
+  "status": "demo-only",
+  "utilityLayer": {
+    "framework": "unocss",
+    "preset": "uno-preset-echo",
+    "notes": [
+      "Current demo is plain Vue/CSS, so this adapter documents the intended UnoCSS boundary.",
+      "Utility classes should consume Echo/dangoui tokens; official scene art, card frames and magic glows remain preview/demo-only classes.",
+      "Do not output tailwind.config.js for this migration."
+    ]
+  },
+  "tokenUtilities": [
+    { "utilityIntent": "bg-page", "token": "--du-bg-2", "value": "#221b15" },
+    { "utilityIntent": "bg-card", "token": "--du-bg-1", "value": "#493832" },
+    { "utilityIntent": "text-primary", "token": "--du-text-1", "value": "#f4eedc" },
+    { "utilityIntent": "text-muted", "token": "--du-text-3", "value": "#c8b08b" },
+    { "utilityIntent": "border-default", "token": "--du-border-1", "value": "#8e6140" },
+    { "utilityIntent": "action-primary", "token": "--du-primary-color", "value": "#996540" }
+  ],
+  "demoOnlyClasses": [
+    "hpma-ornate-frame",
+    "hpma-magic-glow",
+    "hpma-parchment-texture",
+    "hpma-spell-card-media",
+    "hpma-title-font",
+    "hpma-nav-font",
+    "hpma-diamond-icon"
+  ],
+  "assetEvidence": {
+    "fonts": [
+      "uifont_cn_title_1404b12.woff",
+      "nav_font_e50e757.ttf"
+    ],
+    "borders": [
+      "media_border_67b7223.png",
+      "media_border2_e5450c6.png",
+      "top_nav_h_2890ecd.png"
+    ],
+    "icons": [
+      "btn_play2_cca562b.png",
+      "btn_book_6d9c21e.png",
+      "download-app_cf8e2a5.png",
+      "dl-hint_b825005.png"
+    ]
+  }
+}

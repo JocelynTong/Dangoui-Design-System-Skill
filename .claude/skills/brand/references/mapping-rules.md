@@ -113,6 +113,30 @@ Spacing/Mini = 2
 - Echo/Figma 和 dangoui 都没有：`missing`。
 - 需要用户判断是否新增 token：`ask-user`。
 
+### Radius / Border / Shadow 分层
+
+圆角、边框、阴影不能互相代偿，也不能从控件习惯泛化到页面容器。
+
+Radius 判断：
+
+- `frame/card/media radius` 和 `control radius` 分开记录。
+- 图片边框、官网装饰框、卡牌外壳若是直角，frame/card/media radius 记为 `0px`。
+- button、input、tag 出现 `5px / 8px / 999px` 只能证明 control radius，不能推导 card/media 也是圆角。
+- 通用 demo 容器样式造成的圆角不是品牌证据；必须用 computed style 和来源证据交叉确认。
+
+Border 判断：
+
+- 先判断来源：真实 CSS `border`、图片 border asset、伪元素角线、内框、外框。
+- 替换品牌边框时，优先替换目标容器本身的 border；不要默认在容器内部再画一层框。
+- 如果用伪元素表达装饰边框，必须标明它模拟的是外沿角线、内框还是 asset fallback。
+- 边框选择器必须限定到 demo/组件目标，避免证据面板、频次表、mapping 区被误套。
+
+Shadow 判断：
+
+- 阴影和发光只有在源站 CSS、图片采样或明确视觉证据存在时才保留。
+- 选中态、hover 态、active 态不能为了“更明显”自行加 shadow。
+- 没有依据的 shadow 要删除或标为 `style-only / ask-user`。
+
 DTCG 表达：
 
 - CSS 距离类值使用 `$type: "dimension"`，例如 `{ "value": 16, "unit": "px" }`。
@@ -150,6 +174,33 @@ DTCG 表达：
 - 不把页面组合误判为组件库新增需求；先记录为 `composed`。
 - 涉及新增组件、variant、slot、组件专属 token 时，列入 `ask-user`。
 - 弹层、toast、tooltip、upload、calendar 等依赖触发态的组件，可在 demo 占位，但 component mapping 必须记录真实状态。
+- 页面 demo 不是 component mapping 本身；如果做 2-3 个页面验证，每页必须有真实不同的结构和内容模式，不能只替换页面标题或复用同一通用 feed。
+
+## 5. Existing Migration Assets 应用规则
+
+当宿主项目已有 `migrations/{brand}` 或公开 demo/registry 站点返回的 style pack 时，优先应用资产，不重新学习品牌。
+
+资产查找顺序：
+
+1. 宿主项目 `migrations/{brand}/`
+2. 公开 demo/registry 站点返回的 `{brand}` style pack
+3. 如果两者都不存在，回到素材学习流程：`$brand <URL>`
+
+应用顺序：
+
+1. `{assetRoot}/brand-evidence.json`：确认原始证据、频次、上下文和用户校准过的判断。
+2. `{assetRoot}/dangoui-adapter.json`：提取可进入 `--du-*` 的 tokens，以及只能进 `demoOnlyVisualControls` 的内容。
+3. `{assetRoot}/component-mapping.json`：决定页面结构和 dangoui 组件组合。
+4. `{assetRoot}/preview-gate.json`：决定应该应用到哪些核心页面或 preview 页面。
+5. `{assetRoot}/echo-mapping.json` / `brand-profile.dtcg.json`：确认 fallback、style-only、missing、ask-user。
+
+落地约束：
+
+- `mapped` token 可以进入主题变量或 token override。
+- `fallback` token 可以使用最近值，但必须保留注释或 adapter 记录。
+- `style-only` 只进页面样式层、主题 class、asset 或 demo visual control。
+- `missing` 和 `ask-user` 不要强行实现成假 token。
+- 如果迁移资产和宿主项目现有设计系统冲突，先保留宿主项目 API 和命名，再用局部 theme class 承接品牌表现。
 
 ## 5. 废弃层
 

@@ -1,0 +1,32 @@
+{
+  "brand": "hpma",
+  "tokens": {
+    "color": [
+      { "brandValue": "#221b15", "echoRole": "bg/2", "dangouiTarget": "--du-bg-2", "status": "mapped", "reason": "Warm dark page canvas derived from official dark brown logo/character-card samples." },
+      { "brandValue": "#493832", "echoRole": "bg/1", "dangouiTarget": "--du-bg-1", "status": "mapped", "reason": "Panel/input surface in CSS and parchment-brown UI." },
+      { "brandValue": "#f4eedc", "echoRole": "text/1", "dangouiTarget": "--du-text-1", "status": "mapped", "reason": "Warm parchment foreground for text over dark surfaces." },
+      { "brandValue": "#c8b08b", "echoRole": "text/3", "dangouiTarget": "--du-text-3", "status": "mapped", "reason": "Gold-muted labels and media link text." },
+      { "brandValue": "#8e6140", "echoRole": "border/1", "dangouiTarget": "--du-border-1", "status": "mapped", "reason": "Input border and antique brown frame evidence." },
+      { "brandValue": "#996540", "echoRole": "primary/color", "dangouiTarget": "--du-primary-color", "status": "mapped", "reason": "Stable brown action color in CSS controls; do not use blue magic glow as primary." },
+      { "brandValue": "scene blue/green/gold illustrations", "echoRole": "media asset", "dangouiTarget": null, "status": "style-only", "reason": "Sampled from wallpapers and scenes, not UI controls." }
+    ],
+    "radius": [
+      { "brandValue": "0px", "echoToken": null, "value": { "value": 0, "unit": "px" }, "status": "style-only", "reason": "Ornate media/card frames are visually straight-edged; keep frame radius at zero in demo styling." },
+      { "brandValue": "5px", "echoToken": "Radius/Small", "value": { "value": 4, "unit": "px" }, "status": "fallback", "reason": "CSS input radius is 5px; closest primitive is 4px." },
+      { "brandValue": "8px", "echoToken": "Radius/Normal", "value": { "value": 8, "unit": "px" }, "status": "control-only", "reason": "Button evidence only; do not apply this radius to framed cards/media containers." }
+    ],
+    "spacing": [
+      { "brandValue": "12-16px", "echoToken": "Spacing/Medium/Large", "status": "fallback", "reason": "Site uses image-heavy sections; exact layout values are not reliable from screenshot-only evidence." }
+    ],
+    "shadow": [
+      { "brandValue": "magical glow and inset gold frame", "echoToken": null, "futureTokenCandidate": "Shadow/MagicOrnateFrame", "status": "style-only", "reason": "No current Echo/dangoui shadow token for ornate media frame and glow." }
+    ]
+  },
+  "components": [
+    { "brandPattern": "ornate-top-nav", "echoComponentCandidate": "NavigationBar + Tabs", "status": "composed" },
+    { "brandPattern": "download-panel", "echoComponentCandidate": "Card + Button + Image", "status": "composed" },
+    { "brandPattern": "news-carousel-with-list", "echoComponentCandidate": "Swiper + Tabs + Card", "status": "composed" },
+    { "brandPattern": "media-thumbnail-grid", "echoComponentCandidate": "Image + Card", "status": "composed" },
+    { "brandPattern": "spell-character-card", "echoComponentCandidate": "Card + Image + Badge", "status": "fallback" }
+  ]
+}

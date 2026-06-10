@@ -1,0 +1,53 @@
+{
+  "brand": "hpma",
+  "source": "https://www.harrypottermagicawakened.com/cn/index.html",
+  "status": "selected",
+  "decision": "select-preview-a-with-preview-c-media-boundary",
+  "previews": [
+    {
+      "previewId": "preview-a",
+      "name": "Hogwarts parchment interface",
+      "pages": ["home", "news", "spell-card-index"],
+      "visualHypothesis": {
+        "mood": "warm parchment, antique magic desk, bookish ceremony",
+        "density": "medium",
+        "colorDirection": "dark brown canvas, parchment text, antique gold CTA and border",
+        "componentPatterns": ["ornate-top-nav", "parchment-news-list", "spell-card-grid", "download-panel"]
+      },
+      "decision": "selected",
+      "reason": "Best matches the official site structure and keeps UI colors separate from media illustrations."
+    },
+    {
+      "previewId": "preview-b",
+      "name": "Dark combat magic HUD",
+      "pages": ["spell-card-index", "event-detail"],
+      "visualHypothesis": {
+        "mood": "dark duel arena, high-contrast magic effects",
+        "density": "high",
+        "colorDirection": "black, gold, blue magic glow",
+        "componentPatterns": ["hud-card", "combat-stat-panel", "spell-action-button"]
+      },
+      "decision": "rejected",
+      "reason": "It overfits game combat visuals and would incorrectly push media glow into semantic tokens."
+    },
+    {
+      "previewId": "preview-c",
+      "name": "Gallery-led magical world",
+      "pages": ["media-gallery", "wallpaper-grid"],
+      "visualHypothesis": {
+        "mood": "illustrated wizarding world, scenic and collectible",
+        "density": "medium-low",
+        "colorDirection": "painted scene colors, parchment overlays, gold labels",
+        "componentPatterns": ["media-led-card", "wallpaper-grid", "video-thumbnail"]
+      },
+      "decision": "merge-media-boundary",
+      "reason": "Useful for media/component pattern evidence, but scene colors remain demo-only assets."
+    }
+  ],
+  "formalMigrationInput": {
+    "selectedPreviewId": "preview-a",
+    "mergedFrom": ["preview-c"],
+    "rejected": ["preview-b"],
+    "notes": "Proceed with parchment UI tokens and keep character art, scenes, blue glow and ornate borders in demoOnlyVisualControls."
+  }
+}

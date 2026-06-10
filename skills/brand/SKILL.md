@@ -23,15 +23,17 @@ npm run sync:skills
 
 ## 目标
 
-把上游品牌风格转成可审查、可迁移、可落地的 Echo / dangoui 资产。
+把上游品牌 URL、DESIGN.md、截图或 Figma/DTCG 资产转成可审查、可迁移、可落地的 Echo / dangoui 资产。
 
 核心原则：
 
 - 保持 Echo / dangoui 的 token 名、组件名、props、slots 稳定。
 - 品牌网站的 schema key、CSS 变量名、自然语言总结不能直接变成 dangoui token。
-- 先用 2-3 个 demo 做视觉方向预审，再沉淀长期资产。
+- 先用 2-3 个真实不同的 demo 页面做视觉方向预审，再沉淀长期资产。
 - 每次映射都必须有证据、状态和落地位置。
 - 当前 dangoui 不支持的能力，不伪装成正式 `--du-*`。
+- 用户手动校正过的效果属于高优先级证据；后续改内容或补页面时不能静默丢失这些效果。
+- 面向运营/vibecoder 的主调用方式应该是一句话：`$brand <URL>`。不要要求用户先理解 assetRoot、mapping 文件或内部模式名。
 
 ## Mode Selection
 
@@ -64,7 +66,7 @@ Mode A 的输出是 skill 仓库变更，不是业务项目主题。
 
 触发例子：
 
-- “用 brand skill，把这个网址的风格迁移到当前项目。”
+- “$brand https://example.com，把这个网址的风格迁移到当前项目。”
 - “给这个业务项目做 3 个 Apple / Spotify / 某品牌风格 preview。”
 - “把 DESIGN.md 应用到当前 Vue / React / dangoui demo。”
 - “只生成迁移资产，不更新 skill 仓库。”
@@ -77,8 +79,80 @@ Mode A 的输出是 skill 仓库变更，不是业务项目主题。
 - 将选中的 preview 应用到宿主项目自己的页面、主题文件或 demo 入口。
 - 正式 dangoui token 只写已有 `--du-*`；未承接能力写入 demo 专用样式、adapter 或 ReviewQueue。
 - 运行宿主项目的构建/测试，并用浏览器验证可见 demo。
+- 如果输入是 URL，直接抓取 URL 的 CSS、DOM、截图和可用媒体资产，不要要求用户手写风格描述。
+- 如果未来存在公开 demo/registry 站点，例如 `design.echo.tech`，可以把生成的 `migrations/{brand}` 发布或保存为 style pack，但应用时仍以机器可读资产为准。
 
 Mode B 的输出是宿主项目变更，不是这个 skill 的新版发布。
+
+### Mode C：Apply Existing Migration Assets
+
+当用户要求把已经沉淀好的迁移资产应用到业务项目时使用。此模式不重新学习品牌官网，除非迁移资产缺失、用户给了新 URL，或用户明确要求重学。
+
+触发例子：
+
+- “用 `migrations/hpma` 把当前 vibecoding 项目改成 HPMA 风格。”
+- “不要口头描述，直接按迁移资产应用这个品牌。”
+- “Claude 拉最新代码后，用这个 skill 套 HPMA 风格。”
+- “基于已有 `brand-evidence / dangoui-adapter / component-mapping` 改项目。”
+
+资产查找顺序：
+
+1. 宿主项目 `migrations/{brand}/`
+2. 公开 demo/registry 站点返回的 `{brand}` style pack
+3. 如果两者都不存在，回到 Mode B 用 `$brand <URL>` 重新学习素材
+
+必须读取的资产：
+
+- `{assetRoot}/brand-evidence.json`
+- `{assetRoot}/echo-mapping.json`
+- `{assetRoot}/dangoui-adapter.json`
+- `{assetRoot}/component-mapping.json`
+- `{assetRoot}/preview-gate.json`
+- 如存在，读取 `{assetRoot}/README.md`、`brand-profile.dtcg.json`、`uno-adapter.json`
+
+执行规则：
+
+- 以 `{assetRoot}` 的 JSON 作为事实来源；不要凭记忆、品牌名或审美直觉改样式。
+- 不要要求用户手动复制 JSON；如果用户给的是 URL，直接重新学习并生成 `migrations/{brand}`。
+- `dangoui-adapter.tokens` 里的现有 `--du-*` 可以进入主题 token；`demoOnlyVisualControls` 只能进入页面样式层、主题 class、asset 或 ReviewQueue。
+- `component-mapping.json` 决定组件组合方式；不要把页面组合误判为需要新增 dangoui 组件。
+- `preview-gate.json` 决定 2-3 个页面方向；每页必须有真实不同的结构和关键内容，不得只换 tab 文案。
+- 如果目标项目没有相同页面，选择 2-3 个最接近的现有页面/模块应用；没有可用页面时先生成 preview 页面。
+- 对用户校准过的效果做回归：字体、icon/asset、边框、圆角、阴影、选中态、证据区排除规则。
+- HPMA 等装饰框风格要区分 frame/card/media radius 和 control radius；直角框保持 `0px`，button/input 可以保留 control radius。
+- 替换边框时优先替换真实容器 border 或贴边角线；不要默认在容器内部再套一层框。
+- 没有证据的 active/hover shadow 不添加。
+- 完成后运行目标项目构建/测试，并用浏览器验证正例和反例。
+
+Mode C 的输出是业务项目风格应用变更，不是重新生成品牌迁移资产。
+
+### Public Demo / Registry Flow
+
+未来如果本仓库发布为类似 `design.echo.tech` 的公开 demo 站，推荐流程是：
+
+1. 运营或 vibecoder 输入 `$brand <品牌 URL>`。
+2. skill 抓取 URL，生成 2-3 个 preview 页面并写入 `migrations/{brand}`。
+3. demo 站展示 preview、证据、mapping、component gap 和 QA 状态。
+4. 用户确认后，`migrations/{brand}` 成为可复用 style pack。
+5. 其他项目应用时可以再次输入 `$brand <同一 URL>` 重新学习，或使用已发布的 style pack。
+
+公开站点不是口头风格说明；它应该托管机器可读资产，例如：
+
+```text
+migrations/{brand}/brand-evidence.json
+migrations/{brand}/dangoui-adapter.json
+migrations/{brand}/component-mapping.json
+migrations/{brand}/preview-gate.json
+```
+
+如果站点提供 API，优先约定：
+
+```text
+GET /api/brand-migrations/{brand}
+GET /api/brand-migrations?source={encodedUrl}
+```
+
+没有 API 时，skill 仍应能从 URL 重新学习，不要求运营写长 prompt。
 
 ## 每次必读文件
 
@@ -107,7 +181,7 @@ Mode B 的输出是宿主项目变更，不是这个 skill 的新版发布。
 
 ### 1. Preview Gate
 
-先生成 2-3 个低成本 demo 方向。
+先生成 2-3 个低成本 demo 方向或页面；如果用户要求“2-3 个 demo 页面”，必须让页面结构、内容模式和组件组合都不同，不能只切换 tab 文案或复用同一套通用渲染。
 
 每个方向记录：
 
@@ -116,6 +190,13 @@ Mode B 的输出是宿主项目变更，不是这个 skill 的新版发布。
 - 用户反馈：选择、否定、合并、待确认。
 
 只有通过用户预审的方向，才进入正式统计和迁移资产。
+
+页面 demo 的最低要求：
+
+- 每页有独立主体结构，例如首页、资讯/活动页、图鉴/详情页。
+- 每页至少有 2 个该页面独有的可见内容或组件模式。
+- 切换页面后必须用浏览器或 DOM 验证关键文案/组件确实变化。
+- 不要把 `components` 数组当作页面实现；必须有实际渲染分支或真实路由。
 
 ### 2. 品牌证据统计
 
@@ -135,6 +216,13 @@ Mode B 的输出是宿主项目变更，不是这个 skill 的新版发布。
 ```
 
 不要把 UI 颜色、媒体资产、圆角、阴影混在同一张百分比表。
+
+对边框、圆角、阴影要分开统计和判断：
+
+- 边框/框体：区分真实 CSS border、图片边框资产、伪元素角线、内框、外框。
+- 圆角：区分 frame/card/media 容器圆角和 button/input/tag 等 control 圆角；不要把 control radius 泛化到所有容器。
+- 阴影：只有在来源证据明确时才迁移；不能为了“选中态更明显”自行加 shadow。
+- 如果用户指出某个效果没有来源依据，降级为 `style-only` 或删除，并把理由写入资产。
 
 ### 3. 资产分层
 
@@ -212,7 +300,16 @@ Claude.ai 自定义 skill 上传后，优先使用 skill 内的 `scripts/create-
 - UI 展示组件模式、dangoui component、props/slots、unsupported。
 - 不支持的风格特征用 demo 专用视觉控制或 placeholder 表达。
 - 运行构建。
-- 用浏览器验证预设、token、组件映射和视觉效果。
+- 用浏览器验证预设、token、组件映射、页面差异和视觉效果。
+
+改 demo 或业务项目时的回归规则：
+
+- 改内容结构前，先识别已校准的视觉效果：字体包、icon/asset、边框、圆角、阴影、选中态、证据区排除规则。
+- 新增页面或新 class 时，必须继承或显式接入已校准效果；不能因为 class 变了导致效果失效。
+- 修一个区域的边框/阴影时要限定作用域，避免证据面板、映射表、频次区等非 demo 容器被误套。
+- 替换边框时优先替换容器真实边界；不要默认在内部再加一层框。若必须用伪元素，说明是外沿装饰、内框还是资产替代。
+- 圆角必须由证据驱动：直角框就保持 `0px`；按钮/输入可以保留 control radius，但不能推导成 card/media radius。
+- 修改后至少验证一个正例和一个反例：正例是目标 demo 元素生效，反例是不该生效的证据/映射区域未被污染。
 
 ## 验收清单
 
@@ -226,3 +323,6 @@ Claude.ai 自定义 skill 上传后，优先使用 skill 内的 `scripts/create-
 - 组件样式解释有真实 token chain。
 - `dangouiTokens` 和 `demoOnlyVisualControls` 分离。
 - 构建通过并完成浏览器验证。
+- 2-3 个 demo 页面不是同一套通用内容；切换后结构和关键内容可验证不同。
+- 用户已校准的字体、icon、边框、圆角、阴影没有在后续内容改造中丢失。
+- 边框不是误加内框；圆角不是由通用容器样式或控件习惯误推导。

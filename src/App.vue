@@ -263,6 +263,120 @@
                     </section>
                   </template>
 
+                  <template v-else-if="selectedTemplateId === 'hpma-home'">
+                    <div class="click-target hpma-hero" :class="{ selected: selectedInstanceId === pageNodeId('Hero') }" :data-node-id="pageNodeId('Hero')" @click="selectInstance(pageNodeId('Hero'))">
+                      <span class="tag">Hero</span>
+                      <p>HOGWARTS LETTER</p>
+                      <strong>录取通知书已寄出</strong>
+                      <span>棕金主视觉、羊皮纸正文和魔法徽章承担官网首页的入学氛围。</span>
+                    </div>
+                    <div class="click-target hpma-download-panel" :class="{ selected: selectedInstanceId === pageNodeId('DownloadPanel') }" :data-node-id="pageNodeId('DownloadPanel')" @click="selectInstance(pageNodeId('DownloadPanel'))">
+                      <span class="tag">DownloadPanel</span>
+                      <strong>开学季预约开启</strong>
+                      <div class="hpma-platform-row">
+                        <span>App Store</span>
+                        <span>Android</span>
+                        <span>PC</span>
+                      </div>
+                      <DuButton text="进入霍格沃茨" type="primary" />
+                    </div>
+                    <div class="click-target hpma-qr-panel" :class="{ selected: selectedInstanceId === pageNodeId('QRCode') }" :data-node-id="pageNodeId('QRCode')" @click="selectInstance(pageNodeId('QRCode'))">
+                      <span class="tag">QRCode</span>
+                      <i></i>
+                      <div>
+                        <strong>扫码领取入学清单</strong>
+                        <p>二维码独立成块，保留官网下载入口的高识别度。</p>
+                      </div>
+                    </div>
+                    <div class="click-target hpma-letter-actions" :class="{ selected: selectedInstanceId === pageNodeId('Button') }" :data-node-id="pageNodeId('Button')" @click="selectInstance(pageNodeId('Button'))">
+                      <span class="tag">Button</span>
+                      <div class="button-row">
+                        <DuButton text="立即预约" type="primary" />
+                        <DuButton text="查看学院" type="outline" />
+                      </div>
+                    </div>
+                  </template>
+
+                  <template v-else-if="selectedTemplateId === 'hpma-news'">
+                    <div class="click-target hpma-news-feature" :class="{ selected: selectedInstanceId === pageNodeId('Swiper') }" :data-node-id="pageNodeId('Swiper')" @click="selectInstance(pageNodeId('Swiper'))">
+                      <span class="tag">Swiper</span>
+                      <div class="hpma-news-poster" aria-hidden="true">
+                        <span>SEASON</span>
+                        <strong>魔法觉醒赛季更新</strong>
+                      </div>
+                      <p>轮播位保留暗场大图、金线框和活动标题，适合接真实运营 banner。</p>
+                    </div>
+                    <div class="click-target hpma-news-tabs" :class="{ selected: selectedInstanceId === pageNodeId('Tabs') }" :data-node-id="pageNodeId('Tabs')" @click="selectInstance(pageNodeId('Tabs'))">
+                      <span class="tag">Tabs</span>
+                      <DuTabs value="event" type="tag" size="normal">
+                        <DuTab name="event">活动</DuTab>
+                        <DuTab name="news">新闻</DuTab>
+                        <DuTab name="notice">公告</DuTab>
+                      </DuTabs>
+                    </div>
+                    <div class="click-target hpma-news-list" :class="{ selected: selectedInstanceId === pageNodeId('Card') }" :data-node-id="pageNodeId('Card')" @click="selectInstance(pageNodeId('Card'))">
+                      <span class="tag">Card</span>
+                      <article>
+                        <time>06.12</time>
+                        <div>
+                          <strong>禁林调查限时开启</strong>
+                          <p>羊皮纸列表用于承接资讯摘要、日期和跳转入口。</p>
+                        </div>
+                      </article>
+                      <article>
+                        <time>06.08</time>
+                        <div>
+                          <strong>伙伴卡平衡性调整</strong>
+                          <p>细金线分隔比普通卡片边框更贴近官网资讯区。</p>
+                        </div>
+                      </article>
+                    </div>
+                    <div class="click-target hpma-news-actions" :class="{ selected: selectedInstanceId === pageNodeId('Tag') }" :data-node-id="pageNodeId('Tag')" @click="selectInstance(pageNodeId('Tag'))">
+                      <span class="tag">Tag</span>
+                      <div class="tag-row">
+                        <DuTag color="primary" round>限时活动</DuTag>
+                        <DuTag color="default" round>赛季情报</DuTag>
+                      </div>
+                      <DuButton text="查看更多资讯" type="outline" />
+                    </div>
+                  </template>
+
+                  <template v-else-if="selectedTemplateId === 'hpma-cards'">
+                    <div class="click-target hpma-search-panel" :class="{ selected: selectedInstanceId === pageNodeId('Search') }" :data-node-id="pageNodeId('Search')" @click="selectInstance(pageNodeId('Search'))">
+                      <span class="tag">Search</span>
+                      <DuSearch readonly :placeholder="['搜索魔咒、伙伴、回响']" />
+                    </div>
+                    <div class="click-target hpma-card-media" :class="{ selected: selectedInstanceId === pageNodeId('Image') }" :data-node-id="pageNodeId('Image')" @click="selectInstance(pageNodeId('Image'))">
+                      <span class="tag">Image</span>
+                      <div class="hpma-spell-orbit" aria-hidden="true">
+                        <i></i><i></i><i></i>
+                      </div>
+                      <strong>魔咒图鉴</strong>
+                      <p>图鉴页用卡面、轨迹光效和稀有度标签区别于首页/资讯页。</p>
+                    </div>
+                    <div class="click-target hpma-spell-grid" :class="{ selected: selectedInstanceId === pageNodeId('Card') }" :data-node-id="pageNodeId('Card')" @click="selectInstance(pageNodeId('Card'))">
+                      <span class="tag">Card</span>
+                      <article>
+                        <b>Expelliarmus</b>
+                        <small>魔咒</small>
+                      </article>
+                      <article>
+                        <b>Golden Snitch</b>
+                        <small>召唤</small>
+                      </article>
+                    </div>
+                    <div class="click-target hpma-rarity-row" :class="{ selected: selectedInstanceId === pageNodeId('Badge') }" :data-node-id="pageNodeId('Badge')" @click="selectInstance(pageNodeId('Badge'))">
+                      <span class="tag">Badge</span>
+                      <DuBadge value="LEGEND" color="primary" always-show>
+                        <span class="badge-anchor">稀有度</span>
+                      </DuBadge>
+                      <DuTabs value="spell" type="tag" size="normal" :data-node-id="pageNodeId('Tabs')" @click.stop="selectInstance(pageNodeId('Tabs'))">
+                        <DuTab name="spell">魔咒</DuTab>
+                        <DuTab name="partner">伙伴</DuTab>
+                      </DuTabs>
+                    </div>
+                  </template>
+
                   <template v-else-if="selectedTemplateId === 'czn-home'">
                     <div class="click-target czn-hero" :class="{ selected: selectedInstanceId === pageNodeId('Hero') }" :data-node-id="pageNodeId('Hero')" @click="selectInstance(pageNodeId('Hero'))">
                       <span class="tag">Hero</span>
@@ -754,6 +868,56 @@ const stylePresets = [
     ],
   },
   {
+    id: "hpma",
+    label: "HPMA",
+    icon: "https://www.harrypottermagicawakened.com/favicon.ico",
+    source: "官网 HTML/CSS + 截图采样",
+    hero: "Magic Awakened",
+    notice: "棕黑羊皮纸、古铜金边、白金标题和手绘魔法场景被拆成 dangoui token 与 demo-only 媒体资产两层。",
+    evidenceNote: "频次来自官网主 CSS 的 UI 色值引用，共 115 次；另用官网分享图、游戏特色图、角色卡和壁纸做图片采样，只作为媒体资产口径。金棕 CTA、羊皮纸文字和深棕面板进入 dangoui token；学院场景、角色插画、魔法蓝光和华丽边框留在 demoOnlyVisualControls。",
+    sectionTitle: "Wizarding Desk",
+    tabs: ["录取", "课程", "卡牌"],
+    cards: [
+      { title: "入学信面板", copy: "用 Card 承接羊皮纸式内容面板，文字和边界使用棕金 token，装饰纹理只作为 demo 背景。" },
+      { title: "魔咒卡组", copy: "媒体图、卡牌框、魔法光效和角色插画属于品牌资产层，不写入正式 dangoui token。" },
+    ],
+    tokens: [
+      { name: "--du-bg-2", value: "#221b15" },
+      { name: "--du-bg-1", value: "#493832" },
+      { name: "--du-text-1", value: "#f4eedc" },
+      { name: "--du-text-2", value: "#e9d9c5" },
+      { name: "--du-text-3", value: "#c8b08b" },
+      { name: "--du-border-1", value: "#8e6140" },
+      { name: "--du-primary-color", value: "#996540" },
+      { name: "--du-primary-border", value: "#8e6140" },
+      { name: "--du-primary-outline-color", value: "#c8b08b" },
+      { name: "--du-primary-soft-bg", value: "#2f241b" },
+      { name: "--du-primary-solid-bg", value: "#996540" },
+    ],
+    style: {
+      cardRadius: "0px",
+      controlRadius: "5px",
+      pageSpacing: "16px",
+      cardShadow: "0 20px 48px rgba(0,0,0,.42), inset 0 0 0 1px rgba(200,176,139,.22)",
+      media: "radial-gradient(circle at 72% 24%, rgba(96,172,190,.78), transparent 13%), radial-gradient(circle at 32% 36%, rgba(239,204,92,.72), transparent 15%), linear-gradient(135deg, rgba(20,19,16,.92), rgba(73,56,50,.92) 46%, rgba(153,101,64,.82)), repeating-linear-gradient(45deg, rgba(244,238,220,.14) 0 1px, transparent 1px 18px)",
+      fontDisplay: "uifont_cn_title",
+      fontNav: "navfont",
+      iconSystem: "image-asset buttons + diamond bullets",
+      borderFrame: "ornate gold corner frame / media_border asset",
+    },
+    signals: [
+      { raw: "#6a3611", count: 12, percent: "10.4%", target: "--du-primary-border", value: "官网 CSS 高频古铜棕，承接边界/强调" },
+      { raw: "#ffffff / #fefefe", count: 13, percent: "11.3%", target: "--du-text-1 / --du-white-*", value: "Logo、亮标题、反相文字" },
+      { raw: "#696a75", count: 8, percent: "7%", target: "--du-text-3", value: "输入 placeholder / 弱信息" },
+      { raw: "#523c2e", count: 7, percent: "6.1%", target: "--du-bg-1", value: "深棕面板/弹层表面" },
+      { raw: "#e9d9c5", count: 6, percent: "5.2%", target: "--du-text-1", value: "羊皮纸高亮文字" },
+      { raw: "#c8b08b", count: 4, percent: "3.5%", target: "--du-text-3", value: "金色标签、媒体导航文字" },
+      { raw: "手绘场景/角色/魔法蓝光", count: 6, percent: "图片采样", target: "demoOnlyVisualControls", value: "霍格沃茨街景、角色卡、飞贼、光效" },
+      { raw: "uifont_cn_title / navfont", count: 2, percent: "字体资产", target: "demoOnlyVisualControls", value: "官网字体包，用于标题和导航，不进入 dangoui token" },
+      { raw: "media_border / top_nav_h / button png", count: 6, percent: "图片资产", target: "demoOnlyVisualControls", value: "装饰边框、导航高亮、按钮/icon 图片" },
+    ],
+  },
+  {
     id: "apple",
     label: "Apple",
     icon: "https://www.apple.com/apple-touch-icon.png",
@@ -1164,6 +1328,23 @@ const styleRecipeDetails = {
       { title: "Media", value: "10-12px", note: "媒体容器可略大，但避免全 pill。" },
     ],
   },
+  hpma: {
+    typography: [
+      { title: "Display", value: "26-32px / 850", note: "标题需要像入学通知书和游戏 logo 一样有强仪式感，适合 serif/装饰字形方向。" },
+      { title: "Body", value: "13-15px / 560", note: "正文承接官网说明、新闻列表和卡牌信息，偏羊皮纸阅读感。" },
+      { title: "Label", value: "12-14px / 700", note: "导航、卡牌名和按钮文字用金棕色强化魔法书签感。" },
+    ],
+    spacing: [
+      { title: "Page", value: "16px", note: "信息密度中等，既能承接官网新闻，也保留沉浸式视觉空间。" },
+      { title: "Media gap", value: "12-16px", note: "媒体卡、壁纸和视频缩略图之间保持清晰网格，不把插画色混进 token。" },
+      { title: "CTA", value: "10-14px", note: "下载、预约、查看更多等行动入口靠近内容面板，保持游戏站节奏。" },
+    ],
+    radius: [
+      { title: "Card", value: "0px", note: "官网装饰框和媒体框更接近直角，主要识别来自边框、纹理和手绘资产。" },
+      { title: "Control", value: "5px", note: "输入框 CSS 出现 5px，按钮可近似到 Echo Radius/Small 或 Normal。" },
+      { title: "Media", value: "0-8px", note: "特色图和壁纸更多依赖装饰边框，圆角不是主要 token 特征。" },
+    ],
+  },
   apple: {
     typography: [
       { title: "Display", value: "28-34px / 760", note: "大标题留白充分，语气像产品展陈，不靠重描边制造冲击。" },
@@ -1449,6 +1630,29 @@ const cznTemplatePages = [
     components: ["NavigationBar", "CharacterPanel", "Avatar", "Card", "Tag"],
   },
 ];
+const hpmaTemplatePages = [
+  {
+    id: "hpma-home",
+    tab: "官网首页",
+    name: "霍格沃茨入学首页",
+    description: "对应官网首页：顶部导航、下载入口、录取通知书式文案和棕金魔法氛围。",
+    components: ["NavigationBar", "Hero", "DownloadPanel", "QRCode", "Button"],
+  },
+  {
+    id: "hpma-news",
+    tab: "资讯/活动",
+    name: "魔法资讯活动页",
+    description: "对应官网新闻与活动轮播：羊皮纸列表、金棕标签、媒体缩略图和查看更多。",
+    components: ["NavigationBar", "Swiper", "Tabs", "Card", "Tag", "Button"],
+  },
+  {
+    id: "hpma-cards",
+    tab: "魔咒卡牌",
+    name: "魔咒与伙伴图鉴",
+    description: "对应魔咒&伙伴介绍和壁纸图库：卡牌框、角色媒体、图鉴网格和装饰边界。",
+    components: ["NavigationBar", "Search", "Image", "Card", "Badge", "Tabs"],
+  },
+];
 const notionTemplatePages = [
   {
     id: "notion-home",
@@ -1474,6 +1678,7 @@ const notionTemplatePages = [
 ];
 const demoPagesByStyle = {
   czn: cznTemplatePages,
+  hpma: hpmaTemplatePages,
   notion: notionTemplatePages,
 };
 const currentDemoPages = computed(() => demoPagesByStyle[selectedStyleId.value] || []);

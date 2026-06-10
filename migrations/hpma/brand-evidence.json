@@ -1,0 +1,62 @@
+{
+  "brand": "hpma",
+  "source": "https://www.harrypottermagicawakened.com/cn/index.html",
+  "scopeNote": "Evidence combines official HTML/CSS structure, CSS color references from index_265aa12.css, and sampled official images. CSS colors are treated as UI evidence; image samples are media evidence and do not directly become dangoui tokens.",
+  "statistics": {
+    "uiColor": {
+      "scope": "Hex color references in the official main CSS. Total refs = 115.",
+      "formula": "percent = count / 115",
+      "total": 115,
+      "frequency": [
+        { "value": "#6a3611", "count": 12, "percent": "10.4%", "contexts": ["navigation/action accent", "ornamental brown"], "role": "antique brown emphasis" },
+        { "value": "#ffffff / #fefefe", "count": 13, "percent": "11.3%", "contexts": ["logo text", "button/input foreground", "reverse text"], "role": "bright foreground" },
+        { "value": "#696a75", "count": 8, "percent": "7.0%", "contexts": ["placeholder", "secondary copy"], "role": "muted text" },
+        { "value": "#e4e5e4", "count": 8, "percent": "7.0%", "contexts": ["selection text", "light UI text"], "role": "light text" },
+        { "value": "#523c2e", "count": 7, "percent": "6.1%", "contexts": ["panel/input surface"], "role": "dark brown surface" },
+        { "value": "#000000", "count": 6, "percent": "5.2%", "contexts": ["base text", "overlay"], "role": "ink/overlay" },
+        { "value": "#e9d9c5", "count": 6, "percent": "5.2%", "contexts": ["parchment copy", "modal text"], "role": "parchment text" },
+        { "value": "#c8b08b", "count": 4, "percent": "3.5%", "contexts": ["media links", "gold labels"], "role": "antique gold text" },
+        { "value": "#f0ebd9", "count": 4, "percent": "3.5%", "contexts": ["media captions", "footer text"], "role": "warm parchment foreground" },
+        { "value": "#996540", "count": 1, "percent": "0.9%", "contexts": ["verify button background"], "role": "brown primary action" }
+      ]
+    },
+    "mediaColor": {
+      "scope": "Sampled official images: share/logo image, game feature image, character card, news banner and wallpaper. Quantized to 16-step RGB buckets.",
+      "formula": "percent = sampled bucket count / image sample total",
+      "frequency": [
+        { "value": "#302020", "count": "dominant in share and character-card samples", "contexts": ["logo background", "character card"], "role": "media background, not a formal token by itself" },
+        { "value": "#403020 / #504030", "count": "high across feature and character-card samples", "contexts": ["Diagon Alley, parchment shadow"], "role": "media warm brown" },
+        { "value": "#e0c090", "count": "feature image highlight", "contexts": ["wizarding world title and sunlit scene"], "role": "golden media highlight" },
+        { "value": "#a0c0c0", "count": "12.2% in snitch wallpaper sample", "contexts": ["Quidditch sky scene"], "role": "scene color, demo-only" },
+        { "value": "#ffffff", "count": "logo foreground", "contexts": ["share logo"], "role": "brand mark foreground" }
+      ]
+    },
+    "componentPattern": {
+      "scope": "Patterns visible in official HTML and page sections.",
+      "formula": "percent = count / total component-pattern count in this scope",
+      "total": 18,
+      "frequency": [
+        { "pattern": "ornate-top-nav", "count": 3, "percent": "16.7%", "contexts": ["官网首页", "地图", "游戏特色"], "structure": ["nav links", "center logo", "submenu"] },
+        { "pattern": "download-panel", "count": 2, "percent": "11.1%", "contexts": ["QR code", "download CTA"], "structure": ["qr", "download logo", "action button"] },
+        { "pattern": "news-carousel-with-list", "count": 4, "percent": "22.2%", "contexts": ["newsBig swiper", "news tabs", "text list"], "structure": ["banner image", "category tabs", "dated list"] },
+        { "pattern": "feature-split-scene", "count": 5, "percent": "27.8%", "contexts": ["游戏特色 page1-page5"], "structure": ["large scene image", "ornate frame", "feature title"] },
+        { "pattern": "media-thumbnail-grid", "count": 3, "percent": "16.7%", "contexts": ["video center", "wallpaper gallery"], "structure": ["thumbnail", "border overlay", "caption"] },
+        { "pattern": "spell-character-card", "count": 1, "percent": "5.6%", "contexts": ["魔咒&伙伴介绍"], "structure": ["character portrait", "card frame", "rarity label"] }
+      ]
+    },
+    "nonColor": {
+      "scope": "CSS and visual inspection of typography, icon assets, controls, media frames and motion.",
+      "frequency": [
+        { "type": "typography", "value": "uifont_cn_title", "count": 1, "percent": "font asset", "contexts": ["official CSS @font-face", "mobile order button"], "role": "display/title font package" },
+        { "type": "typography", "value": "navfont", "count": 1, "percent": "font asset", "contexts": ["official CSS @font-face", "top navigation"], "role": "navigation font package" },
+        { "type": "icon", "value": "image asset icons", "count": 8, "percent": "asset evidence", "contexts": ["download badge", "QR hint", "book button", "play button", "close button", "nav highlight"], "role": "demo-only icon system" },
+        { "type": "border", "value": "media_border_67b7223.png / media_border2_e5450c6.png", "count": 2, "percent": "asset evidence", "contexts": ["video thumbnails", "wallpaper thumbnails"], "role": "ornate media frame asset" },
+        { "type": "radius", "value": "0px", "count": 2, "percent": "frame evidence", "contexts": ["media border assets", "thumbnail frame shells"], "role": "straight-edged frame/card radius" },
+        { "type": "radius", "value": "5px", "count": 1, "percent": "input/control evidence", "contexts": ["mobile order input"], "role": "control radius" },
+        { "type": "radius", "value": "8px", "count": 1, "percent": "button evidence", "contexts": ["verify button"], "role": "button/control radius only" },
+        { "type": "shadow/glow", "value": "blue/gold magical glow", "count": 4, "percent": "media evidence", "contexts": ["logo glint", "spell card orb", "scene highlights"], "role": "style-only" },
+        { "type": "border", "value": "ornate gold frame", "count": 6, "percent": "media/component evidence", "contexts": ["feature images", "thumbnail borders"], "role": "style-only / component gap" }
+      ]
+    }
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "brand": "hpma",
+  "components": [
+    {
+      "brandPattern": "ornate-top-nav",
+      "status": "composed",
+      "echoComponentCandidate": "NavigationBar + Tabs",
+      "dangouiComponents": ["NavigationBar", "Tabs"],
+      "props": { "NavigationBar": ["title"], "Tabs": ["active"] },
+      "slots": { "NavigationBar": ["left", "right"], "Tabs": ["default"] },
+      "usesTokens": ["--du-bg-2", "--du-text-1", "--du-text-3", "--du-primary-color"],
+      "unsupported": ["center logo image", "ornate hover state", "social flyout"],
+      "tokenChain": "demo nav class -> dangoui NavigationBar/Tabs visual structure -> --du-bg-2 / --du-text-* / --du-primary-color -> adapter mapped"
+    },
+    {
+      "brandPattern": "download-panel",
+      "status": "composed",
+      "echoComponentCandidate": "Card + Button + Image",
+      "dangouiComponents": ["Card", "Button", "Image"],
+      "props": { "Button": ["type", "text"], "Image": ["src"] },
+      "slots": { "Card": ["default"] },
+      "usesTokens": ["--du-bg-1", "--du-primary-color", "--du-primary-solid-bg"],
+      "unsupported": ["real QR code runtime", "official download badge artwork"],
+      "tokenChain": "download panel class -> DuCard + DuButton + DuImage -> --du-bg-1 / button aliases -> adapter primary brown"
+    },
+    {
+      "brandPattern": "news-carousel-with-list",
+      "status": "composed",
+      "echoComponentCandidate": "Swiper + Tabs + Card + Tag",
+      "dangouiComponents": ["Swiper", "Tabs", "Card", "Tag"],
+      "props": { "Tabs": ["active"], "Tag": ["text"] },
+      "slots": { "Card": ["default"], "Swiper": ["default"] },
+      "usesTokens": ["--du-bg-1", "--du-border-1", "--du-text-1", "--du-text-3"],
+      "unsupported": ["news data feed", "official banner crop", "ornate carousel frame"],
+      "tokenChain": "news carousel class -> Swiper placeholder + Card list -> --du-bg-1 / --du-border-1 -> media frame style-only"
+    },
+    {
+      "brandPattern": "media-thumbnail-grid",
+      "status": "composed",
+      "echoComponentCandidate": "Image + Card",
+      "dangouiComponents": ["Image", "Card"],
+      "props": { "Image": ["src"], "Card": ["title"] },
+      "slots": { "Card": ["default"] },
+      "usesTokens": ["--du-bg-1", "--du-text-3", "--du-border-1"],
+      "unsupported": ["video play overlay", "wallpaper download trigger", "ornate thumbnail border"],
+      "tokenChain": "media grid class -> DuImage + DuCard -> --du-bg-1 / --du-text-3 -> border artwork style-only"
+    },
+    {
+      "brandPattern": "spell-character-card",
+      "status": "fallback",
+      "echoComponentCandidate": "Card + Image + Badge",
+      "dangouiComponents": ["Card", "Image", "Badge"],
+      "props": { "Badge": ["content"], "Image": ["src"] },
+      "slots": { "Card": ["default"] },
+      "usesTokens": ["--du-bg-1", "--du-text-1", "--du-primary-outline-color"],
+      "unsupported": ["rarity-specific frame", "card illustration crop rules", "magic orb glow"],
+      "tokenChain": "spell card demo class -> DuCard + DuImage + DuBadge -> text/background tokens mapped; rarity frame remains demoOnlyVisualControls"
+    }
+  ]
+}

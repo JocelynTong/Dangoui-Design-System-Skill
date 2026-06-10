@@ -1,0 +1,35 @@
+{
+  "brand": "hpma",
+  "tokens": {
+    "--du-bg-2": { "value": "#221b15", "status": "mapped", "source": "warm dark page canvas" },
+    "--du-bg-1": { "value": "#493832", "status": "mapped", "source": "panel/input surface" },
+    "--du-text-1": { "value": "#f4eedc", "status": "mapped", "source": "warm parchment foreground" },
+    "--du-text-2": { "value": "#e9d9c5", "status": "mapped", "source": "parchment copy" },
+    "--du-text-3": { "value": "#c8b08b", "status": "mapped", "source": "gold-muted label" },
+    "--du-border-1": { "value": "#8e6140", "status": "mapped", "source": "input border / antique brown frame" },
+    "--du-primary-color": { "value": "#996540", "status": "mapped", "source": "brown action control" },
+    "--du-primary-border": { "value": "#8e6140", "status": "mapped", "source": "antique border" },
+    "--du-primary-outline-color": { "value": "#c8b08b", "status": "mapped", "source": "gold outline text" },
+    "--du-primary-soft-bg": { "value": "#2f241b", "status": "mapped", "source": "dark brown action soft bg" },
+    "--du-primary-solid-bg": { "value": "#996540", "status": "mapped", "source": "brown action control" }
+  },
+  "demoOnlyVisualControls": {
+    "--style-card-radius": { "value": "0px", "status": "style-only", "reason": "Ornate HPMA frames and media shells are straight-edged; do not infer rounded cards from control evidence." },
+    "--style-control-radius": { "value": "5px", "status": "fallback", "echoToken": "Radius/Small" },
+    "--style-card-shadow": { "value": "0 20px 48px rgba(0,0,0,.42), inset 0 0 0 1px rgba(200,176,139,.22)", "status": "style-only" },
+    "--style-media": { "value": "magical brown/gold/blue illustration gradient", "status": "style-only" },
+    "--style-font-display": { "value": "uifont_cn_title", "status": "style-only", "reason": "Official site ships a custom title font; dangoui has no typography token for this." },
+    "--style-font-nav": { "value": "navfont", "status": "style-only", "reason": "Official navigation uses a custom font package; keep it as demo typography control." },
+    "--style-icon-system": { "value": "image-asset buttons + diamond bullets", "status": "style-only", "reason": "Official icons are mostly image assets, not dangoui icon names." },
+    "--style-border-frame": { "value": "ornate gold corner frame / media_border asset", "status": "style-only", "reason": "Official borders are decorative image frames; current dangoui has no frame token/component." },
+    "ornateMediaFrame": { "status": "missing", "reason": "Requires an image/border asset or a formal media-frame component." },
+    "characterArtAndSceneColor": { "status": "style-only", "reason": "Official illustrations and wallpaper colors are media assets, not semantic tokens." }
+  },
+  "components": {
+    "ornate-top-nav": { "status": "composed", "dangouiComponents": ["NavigationBar", "Tabs"], "unsupported": ["center logo lockup", "ornate hover decoration"] },
+    "download-panel": { "status": "composed", "dangouiComponents": ["Card", "Button", "Image"], "unsupported": ["QR runtime asset", "download badge artwork"] },
+    "news-carousel-with-list": { "status": "composed", "dangouiComponents": ["Swiper", "Tabs", "Card", "Tag"], "unsupported": ["official news data feed"] },
+    "media-thumbnail-grid": { "status": "composed", "dangouiComponents": ["Image", "Card"], "unsupported": ["ornate thumbnail border asset"] },
+    "spell-character-card": { "status": "fallback", "dangouiComponents": ["Card", "Image", "Badge"], "unsupported": ["rarity frame", "card-specific decorative shell"] }
+  }
+}

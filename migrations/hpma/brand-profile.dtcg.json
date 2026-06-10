@@ -1,0 +1,74 @@
+{
+  "$description": "Harry Potter: Magic Awakened brand migration profile. Token sections follow DTCG style; component patterns are referenced through component-mapping.json.",
+  "$extensions": {
+    "com.echo.brandMigration": {
+      "brand": "hpma",
+      "source": "https://www.harrypottermagicawakened.com/cn/index.html",
+      "evidence": "migrations/hpma/brand-evidence.json",
+      "previewGate": "migrations/hpma/preview-gate.json",
+      "componentMapping": "migrations/hpma/component-mapping.json"
+    }
+  },
+  "Color": {
+    "DarkParchmentCanvas": {
+      "$type": "color",
+      "$value": "#221b15",
+      "$description": "Warm dark page canvas for the HPMA demo.",
+      "$extensions": { "com.echo.brandMigration": { "status": "mapped", "rawBrandValue": "#302020 / #221b15", "dangouiTarget": "--du-bg-2" } }
+    },
+    "BrownPanel": {
+      "$type": "color",
+      "$value": "#493832",
+      "$description": "Dark brown panel surface.",
+      "$extensions": { "com.echo.brandMigration": { "status": "mapped", "rawBrandValue": "#523c2e / #493832", "dangouiTarget": "--du-bg-1" } }
+    },
+    "ParchmentText": {
+      "$type": "color",
+      "$value": "#f4eedc",
+      "$description": "Warm parchment foreground text.",
+      "$extensions": { "com.echo.brandMigration": { "status": "mapped", "rawBrandValue": "#f4eedc / #f0ebd9", "dangouiTarget": "--du-text-1" } }
+    },
+    "AntiqueGoldMuted": {
+      "$type": "color",
+      "$value": "#c8b08b",
+      "$description": "Antique gold label and muted text.",
+      "$extensions": { "com.echo.brandMigration": { "status": "mapped", "rawBrandValue": "#c8b08b", "dangouiTarget": "--du-text-3" } }
+    },
+    "BrownPrimaryAction": {
+      "$type": "color",
+      "$value": "#996540",
+      "$description": "Brown-gold action color, not the blue magic glow.",
+      "$extensions": { "com.echo.brandMigration": { "status": "mapped", "rawBrandValue": "#996540", "dangouiTarget": "--du-primary-color" } }
+    },
+    "MagicScenePalette": {
+      "$type": "color",
+      "$value": "#60acbe",
+      "$description": "Representative blue magic/scene color; kept out of semantic token mapping.",
+      "$extensions": { "com.echo.brandMigration": { "status": "style-only", "rawBrandValue": ["#a0c0c0", "#60acbe", "#e0c090"], "reason": "Scene and magic-effect colors are media assets." } }
+    }
+  },
+  "Radius": {
+    "Control": {
+      "$type": "dimension",
+      "$value": { "value": 4, "unit": "px" },
+      "$description": "Closest Echo primitive for 5px official input radius.",
+      "$extensions": { "com.echo.brandMigration": { "status": "fallback", "rawBrandValue": "5px", "currentToken": "Radius/Small" } }
+    },
+    "Card": {
+      "$type": "dimension",
+      "$value": { "value": 0, "unit": "px" },
+      "$description": "Straight-edged ornate frame/card radius for HPMA demo layout.",
+      "$extensions": { "com.echo.brandMigration": { "status": "style-only", "rawBrandValue": "0px", "reason": "Do not apply button/control radius to media and card frames." } }
+    }
+  },
+  "Shadow": {
+    "$description": "Ornate gold frame and magic glow are not current formal tokens.",
+    "$extensions": {
+      "com.echo.brandMigration": {
+        "status": "style-only",
+        "rawBrandValue": "blue/gold glow + inset gold frame",
+        "futureTokenCandidate": "Shadow/MagicOrnateFrame"
+      }
+    }
+  }
+}
