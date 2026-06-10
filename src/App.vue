@@ -155,7 +155,6 @@
                 <div class="feed template-feed" :class="{ 'style-phone-feed': selectedWorkspaceMode === 'style' }">
                   <template v-if="selectedWorkspaceMode === 'style'">
                     <section class="style-mockup-page" aria-label="style preview page">
-                      <div class="style-page-kicker">Style recipe</div>
                       <h2>{{ selectedStyleCategory?.label }} <span>{{ selectedStyleCategory?.zh }}</span></h2>
                       <p>{{ currentStyleCategoryDescription }}</p>
                     </section>
