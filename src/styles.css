@@ -1328,10 +1328,6 @@ pre {
   border-color: color-mix(in srgb, var(--style-accent) 24%, transparent);
 }
 
-.style-preview-panel {
-  gap: 9px;
-}
-
 .style-preview-heading {
   display: flex;
   align-items: baseline;
@@ -1352,55 +1348,67 @@ pre {
   font-size: 13px;
 }
 
-.context-color-strip {
+.style-mockup-preview {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  margin-bottom: 14px;
+  padding: 12px;
+  border-radius: var(--style-card-radius);
+  background: color-mix(in srgb, var(--style-card-bg) 94%, var(--style-page-bg));
+  color: var(--style-text);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 8%, transparent);
+}
+
+.mockup-color-strip {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 6px;
   min-width: 0;
 }
 
-.context-color-strip i {
+.mockup-color-strip i {
   display: block;
   height: 34px;
-  border-radius: calc(var(--mockup-radius) * 0.28);
+  border-radius: var(--style-control-radius);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 10%, transparent);
 }
 
-.context-type-specimens {
+.mockup-type-specimens {
   display: grid;
   gap: 7px;
   min-width: 0;
 }
 
-.context-type-specimens > div {
+.mockup-type-specimens > div {
   display: grid;
   gap: 4px;
   min-width: 0;
   padding: 10px;
-  border-radius: calc(var(--mockup-radius) * 0.32);
+  border-radius: var(--style-card-radius);
   background: var(--style-card-bg);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 8%, transparent);
 }
 
-.context-type-specimens span {
+.mockup-type-specimens span {
   color: var(--style-muted);
   font-size: 10px;
   font-weight: 760;
   line-height: 1.2;
 }
 
-.context-type-specimens strong {
+.mockup-type-specimens strong {
   color: var(--style-text);
   line-height: 1.12;
 }
 
-.context-scale-panel {
+.mockup-scale-panel {
   background: var(--style-card-bg);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 8%, transparent);
 }
 
-.context-scale-panel .spacing-scale-item,
-.context-scale-panel .radius-scale-card {
+.mockup-scale-panel .spacing-scale-item,
+.mockup-scale-panel .radius-scale-card {
   width: 112px;
   min-width: 112px;
 }
