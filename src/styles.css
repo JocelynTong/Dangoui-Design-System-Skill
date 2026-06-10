@@ -718,6 +718,11 @@ a {
   overflow: hidden;
 }
 
+.palette-row.spacing-row {
+  grid-template-columns: minmax(0, 1fr);
+  padding: 8px;
+}
+
 .palette-row.primary {
   border-color: color-mix(in srgb, var(--style-accent) 32%, var(--line));
   box-shadow: 0 0 0 1px color-mix(in srgb, var(--style-accent) 14%, transparent);
@@ -749,26 +754,8 @@ a {
 }
 
 .recipe-swatch-spacing {
-  grid-template-columns: 1fr var(--recipe-gap, 8px) 1fr;
-  gap: 0;
   color: var(--muted);
   font-size: 9px;
-}
-
-.recipe-swatch-spacing::before,
-.recipe-swatch-spacing::after {
-  content: "";
-  display: block;
-  width: 100%;
-  min-width: 8px;
-  height: 28px;
-  border-radius: 5px;
-  background: color-mix(in srgb, var(--style-accent) 70%, var(--panel-soft));
-}
-
-.recipe-swatch-spacing span {
-  grid-column: 1 / -1;
-  margin-top: 4px;
 }
 
 .recipe-swatch-radius::before {
@@ -800,11 +787,42 @@ a {
   overflow-wrap: anywhere;
 }
 
+.spacing-preview {
+  display: grid;
+  grid-template-columns: minmax(28px, 1fr) var(--recipe-gap, 8px) minmax(28px, 1fr);
+  align-items: center;
+  min-width: 0;
+  padding: 7px;
+  border-radius: 7px;
+  background: color-mix(in srgb, var(--panel-soft) 78%, var(--style-card-bg));
+}
+
+.spacing-preview i {
+  display: block;
+  height: 24px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--style-accent) 68%, var(--panel-soft));
+}
+
+.spacing-preview span {
+  grid-column: 1 / -1;
+  justify-self: center;
+  margin-top: 5px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 720;
+  line-height: 1.2;
+}
+
 .palette-meta {
   display: grid;
   gap: 4px;
   padding: 7px 8px 7px 0;
   min-width: 0;
+}
+
+.spacing-row .palette-meta {
+  padding: 0;
 }
 
 .palette-meta > div {

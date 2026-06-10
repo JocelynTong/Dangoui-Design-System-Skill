@@ -57,8 +57,14 @@
                     </div>
                   </div>
                   <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
-                    <div v-for="item in selectedStyleRecipeRows" :key="item.title" class="palette-row">
+                    <div
+                      v-for="item in selectedStyleRecipeRows"
+                      :key="item.title"
+                      class="palette-row"
+                      :class="{ 'spacing-row': selectedStyleCategoryId === 'spacing' }"
+                    >
                       <i
+                        v-if="selectedStyleCategoryId !== 'spacing'"
                         class="palette-swatch recipe-swatch"
                         :class="recipeSwatchClass"
                         :style="recipeSwatchStyle(item)"
@@ -72,6 +78,15 @@
                         </div>
                         <em>{{ item.target }}</em>
                         <span class="recipe-value">{{ item.value }}</span>
+                        <div
+                          v-if="selectedStyleCategoryId === 'spacing'"
+                          class="spacing-preview"
+                          :style="recipeSwatchStyle(item)"
+                        >
+                          <i></i>
+                          <span>{{ recipeSwatchText(item) }}</span>
+                          <i></i>
+                        </div>
                         <p>{{ item.note }}</p>
                       </div>
                     </div>
