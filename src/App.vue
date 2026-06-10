@@ -1686,22 +1686,18 @@ function recipeSwatchStyle(item) {
     return {
       fontSize: `${Math.min(firstNumber(sizePart, 14), 22)}px`,
       fontWeight: String(firstNumber(weightPart, 700)),
-      background: "var(--style-card-bg)",
-      color: "var(--style-text)",
     };
   }
   if (category === "spacing") {
     const gap = Math.min(firstNumber(item.value, 8), 24);
     return {
       "--recipe-gap": `${gap}px`,
-      background: "var(--style-card-bg)",
     };
   }
   if (category === "radius") {
     const radius = item.value.includes("999") ? 999 : firstNumber(item.value, 8);
     return {
       "--recipe-radius": radius === 999 ? "999px" : `${Math.min(radius, 28)}px`,
-      background: "var(--style-card-bg)",
     };
   }
   return {};
