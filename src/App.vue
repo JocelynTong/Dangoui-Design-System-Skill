@@ -161,8 +161,7 @@
 
                     <section class="style-evidence-mockup-card" aria-label="style evidence">
                       <div class="style-preview-heading">
-                        <span>{{ styleEvidenceHeading.eyebrow }}</span>
-                        <strong>{{ styleEvidenceHeading.title }}</strong>
+                        <span>映射与频次</span>
                       </div>
                       <div v-if="selectedStyleCategoryId === 'color'" class="palette-list">
                         <div
@@ -1504,12 +1503,6 @@ const selectedStyleCategory = computed(() =>
 const currentStyleCategoryDescription = computed(() =>
   selectedStyleCategoryId.value === "color" ? selectedStyle.value.evidenceNote : selectedStyleCategory.value?.description || "",
 );
-const styleEvidenceHeading = computed(() => {
-  if (selectedStyleCategoryId.value === "typography") return { eyebrow: "Specimen", title: "展示与频次映射" };
-  if (selectedStyleCategoryId.value === "spacing") return { eyebrow: "Scale", title: "间距与频次映射" };
-  if (selectedStyleCategoryId.value === "radius") return { eyebrow: "Scale", title: "圆角与频次映射" };
-  return { eyebrow: "Evidence", title: "频次与映射" };
-});
 const recipeSwatchClass = computed(() => `recipe-swatch-${selectedStyleCategoryId.value}`);
 const selectedStyleRecipeRows = computed(() => {
   const recipe = styleRecipeDetails[selectedStyle.value.id];
