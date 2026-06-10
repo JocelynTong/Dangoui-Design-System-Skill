@@ -58,13 +58,20 @@
                   </div>
                   <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
                     <div v-for="item in selectedStyleRecipeRows" :key="item.title" class="palette-row">
-                      <i class="palette-swatch recipe-swatch">{{ item.value }}</i>
+                      <i
+                        class="palette-swatch recipe-swatch"
+                        :class="recipeSwatchClass"
+                        :style="recipeSwatchStyle(item)"
+                      >
+                        <span>{{ recipeSwatchText(item) }}</span>
+                      </i>
                       <div class="palette-meta">
                         <div>
                           <strong>{{ item.title }}</strong>
                           <span>{{ item.stat }}</span>
                         </div>
                         <em>{{ item.target }}</em>
+                        <span class="recipe-value">{{ item.value }}</span>
                         <p>{{ item.note }}</p>
                       </div>
                     </div>
@@ -1430,6 +1437,7 @@ const selectedStyle = computed(() => stylePresets.find((preset) => preset.id ===
 const selectedStyleCategory = computed(() =>
   styleCategories.find((category) => category.id === selectedStyleCategoryId.value),
 );
+const recipeSwatchClass = computed(() => `recipe-swatch-${selectedStyleCategoryId.value}`);
 const selectedStyleRecipeRows = computed(() => {
   const recipe = styleRecipeDetails[selectedStyle.value.id];
   const stats = recipeStatsByCategory[selectedStyleCategoryId.value] || [];
@@ -1554,6 +1562,46 @@ function signalSwatch(signal) {
   }
   if (String(signal.raw).includes("palette")) return selectedStyle.value.style.media;
   return "linear-gradient(135deg, #f6f5f4, #e6e6e6)";
+}
+
+function firstNumber(value, fallback) {
+  const match = String(value).match(/\d+/);
+  return match ? Number(match[0]) : fallback;
+}
+
+function recipeSwatchText(item) {
+  if (selectedStyleCategoryId.value === "typography") return "Aa";
+  if (selectedStyleCategoryId.value === "spacing") return `${firstNumber(item.value, 8)}px`;
+  if (selectedStyleCategoryId.value === "radius") return item.value.includes("999") ? "pill" : `${firstNumber(item.value, 8)}px`;
+  return item.value;
+}
+
+function recipeSwatchStyle(item) {
+  const category = selectedStyleCategoryId.value;
+  if (category === "typography") {
+    const [sizePart, weightPart] = String(item.value).split("/");
+    return {
+      fontSize: `${Math.min(firstNumber(sizePart, 14), 22)}px`,
+      fontWeight: String(firstNumber(weightPart, 700)),
+      background: "var(--style-card-bg)",
+      color: "var(--style-text)",
+    };
+  }
+  if (category === "spacing") {
+    const gap = Math.min(firstNumber(item.value, 8), 24);
+    return {
+      "--recipe-gap": `${gap}px`,
+      background: "var(--style-card-bg)",
+    };
+  }
+  if (category === "radius") {
+    const radius = item.value.includes("999") ? 999 : firstNumber(item.value, 8);
+    return {
+      "--recipe-radius": radius === 999 ? "999px" : `${Math.min(radius, 28)}px`,
+      background: "var(--style-card-bg)",
+    };
+  }
+  return {};
 }
 
 function componentDocsUrl(name) {

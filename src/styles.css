@@ -743,6 +743,63 @@ a {
   overflow-wrap: anywhere;
 }
 
+.recipe-swatch span {
+  position: relative;
+  z-index: 1;
+}
+
+.recipe-swatch-spacing {
+  grid-template-columns: 1fr var(--recipe-gap, 8px) 1fr;
+  gap: 0;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.recipe-swatch-spacing::before,
+.recipe-swatch-spacing::after {
+  content: "";
+  display: block;
+  width: 100%;
+  min-width: 8px;
+  height: 28px;
+  border-radius: 5px;
+  background: color-mix(in srgb, var(--style-accent) 70%, var(--panel-soft));
+}
+
+.recipe-swatch-spacing span {
+  grid-column: 1 / -1;
+  margin-top: 4px;
+}
+
+.recipe-swatch-radius::before {
+  content: "";
+  display: block;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--recipe-radius, 8px);
+  background: color-mix(in srgb, var(--style-accent) 72%, var(--panel-soft));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-accent) 24%, transparent);
+}
+
+.recipe-swatch-radius span {
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.recipe-swatch-typography {
+  min-height: 58px;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+}
+
+.recipe-value {
+  color: var(--style-accent);
+  font-size: 10px;
+  font-weight: 760;
+  line-height: 1.2;
+  overflow-wrap: anywhere;
+}
+
 .palette-meta {
   display: grid;
   gap: 4px;
