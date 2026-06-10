@@ -57,64 +57,28 @@
                     </div>
                   </div>
                   <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
-                    <div v-if="selectedStyleCategoryId === 'spacing'" class="recipe-scale-panel spacing-scale" aria-label="spacing scale">
-                      <strong>Spacing scale</strong>
-                      <small>色块宽度 = spacing value</small>
-                      <div class="spacing-scale-track">
-                        <div
-                          v-for="item in spacingScaleRows"
-                          :key="item.title"
-                          class="spacing-scale-item"
-                          :style="{ '--scale-width': `${item.width}px` }"
-                        >
-                          <i></i>
-                          <span>{{ item.title }} · {{ item.label }}</span>
-                          <em>{{ item.stat }}</em>
-                          <p>{{ item.note }}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div v-if="selectedStyleCategoryId === 'radius'" class="recipe-scale-panel radius-scale" aria-label="radius scale">
-                      <strong>Border radius scale</strong>
-                      <small>形状圆角 = radius value</small>
-                      <div class="radius-scale-track">
-                        <div
-                          v-for="item in radiusScaleRows"
-                          :key="item.title"
-                          class="radius-scale-card"
-                          :style="{ '--recipe-radius': item.radius }"
-                        >
-                          <i></i>
-                          <span>{{ item.label }}</span>
-                          <em>{{ item.stat }}</em>
-                          <p>{{ item.note }}</p>
-                        </div>
-                      </div>
-                    </div>
-                    <template v-if="selectedStyleCategoryId !== 'spacing' && selectedStyleCategoryId !== 'radius'">
-                      <div
-                        v-for="item in selectedStyleRecipeRows"
-                        :key="item.title"
-                        class="palette-row"
+                    <div
+                      v-for="item in selectedStyleRecipeRows"
+                      :key="item.title"
+                      class="palette-row"
+                    >
+                      <i
+                        class="palette-swatch recipe-swatch"
+                        :class="recipeSwatchClass"
+                        :style="recipeSwatchStyle(item)"
                       >
-                        <i
-                          class="palette-swatch recipe-swatch"
-                          :class="recipeSwatchClass"
-                          :style="recipeSwatchStyle(item)"
-                        >
-                          <span>{{ recipeSwatchText(item) }}</span>
-                        </i>
-                        <div class="palette-meta">
-                          <div>
-                            <strong>{{ item.title }}</strong>
-                            <span>{{ item.stat }}</span>
-                          </div>
-                          <em>{{ item.target }}</em>
-                          <span class="recipe-value">{{ item.value }}</span>
-                          <p>{{ item.note }}</p>
+                        <span>{{ recipeSwatchText(item) }}</span>
+                      </i>
+                      <div class="palette-meta">
+                        <div>
+                          <strong>{{ item.title }}</strong>
+                          <span>{{ item.stat }}</span>
                         </div>
+                        <em>{{ item.target }}</em>
+                        <span class="recipe-value">{{ item.value }}</span>
+                        <p>{{ item.note }}</p>
                       </div>
-                    </template>
+                    </div>
                   </div>
                   <div v-else class="recipe-placeholder">
                     <span>{{ category.status }}</span>
@@ -206,6 +170,68 @@
                 <div class="context-section">
                   <strong>{{ selectedStyle.label }}</strong>
                   <p>{{ selectedStyle.notice }}</p>
+                </div>
+
+                <div v-if="selectedInspectorTab === 'style'" class="context-section style-preview-panel">
+                  <div class="style-preview-heading">
+                    <span>{{ selectedStyleCategory?.label }}</span>
+                    <strong>{{ selectedStyleCategory?.zh }}</strong>
+                  </div>
+
+                  <div v-if="selectedStyleCategoryId === 'color'" class="context-color-strip">
+                    <i
+                      v-for="signal in selectedStyle.signals"
+                      :key="`${selectedStyle.id}-context-${signal.raw}-${signal.target}`"
+                      :style="{ background: signalSwatch(signal) }"
+                    ></i>
+                  </div>
+
+                  <div v-else-if="selectedStyleCategoryId === 'typography'" class="context-type-specimens">
+                    <div
+                      v-for="item in selectedStyleRecipeRows"
+                      :key="`type-${item.title}`"
+                      :style="recipeSwatchStyle(item)"
+                    >
+                      <span>{{ item.title }}</span>
+                      <strong>Design system rhythm</strong>
+                    </div>
+                  </div>
+
+                  <div v-else-if="selectedStyleCategoryId === 'spacing'" class="recipe-scale-panel context-scale-panel spacing-scale" aria-label="spacing scale">
+                    <strong>Spacing scale</strong>
+                    <small>色块宽度 = spacing value</small>
+                    <div class="spacing-scale-track">
+                      <div
+                        v-for="item in spacingScaleRows"
+                        :key="`context-spacing-${item.title}`"
+                        class="spacing-scale-item"
+                        :style="{ '--scale-width': `${item.width}px` }"
+                      >
+                        <i></i>
+                        <span>{{ item.title }} · {{ item.label }}</span>
+                        <em>{{ item.stat }}</em>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div v-else-if="selectedStyleCategoryId === 'radius'" class="recipe-scale-panel context-scale-panel radius-scale" aria-label="radius scale">
+                    <strong>Border radius scale</strong>
+                    <small>形状圆角 = radius value</small>
+                    <div class="radius-scale-track">
+                      <div
+                        v-for="item in radiusScaleRows"
+                        :key="`context-radius-${item.title}`"
+                        class="radius-scale-card"
+                        :style="{ '--recipe-radius': item.radius }"
+                      >
+                        <i></i>
+                        <span>{{ item.label }}</span>
+                        <em>{{ item.stat }}</em>
+                      </div>
+                    </div>
+                  </div>
+
+                  <p v-else>{{ selectedStyleCategory?.description }}</p>
                 </div>
 
                 <div v-if="currentDemoPages.length" class="context-section">
