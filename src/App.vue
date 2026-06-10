@@ -20,8 +20,8 @@
 
       <div class="side-rail">
         <nav class="inspector-tabs" aria-label="inspector sections">
-          <button type="button" :class="{ active: selectedInspectorTab === 'style' }" @click="selectedInspectorTab = 'style'">风格</button>
-          <button type="button" :class="{ active: selectedInspectorTab === 'components' }" @click="selectedInspectorTab = 'components'">组件</button>
+          <button type="button" :class="{ active: selectedInspectorTab === 'style' }" @click="showStyleMenu">风格</button>
+          <button type="button" :class="{ active: selectedInspectorTab === 'components' }" @click="showComponentMenu">组件</button>
         </nav>
 
         <template v-if="selectedInspectorTab === 'style'">
@@ -32,7 +32,7 @@
               class="token-category"
               :class="{ active: selectedStyleCategoryId === category.id }"
             >
-              <button class="node-button token-category-button" type="button" @click="selectedStyleCategoryId = category.id">
+              <button class="node-button token-category-button" type="button" @click="selectStyleCategory(category.id)">
                 <strong>{{ category.label }} <em>{{ category.zh }}</em><span>{{ category.meta }}</span></strong>
               </button>
             </div>
@@ -149,11 +149,11 @@
                 >
                   <span class="tag">NavigationBar</span>
                   <DuNavigationBar color="white" :back="false" :share="true">
-                    <strong class="nav-title">{{ selectedInspectorTab === 'style' ? `${selectedStyleCategory?.label} ${selectedStyleCategory?.zh}` : selectedTemplate.name }}</strong>
+                    <strong class="nav-title">{{ selectedWorkspaceMode === 'style' ? '风格' : selectedTemplate.name }}</strong>
                   </DuNavigationBar>
                 </div>
-                <div class="feed template-feed" :class="{ 'style-phone-feed': selectedInspectorTab === 'style' }">
-                  <template v-if="selectedInspectorTab === 'style'">
+                <div class="feed template-feed" :class="{ 'style-phone-feed': selectedWorkspaceMode === 'style' }">
+                  <template v-if="selectedWorkspaceMode === 'style'">
                     <section class="style-mockup-page" aria-label="style preview page">
                       <div class="style-page-kicker">Style recipe</div>
                       <h2>{{ selectedStyleCategory?.label }} <span>{{ selectedStyleCategory?.zh }}</span></h2>
@@ -1067,7 +1067,8 @@ const selectedComponent = ref("NavigationBar");
 const selectedTokenName = ref("");
 const tokensExpanded = ref(false);
 const selectedTemplateId = ref("czn-home");
-const selectedInspectorTab = ref("components");
+const selectedInspectorTab = ref("style");
+const selectedWorkspaceMode = ref("components");
 const selectedStyleCategoryId = ref("color");
 
 const styleCategories = [
@@ -1742,6 +1743,7 @@ function getToken(tokenName) {
 function selectInstance(instanceId) {
   const instance = pageInstances.value.find((item) => item.id === instanceId);
   if (!instance) return;
+  selectedWorkspaceMode.value = "components";
   selectedInstanceId.value = instance.id;
   selectedComponent.value = instance.name;
   selectedTokenName.value = "";
@@ -1754,6 +1756,7 @@ function selectInstance(instanceId) {
 }
 
 function selectTemplate(templateId) {
+  selectedWorkspaceMode.value = "components";
   selectedTemplateId.value = templateId;
   nextTick(() => {
     const first = pageInstances.value[0];
@@ -1763,12 +1766,28 @@ function selectTemplate(templateId) {
 
 function selectStyle(styleId) {
   selectedStyleId.value = styleId;
-  selectedInspectorTab.value = "components";
+  selectedInspectorTab.value = "style";
+  selectedWorkspaceMode.value = "components";
   selectedTemplateId.value = demoPagesByStyle[styleId]?.[0]?.id || "distribution";
   nextTick(() => {
     const first = pageInstances.value[0];
     if (first) selectInstance(first.id);
   });
+}
+
+function showStyleMenu() {
+  selectedInspectorTab.value = "style";
+  selectedWorkspaceMode.value = "style";
+}
+
+function showComponentMenu() {
+  selectedInspectorTab.value = "components";
+  selectedWorkspaceMode.value = "components";
+}
+
+function selectStyleCategory(categoryId) {
+  selectedStyleCategoryId.value = categoryId;
+  selectedWorkspaceMode.value = "style";
 }
 
 function selectToken(tokenName) {
