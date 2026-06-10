@@ -56,12 +56,17 @@
                       </div>
                     </div>
                   </div>
-                  <div v-else-if="selectedStyleRecipeRows.length" class="recipe-list">
-                    <div v-for="item in selectedStyleRecipeRows" :key="item.title" class="recipe-row">
-                      <strong>{{ item.title }}</strong>
-                      <span>{{ item.value }}</span>
-                      <small>{{ item.stat }}</small>
-                      <p>{{ item.note }}</p>
+                  <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
+                    <div v-for="item in selectedStyleRecipeRows" :key="item.title" class="palette-row">
+                      <i class="palette-swatch recipe-swatch">{{ item.value }}</i>
+                      <div class="palette-meta">
+                        <div>
+                          <strong>{{ item.title }}</strong>
+                          <span>{{ item.stat }}</span>
+                        </div>
+                        <em>{{ item.target }}</em>
+                        <p>{{ item.note }}</p>
+                      </div>
                     </div>
                   </div>
                   <div v-else class="recipe-placeholder">
@@ -1422,12 +1427,16 @@ const missingByName = computed(() =>
 );
 const uniqueComponentCount = computed(() => new Set(pageInstances.value.map((item) => item.name)).size);
 const selectedStyle = computed(() => stylePresets.find((preset) => preset.id === selectedStyleId.value) || stylePresets[0]);
+const selectedStyleCategory = computed(() =>
+  styleCategories.find((category) => category.id === selectedStyleCategoryId.value),
+);
 const selectedStyleRecipeRows = computed(() => {
   const recipe = styleRecipeDetails[selectedStyle.value.id];
   const stats = recipeStatsByCategory[selectedStyleCategoryId.value] || [];
   return (recipe?.[selectedStyleCategoryId.value] || []).map((item, index) => ({
     ...item,
     stat: item.stat || stats[index] || "待统计",
+    target: item.target || selectedStyleCategory.value?.meta || "recipe",
   }));
 });
 const selectedStyleTokenMap = computed(() =>

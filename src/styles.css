@@ -706,53 +706,6 @@ a {
   line-height: 1.45;
 }
 
-.recipe-list {
-  display: grid;
-  gap: 6px;
-  min-width: 0;
-}
-
-.recipe-row {
-  display: grid;
-  gap: 4px;
-  min-width: 0;
-  padding: 8px;
-  border-radius: 8px;
-  background: var(--panel);
-}
-
-.recipe-row strong {
-  color: var(--text);
-  font-size: 11px;
-  line-height: 1.25;
-}
-
-.recipe-row span {
-  color: var(--style-accent);
-  font-size: 10px;
-  font-weight: 760;
-  line-height: 1.2;
-  overflow-wrap: anywhere;
-}
-
-.recipe-row small {
-  width: max-content;
-  max-width: 100%;
-  padding: 2px 5px;
-  border-radius: 999px;
-  background: color-mix(in srgb, var(--style-accent-soft) 58%, var(--panel-soft));
-  color: var(--style-accent);
-  font-size: 10px;
-  font-weight: 720;
-  line-height: 1.2;
-}
-
-.recipe-row p {
-  color: var(--muted);
-  font-size: 10px;
-  line-height: 1.45;
-}
-
 .palette-row {
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr);
@@ -775,6 +728,19 @@ a {
   width: 56px;
   min-height: 100%;
   background: var(--panel-soft);
+}
+
+.recipe-swatch {
+  display: grid;
+  place-items: center;
+  padding: 6px;
+  color: var(--style-accent);
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 780;
+  line-height: 1.2;
+  text-align: center;
+  overflow-wrap: anywhere;
 }
 
 .palette-meta {
