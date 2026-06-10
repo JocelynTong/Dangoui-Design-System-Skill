@@ -1360,6 +1360,68 @@ pre {
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 8%, transparent);
 }
 
+.style-workspace-page {
+  display: grid;
+  gap: 16px;
+  width: min(100%, 980px);
+  min-width: 0;
+  padding: 22px;
+  border-radius: 18px;
+  background: var(--style-page-bg);
+  color: var(--style-text);
+  box-shadow: var(--shadow-lg);
+}
+
+.style-workspace-header {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(240px, 0.8fr);
+  gap: 18px;
+  align-items: end;
+  min-width: 0;
+}
+
+.style-workspace-header span {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--style-accent);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.style-workspace-header h1 {
+  margin: 0;
+  color: var(--style-text);
+  font-size: 30px;
+  line-height: 1.05;
+}
+
+.style-workspace-header p {
+  margin: 0;
+  color: var(--style-muted);
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.style-workspace-grid {
+  display: grid;
+  grid-template-columns: minmax(260px, 0.72fr) minmax(360px, 1fr);
+  gap: 14px;
+  align-items: start;
+  min-width: 0;
+}
+
+.style-workspace-grid .style-mockup-page,
+.style-workspace-grid .style-mockup-preview,
+.style-workspace-grid .style-evidence-mockup-card {
+  margin-bottom: 0;
+}
+
+.style-workspace-grid .style-evidence-mockup-card {
+  grid-column: 1 / -1;
+}
+
 .style-mockup-page {
   display: grid;
   gap: 8px;
@@ -2700,6 +2762,15 @@ pre {
     grid-template-columns: 420px 1fr;
   }
 
+  .style-workspace-header,
+  .style-workspace-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .style-workspace-grid .style-evidence-mockup-card {
+    grid-column: auto;
+  }
+
   .template-preview {
     grid-template-columns: 1fr;
   }
@@ -2738,6 +2809,15 @@ pre {
     height: auto;
     overflow: visible;
     padding: 22px 16px;
+  }
+
+  .style-workspace-page {
+    padding: 16px;
+    border-radius: 14px;
+  }
+
+  .style-workspace-header h1 {
+    font-size: 24px;
   }
 
   .demo-stage {
