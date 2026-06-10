@@ -112,14 +112,6 @@
     <section class="workspace">
       <div class="demo-stage">
         <section v-if="selectedInspectorTab === 'style'" class="style-workspace-page" aria-label="style page">
-          <div class="style-workspace-header">
-            <div>
-              <span>风格</span>
-              <h1>{{ selectedStyle.label }} · {{ selectedStyleCategory?.label }}</h1>
-            </div>
-            <p>{{ currentStyleCategoryDescription }}</p>
-          </div>
-
           <div class="style-workspace-grid">
             <div class="phone template-phone style-phone" aria-label="style phone mockup">
               <div class="phone-screen">
