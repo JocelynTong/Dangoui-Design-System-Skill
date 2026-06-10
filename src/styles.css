@@ -782,18 +782,27 @@ a {
   overflow-wrap: anywhere;
 }
 
-.spacing-scale {
+.recipe-scale-panel {
   display: grid;
-  gap: 6px;
+  gap: 8px;
   min-width: 0;
-  padding: 8px;
+  padding: 10px;
   border-radius: 8px;
-  background: var(--panel);
+  background: color-mix(in srgb, var(--panel) 82%, var(--style-page-bg));
+}
+
+.recipe-scale-panel > strong {
+  color: #6b6864;
+  font-size: 10px;
+  font-weight: 850;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
 }
 
 .spacing-scale-row {
   display: grid;
-  grid-template-columns: 42px minmax(0, 1fr) 34px;
+  grid-template-columns: 44px minmax(0, 1fr) 36px;
   gap: 7px;
   align-items: center;
   min-width: 0;
@@ -813,7 +822,7 @@ a {
 
 .spacing-scale-row > div {
   display: grid;
-  grid-template-columns: 24px var(--recipe-gap, 8px) 24px;
+  grid-template-columns: 18px var(--recipe-gap, 8px) minmax(26px, 1fr);
   align-items: center;
   min-width: 0;
 }
@@ -823,6 +832,37 @@ a {
   height: 18px;
   border-radius: 5px;
   background: color-mix(in srgb, var(--style-accent) 70%, var(--panel-soft));
+}
+
+.radius-scale-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 7px;
+  min-width: 0;
+}
+
+.radius-scale-card {
+  display: grid;
+  gap: 6px;
+  justify-items: center;
+  min-width: 0;
+}
+
+.radius-scale-card i {
+  display: block;
+  width: 44px;
+  height: 44px;
+  border-radius: var(--recipe-radius, 8px);
+  background: color-mix(in srgb, var(--style-card-bg) 72%, var(--style-accent-soft));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 10%, transparent);
+}
+
+.radius-scale-card span {
+  color: #25252a;
+  font-size: 10px;
+  font-weight: 760;
+  line-height: 1.2;
+  text-align: center;
 }
 
 .palette-meta {

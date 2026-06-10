@@ -57,7 +57,8 @@
                     </div>
                   </div>
                   <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
-                    <div v-if="selectedStyleCategoryId === 'spacing'" class="spacing-scale" aria-label="spacing scale">
+                    <div v-if="selectedStyleCategoryId === 'spacing'" class="recipe-scale-panel spacing-scale" aria-label="spacing scale">
+                      <strong>Spacing scale</strong>
                       <div
                         v-for="item in spacingScaleRows"
                         :key="item.title"
@@ -70,6 +71,20 @@
                           <i></i>
                         </div>
                         <strong>{{ item.label }}</strong>
+                      </div>
+                    </div>
+                    <div v-if="selectedStyleCategoryId === 'radius'" class="recipe-scale-panel radius-scale" aria-label="radius scale">
+                      <strong>Border radius scale</strong>
+                      <div class="radius-scale-grid">
+                        <div
+                          v-for="item in radiusScaleRows"
+                          :key="item.title"
+                          class="radius-scale-card"
+                          :style="{ '--recipe-radius': item.radius }"
+                        >
+                          <i></i>
+                          <span>{{ item.label }}</span>
+                        </div>
                       </div>
                     </div>
                     <div
@@ -1473,6 +1488,17 @@ const spacingScaleRows = computed(() =>
       title: item.title,
       label: recipeSwatchText(item),
       size: Math.min(size, 28),
+    };
+  }),
+);
+const radiusScaleRows = computed(() =>
+  selectedStyleRecipeRows.value.map((item) => {
+    const isPill = item.value.includes("999");
+    const size = isPill ? 48 : Math.min(firstNumber(item.value, 8), 28);
+    return {
+      title: item.title,
+      label: recipeSwatchText(item),
+      radius: isPill ? "999px" : `${size}px`,
     };
   }),
 );
