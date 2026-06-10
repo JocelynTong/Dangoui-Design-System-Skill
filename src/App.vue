@@ -196,9 +196,8 @@
                           <p>{{ item.note }}</p>
                         </div>
                       </div>
-                      <div v-else-if="selectedStyleCategoryId === 'spacing' && spacingScaleRows.length" class="recipe-scale-panel mockup-scale-panel evidence-scale-panel spacing-scale" aria-label="spacing evidence">
-                        <strong>Spacing scale</strong>
-                        <small>色块宽度 = spacing value；下方保留次数、映射和值。</small>
+                      <div v-else-if="selectedStyleCategoryId === 'spacing' && spacingScaleRows.length" class="evidence-scale-panel spacing-evidence-list" aria-label="spacing evidence">
+                        <p class="style-evidence-note">色块宽度 = spacing value；下方保留次数、映射和值。</p>
                         <div class="spacing-scale-track evidence-scale-list">
                           <div
                             v-for="item in spacingScaleRows"
