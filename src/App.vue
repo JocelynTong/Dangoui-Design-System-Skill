@@ -59,23 +59,21 @@
                   <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
                     <div v-if="selectedStyleCategoryId === 'spacing'" class="recipe-scale-panel spacing-scale" aria-label="spacing scale">
                       <strong>Spacing scale</strong>
-                      <div
-                        v-for="item in spacingScaleRows"
-                        :key="item.title"
-                        class="spacing-scale-row"
-                        :style="{ '--recipe-gap': `${item.size}px` }"
-                      >
-                        <span>{{ item.title }}</span>
-                        <div>
+                      <div class="spacing-scale-track">
+                        <div
+                          v-for="item in spacingScaleRows"
+                          :key="item.title"
+                          class="spacing-scale-item"
+                          :style="{ '--scale-width': `${item.width}px` }"
+                        >
                           <i></i>
-                          <i></i>
+                          <span>{{ item.title }} · {{ item.label }}</span>
                         </div>
-                        <strong>{{ item.label }}</strong>
                       </div>
                     </div>
                     <div v-if="selectedStyleCategoryId === 'radius'" class="recipe-scale-panel radius-scale" aria-label="radius scale">
                       <strong>Border radius scale</strong>
-                      <div class="radius-scale-grid">
+                      <div class="radius-scale-track">
                         <div
                           v-for="item in radiusScaleRows"
                           :key="item.title"
@@ -1488,6 +1486,7 @@ const spacingScaleRows = computed(() =>
       title: item.title,
       label: recipeSwatchText(item),
       size: Math.min(size, 28),
+      width: Math.max(8, Math.min(size * 4, 96)),
     };
   }),
 );
