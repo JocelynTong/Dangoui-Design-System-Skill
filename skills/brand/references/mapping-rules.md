@@ -56,6 +56,7 @@ Color 输出至少拆成两组：
 
 - `colorInventory`：完整颜色清单，按 count 降序记录 raw value、归一化 value、count、percent、来源、上下文、是否 UI color / media color / asset color；无证据命中的候选色 count 记 `0`。
 - `rankedColorEvidence`：高频或关键颜色证据，记录 count、percent、target mapping、理由。
+- `dangoColorStructure`：默认 DangoUI baseline 必须展示一级基础色板、二级语义 token、三级组件别名，说明颜色如何从基础色阶进入语义层，再进入组件别名层。
 
 不要在一级色板层命名为 `primary`、`secondary`、`success`、`warning`、`error`、`trade`。
 

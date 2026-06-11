@@ -169,6 +169,22 @@
                             <span>完整色板 · 按频次排序</span>
                           </div>
                           <p class="style-evidence-note">所有颜色统一进入一张表；无证据但存在于 token / 候选映射里的颜色显示为 0 次。</p>
+                          <div v-if="selectedStyle.id === 'dango'" class="color-hierarchy-panel" aria-label="DangoUI color token hierarchy">
+                            <strong>DangoUI 三级映射结构</strong>
+                            <div class="color-hierarchy-grid">
+                              <div
+                                v-for="group in dangoColorStructureRows"
+                                :key="group.title"
+                                class="color-hierarchy-group"
+                              >
+                                <span>{{ group.title }}</span>
+                                <p>{{ group.description }}</p>
+                                <div>
+                                  <b v-for="item in group.items" :key="`${group.title}-${item}`">{{ item }}</b>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                           <div
                             v-for="color in selectedColorInventoryRows"
                             :key="`${selectedStyle.id}-color-inventory-${color.raw}-${color.target}`"
@@ -807,7 +823,7 @@ const docsBaseUrl = "https://dumpling.echo.tech";
 const introductionUrl = `${docsBaseUrl}/get-started/introduction`;
 const tokenDocsUrl = `${docsBaseUrl}/guide/theme`;
 const tokenPreviewLimit = 5;
-const selectedStyleId = ref("dumpling");
+const selectedStyleId = ref("dango");
 const starterTemplates = [
   {
     side: "分发侧",
@@ -859,12 +875,12 @@ const activeDocs = [
 const workflowSteps = ["看 docs 入口", "选模板", "查组件", "追 token chain", "生成 adapter", "demo 验证"];
 const stylePresets = [
   {
-    id: "dumpling",
-    label: "Dumpling UI",
-    icon: "/assets/style-icons/dumpling-square.svg",
+    id: "dango",
+    label: "DangoUI",
+    icon: "https://dumpling.echo.tech/favicon.ico",
     source: "dumpling.echo.tech / 初始化状态",
-    hero: "Dumpling UI",
-    notice: "未应用品牌迁移的 dangoui / Dumpling UI baseline：组件结构、默认 token 和普通边界保持原样，用来判断后续风格化覆盖了什么。",
+    hero: "DangoUI",
+    notice: "未应用品牌迁移的 DangoUI baseline：组件结构、默认 token 和普通边界保持原样，用来判断后续风格化覆盖了什么。",
     evidenceNote: "这是 baseline，不来自外部品牌采样；用于对照 Button、Card、Divider、Tabs 等组件在未风格化时的默认语义和可编辑面。",
     sectionTitle: "Default Components",
     tabs: ["组件", "Token", "状态"],
@@ -1386,7 +1402,7 @@ const styleCategories = [
 ];
 
 const styleRecipeDetails = {
-  dumpling: {
+  dango: {
     typography: [
       { title: "Display", value: "20-24px / 760", note: "默认组件标题保持系统字体和清晰层级，不引入品牌字体或装饰字形。" },
       { title: "Body", value: "13-14px / 500", note: "正文使用通用 UI 阅读节奏，适合表单、卡片和列表说明。" },
@@ -1893,6 +1909,39 @@ const dividerScaleRows = computed(() =>
 const selectedStyleTokenMap = computed(() =>
   Object.fromEntries(selectedStyle.value.tokens.map((token) => [token.name, token.value])),
 );
+const dangoColorStructureRows = computed(() => {
+  const tokenNames = catalog.value.tokens.map((token) => token.name);
+  const pick = (matcher, fallback) => {
+    const matched = tokenNames.filter(matcher).slice(0, 5);
+    return matched.length ? matched : fallback;
+  };
+  return [
+    {
+      title: "一级：基础色板",
+      description: "只表达颜色值和色阶，不带组件语义。",
+      items: pick(
+        (name) => /^--du-(primary|secondary|success|warning|error|trade)-[1-9]$/.test(name) || /^--du-c-/.test(name),
+        ["--du-primary-1", "--du-primary-5", "--du-secondary-9"],
+      ),
+    },
+    {
+      title: "二级：语义 token",
+      description: "把颜色分配到背景、文字、边框、状态和品牌行动角色。",
+      items: pick(
+        (name) => /^--du-(bg|text|border|primary|secondary|success|warning|error|default|white|trans-black)-/.test(name),
+        ["--du-bg-1", "--du-text-1", "--du-border-1", "--du-primary-color"],
+      ),
+    },
+    {
+      title: "三级：组件别名",
+      description: "组件内部 token 继承或派生自二级语义层。",
+      items: pick(
+        (name) => /^--du-(bt|in|tabs|steps|checkbox|c-badge)-/.test(name),
+        ["--du-bt-color", "--du-in-solid-color", "--du-tabs-active-color"],
+      ),
+    },
+  ];
+});
 const catalogColorInventoryRows = computed(() => {
   const rows = new Map();
   catalog.value.tokens.forEach((token) => {
@@ -1919,7 +1968,7 @@ const catalogColorInventoryRows = computed(() => {
   }));
 });
 const selectedColorInventoryRows = computed(() => {
-  if (selectedStyle.value.id === "dumpling" && catalogColorInventoryRows.value.length) {
+  if (selectedStyle.value.id === "dango" && catalogColorInventoryRows.value.length) {
     return catalogColorInventoryRows.value.sort((a, b) => b.sortCount - a.sortCount || a.raw.localeCompare(b.raw));
   }
 
