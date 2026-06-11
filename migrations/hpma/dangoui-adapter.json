@@ -21,8 +21,25 @@
     "--style-font-display": { "value": "uifont_cn_title", "status": "style-only", "reason": "Official site ships a custom title font; dangoui has no typography token for this." },
     "--style-font-nav": { "value": "navfont", "status": "style-only", "reason": "Official navigation uses a custom font package; keep it as demo typography control." },
     "--style-icon-system": { "value": "image-asset buttons + diamond bullets", "status": "style-only", "reason": "Official icons are mostly image assets, not dangoui icon names." },
+    "--style-divider-color": { "value": "rgba(200,176,139,.72)", "status": "style-only", "source": "ornate gold dividers and frame hairlines" },
+    "--style-frame-corner-size": { "value": "22px", "status": "style-only", "source": "demo CSS corner-line approximation of official media_border assets" },
     "--style-border-frame": { "value": "ornate gold corner frame / media_border asset", "status": "style-only", "reason": "Official borders are decorative image frames; current dangoui has no frame token/component." },
-    "ornateMediaFrame": { "status": "missing", "reason": "Requires an image/border asset or a formal media-frame component." },
+    "ornateMediaFrame": {
+      "status": "missing",
+      "reason": "Requires an image/border asset or a formal media-frame component.",
+      "applyRecipe": {
+        "scope": "Only apply to target demo/page frames, media shells, cards and selected navigation dividers; never apply to evidence/mapping/frequency panels.",
+        "container": ["position: relative", "border: 1px solid var(--hpma-frame)", "border-radius: 0"],
+        "cornerOverlay": ["::after", "content: \"\"", "position: absolute", "inset: 0", "pointer-events: none", "background: eight corner hairlines using --hpma-gold-bright and --style-frame-corner-size"],
+        "requiredVars": {
+          "--hpma-frame": "rgba(200,176,139,.72)",
+          "--hpma-frame-soft": "rgba(200,176,139,.28)",
+          "--hpma-gold-bright": "#efcc5c",
+          "--style-divider-color": "rgba(200,176,139,.72)",
+          "--style-frame-corner-size": "22px"
+        }
+      }
+    },
     "characterArtAndSceneColor": { "status": "style-only", "reason": "Official illustrations and wallpaper colors are media assets, not semantic tokens." }
   },
   "components": {

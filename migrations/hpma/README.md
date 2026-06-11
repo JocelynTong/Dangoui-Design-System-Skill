@@ -35,6 +35,7 @@ HPMA 官网是深棕魔法书桌和羊皮纸阅读感的组合：页面结构由
 | media | 手绘场景 / 角色 / 魔法蓝光 | 6 张样图 | 图片采样 | 特色图、角色卡、壁纸 | 媒体资产 | `demoOnlyVisualControls` |
 | typography | `uifont_cn_title` / `navfont` | 2 | 字体资产 | CSS `@font-face` | 标题/导航字体 | `demoOnlyVisualControls` |
 | asset | `media_border*` / `top_nav_h` / button png | 6+ | 图片资产 | 缩略图框、导航高亮、下载按钮 | 边框/icon 系统 | `demoOnlyVisualControls` |
+| divider/frame | antique gold hairline + corner-line frame | 6 | frame evidence | media borders、top nav highlight、thumbnail dividers | 装饰分割线/框体 recipe | `demoOnlyVisualControls.--style-divider-color` |
 
 ## 3. 高频组件模式统计
 
@@ -73,6 +74,8 @@ demo hpma nav/card class
 - component 缺口：spell card shell、rarity frame、media thumbnail border asset。
 - props / slots / variant 缺口：center logo nav、official download panel、gallery/video overlay。
 - style-only 内容：角色图、场景图、蓝色魔法光、金色装饰框。
+
+HPMA 的特殊边框不能只靠 `--du-border-1` 初始化。应用到业务项目时必须同时初始化 style-only frame recipe：设置 `--hpma-frame`、`--hpma-frame-soft`、`--hpma-gold-bright`、`--style-divider-color`、`--style-frame-corner-size`，并在目标框体上生成贴边角线。不要把这套角线套到证据区、mapping 区或频次表。
 
 ## 8. 机器可读资产
 

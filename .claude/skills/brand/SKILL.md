@@ -117,6 +117,7 @@ Mode B 的输出是宿主项目变更，不是这个 skill 的新版发布。
 - `dangoui-adapter.tokens` 里的现有 `--du-*` 可以进入主题 token；`demoOnlyVisualControls` 只能进入页面样式层、主题 class、asset 或 ReviewQueue。
 - `component-mapping.json` 决定组件组合方式；不要把页面组合误判为需要新增 dangoui 组件。
 - `preview-gate.json` 决定 2-3 个页面方向；每页必须有真实不同的结构和关键内容，不得只换 tab 文案。
+- 如果 `dangoui-adapter.json` 的 `demoOnlyVisualControls` 包含 `--style-border-frame`、`--style-divider-color` 或 `ornateMediaFrame.applyRecipe`，必须初始化对应 CSS recipe；只设置 `--du-border-1` 不算完成特殊边框。
 - 如果目标项目没有相同页面，选择 2-3 个最接近的现有页面/模块应用；没有可用页面时先生成 preview 页面。
 - 对用户校准过的效果做回归：字体、icon/asset、边框、圆角、阴影、选中态、证据区排除规则。
 - HPMA 等装饰框风格要区分 frame/card/media radius 和 control radius；直角框保持 `0px`，button/input 可以保留 control radius。
@@ -308,6 +309,7 @@ Claude.ai 自定义 skill 上传后，优先使用 skill 内的 `scripts/create-
 - 新增页面或新 class 时，必须继承或显式接入已校准效果；不能因为 class 变了导致效果失效。
 - 修一个区域的边框/阴影时要限定作用域，避免证据面板、映射表、频次区等非 demo 容器被误套。
 - 替换边框时优先替换容器真实边界；不要默认在内部再加一层框。若必须用伪元素，说明是外沿装饰、内框还是资产替代。
+- 特殊装饰边框通常属于 divider/frame recipe：需要同时初始化颜色、角线尺寸、作用域和反例排除规则。
 - 圆角必须由证据驱动：直角框就保持 `0px`；按钮/输入可以保留 control radius，但不能推导成 card/media radius。
 - 修改后至少验证一个正例和一个反例：正例是目标 demo 元素生效，反例是不该生效的证据/映射区域未被污染。
 

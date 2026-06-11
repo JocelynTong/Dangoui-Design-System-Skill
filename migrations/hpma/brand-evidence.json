@@ -51,6 +51,7 @@
         { "type": "typography", "value": "navfont", "count": 1, "percent": "font asset", "contexts": ["official CSS @font-face", "top navigation"], "role": "navigation font package" },
         { "type": "icon", "value": "image asset icons", "count": 8, "percent": "asset evidence", "contexts": ["download badge", "QR hint", "book button", "play button", "close button", "nav highlight"], "role": "demo-only icon system" },
         { "type": "border", "value": "media_border_67b7223.png / media_border2_e5450c6.png", "count": 2, "percent": "asset evidence", "contexts": ["video thumbnails", "wallpaper thumbnails"], "role": "ornate media frame asset" },
+        { "type": "divider", "value": "antique gold hairline + corner-line frame", "count": 6, "percent": "frame evidence", "contexts": ["media borders", "top nav highlight", "thumbnail dividers"], "role": "style-only divider/frame recipe" },
         { "type": "radius", "value": "0px", "count": 2, "percent": "frame evidence", "contexts": ["media border assets", "thumbnail frame shells"], "role": "straight-edged frame/card radius" },
         { "type": "radius", "value": "5px", "count": 1, "percent": "input/control evidence", "contexts": ["mobile order input"], "role": "control radius" },
         { "type": "radius", "value": "8px", "count": 1, "percent": "button evidence", "contexts": ["verify button"], "role": "button/control radius only" },

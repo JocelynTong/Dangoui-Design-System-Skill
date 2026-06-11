@@ -18,6 +18,9 @@
     "spacing": [
       { "brandValue": "12-16px", "echoToken": "Spacing/Medium/Large", "status": "fallback", "reason": "Site uses image-heavy sections; exact layout values are not reliable from screenshot-only evidence." }
     ],
+    "divider": [
+      { "brandValue": "antique gold divider / ornate frame hairline", "echoToken": null, "dangouiTarget": "--du-border-1 + demoOnlyVisualControls.--style-divider-color", "status": "style-only", "reason": "Plain divider color can follow --du-border-1, but HPMA frame corners require a style-only frame recipe." }
+    ],
     "shadow": [
       { "brandValue": "magical glow and inset gold frame", "echoToken": null, "futureTokenCandidate": "Shadow/MagicOrnateFrame", "status": "style-only", "reason": "No current Echo/dangoui shadow token for ornate media frame and glow." }
     ]

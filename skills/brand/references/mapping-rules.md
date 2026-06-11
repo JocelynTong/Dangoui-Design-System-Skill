@@ -201,6 +201,8 @@ DTCG 表达：
 - `style-only` 只进页面样式层、主题 class、asset 或 demo visual control。
 - `missing` 和 `ask-user` 不要强行实现成假 token。
 - 如果迁移资产和宿主项目现有设计系统冲突，先保留宿主项目 API 和命名，再用局部 theme class 承接品牌表现。
+- 如果 `dangoui-adapter.json` 暴露 `--style-border-frame`、`--style-divider-color` 或 `ornateMediaFrame.applyRecipe`，必须落地为 CSS recipe。只初始化 `--du-border-1` 或 Divider 颜色会丢失装饰框。
+- Frame/divider recipe 至少包含：目标作用域、真实容器 border、贴边角线或 asset fallback、radius、反例排除区域。
 
 ## 5. 废弃层
 
