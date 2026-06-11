@@ -801,7 +801,7 @@ const docsBaseUrl = "https://dumpling.echo.tech";
 const introductionUrl = `${docsBaseUrl}/get-started/introduction`;
 const tokenDocsUrl = `${docsBaseUrl}/guide/theme`;
 const tokenPreviewLimit = 5;
-const selectedStyleId = ref("czn");
+const selectedStyleId = ref("dumpling");
 const starterTemplates = [
   {
     side: "分发侧",
@@ -852,6 +852,49 @@ const activeDocs = [
 ];
 const workflowSteps = ["看 docs 入口", "选模板", "查组件", "追 token chain", "生成 adapter", "demo 验证"];
 const stylePresets = [
+  {
+    id: "dumpling",
+    label: "Dumpling UI",
+    icon: "/assets/style-icons/dumpling-square.svg",
+    source: "dumpling.echo.tech / 初始化状态",
+    hero: "Dumpling UI",
+    notice: "未应用品牌迁移的 dangoui / Dumpling UI baseline：组件结构、默认 token 和普通边界保持原样，用来判断后续风格化覆盖了什么。",
+    evidenceNote: "这是 baseline，不来自外部品牌采样；用于对照 Button、Card、Divider、Tabs 等组件在未风格化时的默认语义和可编辑面。",
+    sectionTitle: "Default Components",
+    tabs: ["组件", "Token", "状态"],
+    cards: [
+      { title: "原始组件语义", copy: "先识别 dangoui 组件本身：Card 承载内容、Divider 组织层级、Button 表达行动，不急着加入品牌纹理。" },
+      { title: "未覆盖状态", copy: "圆角、弱文字、hairline 和主色都保持初始化 token，作为对比迁移后变化的参照物。" },
+    ],
+    tokens: [
+      { name: "--du-bg-2", value: "#f7f7f9" },
+      { name: "--du-bg-1", value: "#ffffff" },
+      { name: "--du-text-1", value: "#000000e0" },
+      { name: "--du-text-2", value: "#000000a6" },
+      { name: "--du-text-3", value: "#00000066" },
+      { name: "--du-border-1", value: "#0000001f" },
+      { name: "--du-primary-color", value: "#7c66ff" },
+      { name: "--du-primary-border", value: "#7c66ff" },
+      { name: "--du-primary-outline-color", value: "#7c66ff" },
+      { name: "--du-primary-soft-bg", value: "#f2f0ff" },
+      { name: "--du-primary-solid-bg", value: "#7c66ff" },
+    ],
+    style: {
+      cardRadius: "8px",
+      controlRadius: "8px",
+      pageSpacing: "16px",
+      cardShadow: "0 1px 2px rgba(17,17,20,.06)",
+      media: "linear-gradient(135deg,#ffffff,#f7f7f9 56%,#f2f0ff)",
+    },
+    signals: [
+      { raw: "#ffffff", count: 1, percent: "baseline", target: "--du-bg-1", value: "默认组件表面" },
+      { raw: "#f7f7f9", count: 1, percent: "baseline", target: "--du-bg-2", value: "默认页面背景" },
+      { raw: "#000000e0", count: 1, percent: "baseline", target: "--du-text-1", value: "默认主文本" },
+      { raw: "#00000066", count: 1, percent: "baseline", target: "--du-text-3", value: "浅底弱文本；深色品牌迁移时必须被主题弱文本覆盖" },
+      { raw: "#0000001f", count: 1, percent: "baseline", target: "--du-border-1", value: "默认 hairline / Divider / Card boundary" },
+      { raw: "#7c66ff", count: 1, percent: "baseline", target: "--du-primary-color", value: "默认 primary action" },
+    ],
+  },
   {
     id: "czn",
     label: "CZN",
@@ -1337,6 +1380,28 @@ const styleCategories = [
 ];
 
 const styleRecipeDetails = {
+  dumpling: {
+    typography: [
+      { title: "Display", value: "20-24px / 760", note: "默认组件标题保持系统字体和清晰层级，不引入品牌字体或装饰字形。" },
+      { title: "Body", value: "13-14px / 500", note: "正文使用通用 UI 阅读节奏，适合表单、卡片和列表说明。" },
+      { title: "Caption", value: "10-12px / 600", note: "辅助文字使用默认弱文本 token，浅底可读；深色品牌迁移时必须改由主题弱文本承接。" },
+    ],
+    spacing: [
+      { title: "Page", value: "16px", note: "默认页面内距是稳定的中等密度，适合作为迁移前参照。" },
+      { title: "Card gap", value: "12px", note: "卡片、表单行和信息块保持普通组件间距，不表达特定品牌节奏。" },
+      { title: "Control", value: "8px", note: "按钮、标签和输入控件之间使用基础 8px 节奏。" },
+    ],
+    divider: [
+      { title: "Hairline", value: "#0000001f / 1px", note: "默认 Divider 与普通卡片边界都来自 --du-border-1。" },
+      { title: "Frame", value: "none / component border", note: "初始化状态没有装饰框、角线或图片边框；只有组件自身 border。" },
+      { title: "Selection", value: "#7c66ff active indicator", note: "选中态由 primary token 标识，不引入 shadow、纹理或特殊 frame recipe。" },
+    ],
+    radius: [
+      { title: "Card", value: "8px", note: "默认卡片圆角克制，作为后续品牌 card/media radius 对照。" },
+      { title: "Control", value: "8px", note: "按钮、输入和标签沿用普通控件圆角，不推导成品牌风格。" },
+      { title: "Media", value: "8px", note: "默认媒体容器不带特殊裁切、装饰框或资产边界。" },
+    ],
+  },
   czn: {
     typography: [
       { title: "Display", value: "24-28px / 850", note: "用于角色名、官网首屏标题，保持高对比和游戏宣发气势。" },

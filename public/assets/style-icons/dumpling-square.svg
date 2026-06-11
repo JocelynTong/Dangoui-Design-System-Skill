@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Dumpling UI">
+  <rect width="32" height="32" rx="7" fill="#f7f7f9"/>
+  <path d="M8 18c0-5 4-9 8-9s8 4 8 9c0 4-3 6-8 6s-8-2-8-6Z" fill="#fff" stroke="#000" stroke-opacity=".16"/>
+  <path d="M11 17c1.2-2 2.8-3 5-3s3.8 1 5 3" fill="none" stroke="#7c66ff" stroke-width="1.8" stroke-linecap="round"/>
+  <circle cx="13" cy="19" r="1" fill="#000" fill-opacity=".42"/>
+  <circle cx="19" cy="19" r="1" fill="#000" fill-opacity=".42"/>
+</svg>
