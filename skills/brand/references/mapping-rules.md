@@ -42,6 +42,8 @@ Figma alias: primary/bt/border -> {primary.border} -> {primary.5}
 
 只描述颜色本身，不赋予 UI 语义。
 
+一级色板必须是完整 inventory，不是 Top N 高频表。所有从 CSS、token、截图采样、图片资产中进入本次口径的颜色都要先列出；频次、占比和上下文用于排序与解释映射决策，不能替代完整色板。
+
 判断维度：
 
 - 色相：红、橙、黄、绿、青、蓝、紫、中性色。
@@ -49,6 +51,11 @@ Figma alias: primary/bt/border -> {primary.border} -> {primary.5}
 - 饱和度：高饱和、低饱和、近灰。
 - 冷暖：偏冷、偏暖、中性。
 - 频率：大面积、高频、低频但稳定。
+
+Color 输出至少拆成两组：
+
+- `colorInventory`：完整颜色清单，记录 raw value、归一化 value、来源、上下文、是否 UI color / media color / asset color。
+- `rankedColorEvidence`：高频或关键颜色证据，记录 count、percent、target mapping、理由。
 
 不要在一级色板层命名为 `primary`、`secondary`、`success`、`warning`、`error`、`trade`。
 

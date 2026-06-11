@@ -218,6 +218,12 @@ GET /api/brand-migrations?source={encodedUrl}
 
 不要把 UI 颜色、媒体资产、圆角、阴影混在同一张百分比表。
 
+Color 产物必须分成 `完整色板` 和 `高频映射证据` 两层：
+
+- 完整色板先列出本次口径内所有颜色，包括低频但稳定的 UI 色、媒体资产色、截图采样色和 token 色。
+- 高频映射证据再说明 count、percent、上下文和 target mapping。
+- 不允许只输出 Top N 频次表后声称完成 color 学习；Top N 只能解释优先级，不能代表全部 color inventory。
+
 对边框、圆角、阴影要分开统计和判断：
 
 - 边框/框体：区分真实 CSS border、图片边框资产、伪元素角线、内框、外框。

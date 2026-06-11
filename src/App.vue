@@ -163,23 +163,43 @@
                       <div class="style-preview-heading">
                         <span>映射与频次</span>
                       </div>
-                      <div v-if="selectedStyleCategoryId === 'color'" class="palette-list">
-                        <div
-                          v-for="signal in selectedStyle.signals"
-                          :key="`${selectedStyle.id}-page-evidence-${signal.raw}-${signal.target}`"
-                          class="palette-row"
-                          :class="{ primary: signal.target.includes('primary') }"
-                        >
-                          <i class="palette-swatch" :style="{ background: signalSwatch(signal) }"></i>
-                          <div class="palette-meta">
-                            <div>
-                              <strong>{{ signal.raw }}</strong>
-                              <span>{{ signal.count }} 次 · {{ signal.percent }}</span>
+                      <div v-if="selectedStyleCategoryId === 'color'" class="palette-stack">
+                        <section class="color-inventory-panel" aria-label="complete token color inventory">
+                          <strong>完整 token 色板</strong>
+                          <small>先列全量颜色资产；频次只用于解释优先级和映射决策。</small>
+                          <div class="color-token-grid">
+                            <div
+                              v-for="token in selectedColorTokenRows"
+                              :key="`${selectedStyle.id}-color-token-${token.name}`"
+                              class="color-token-card"
+                            >
+                              <i :style="{ background: token.value }"></i>
+                              <span>{{ token.name }}</span>
+                              <b>{{ token.value }}</b>
                             </div>
-                            <em>{{ signal.target }}</em>
-                            <p>{{ signal.value }}</p>
                           </div>
-                        </div>
+                        </section>
+                        <section class="palette-list" aria-label="ranked color evidence">
+                          <div class="style-preview-heading compact-heading">
+                            <span>高频证据与映射</span>
+                          </div>
+                          <div
+                            v-for="signal in selectedStyle.signals"
+                            :key="`${selectedStyle.id}-page-evidence-${signal.raw}-${signal.target}`"
+                            class="palette-row"
+                            :class="{ primary: signal.target.includes('primary') }"
+                          >
+                            <i class="palette-swatch" :style="{ background: signalSwatch(signal) }"></i>
+                            <div class="palette-meta">
+                              <div>
+                                <strong>{{ signal.raw }}</strong>
+                                <span>{{ signal.count }} 次 · {{ signal.percent }}</span>
+                              </div>
+                              <em>{{ signal.target }}</em>
+                              <p>{{ signal.value }}</p>
+                            </div>
+                          </div>
+                        </section>
                       </div>
                       <div v-else-if="selectedStyleCategoryId === 'typography' && selectedStyleRecipeRows.length" class="mockup-type-specimens type-evidence-specimens">
                         <div
@@ -1886,6 +1906,9 @@ const dividerScaleRows = computed(() =>
 );
 const selectedStyleTokenMap = computed(() =>
   Object.fromEntries(selectedStyle.value.tokens.map((token) => [token.name, token.value])),
+);
+const selectedColorTokenRows = computed(() =>
+  selectedStyle.value.tokens.filter((token) => isColorSignal(token.value)),
 );
 const themeVars = computed(() => ({
   "--du-bg-2": selectedStyleTokenMap.value["--du-bg-2"],
