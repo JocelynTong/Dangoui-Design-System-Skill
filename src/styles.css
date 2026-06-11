@@ -945,15 +945,15 @@ a {
   gap: 6px;
   align-content: start;
   flex: 0 0 auto;
-  width: 118px;
-  min-width: 118px;
+  width: 178px;
+  min-width: 178px;
 }
 
 .divider-scale-card i {
   position: relative;
   display: block;
   width: 100%;
-  height: 46px;
+  height: 56px;
   border-radius: 0;
   background: color-mix(in srgb, var(--style-card-bg) 78%, transparent);
 }
@@ -965,8 +965,8 @@ a {
 }
 
 .divider-scale-card-hairline i::before {
-  left: 8px;
-  right: 8px;
+  left: 6px;
+  right: 6px;
   top: 50%;
   height: 1px;
   background: var(--recipe-divider, var(--style-accent));
@@ -979,27 +979,27 @@ a {
 .divider-scale-card-frame i::before {
   inset: 7px;
   background:
-    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left top / 16px 1px no-repeat,
-    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left top / 1px 16px no-repeat,
-    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right top / 16px 1px no-repeat,
-    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right top / 1px 16px no-repeat,
-    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left bottom / 16px 1px no-repeat,
-    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left bottom / 1px 16px no-repeat,
-    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right bottom / 16px 1px no-repeat,
-    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right bottom / 1px 16px no-repeat;
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left top / 28px 1px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left top / 1px 22px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right top / 28px 1px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right top / 1px 22px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left bottom / 28px 1px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left bottom / 1px 22px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right bottom / 28px 1px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right bottom / 1px 22px no-repeat;
 }
 
 .divider-scale-card-selection i::before {
-  left: 14px;
-  right: 14px;
-  bottom: 10px;
+  left: 12px;
+  right: 12px;
+  bottom: 13px;
   height: 2px;
   background: var(--recipe-divider-accent, var(--style-accent));
 }
 
 .divider-scale-card-selection i::after {
   left: 50%;
-  bottom: 7px;
+  bottom: 10px;
   width: 6px;
   height: 6px;
   border-right: 1px solid var(--recipe-divider-accent, var(--style-accent));
@@ -1012,6 +1012,42 @@ a {
   font-size: 10px;
   font-weight: 760;
   line-height: 1.2;
+}
+
+.divider-override-note {
+  display: grid;
+  grid-template-columns: minmax(0, 0.65fr) minmax(0, 1fr) auto minmax(0, 1.35fr);
+  gap: 6px;
+  align-items: center;
+  min-width: 0;
+  padding: 8px 0;
+  border-top: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
+}
+
+.divider-override-note span,
+.divider-override-note em {
+  color: var(--muted);
+  font-size: 9px;
+  font-style: normal;
+  font-weight: 760;
+  line-height: 1.2;
+}
+
+.divider-override-note b,
+.divider-override-note strong {
+  color: var(--style-accent);
+  font-size: 10px;
+  font-weight: 780;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+
+.divider-override-note em {
+  justify-self: center;
+  padding: 3px 6px;
+  color: var(--style-text);
+  background: color-mix(in srgb, var(--style-accent) 12%, transparent);
 }
 
 .palette-meta {

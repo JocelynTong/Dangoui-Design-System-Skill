@@ -234,6 +234,12 @@
                       <div v-else-if="selectedStyleCategoryId === 'divider' && dividerScaleRows.length" class="recipe-scale-panel mockup-scale-panel evidence-scale-panel divider-scale" aria-label="divider and frame evidence">
                         <strong>Divider / Frame recipe</strong>
                         <small>拆分普通分割线、框体边界和选中线；特殊框必须落到 frame recipe。</small>
+                        <div class="divider-override-note" aria-label="style override rule">
+                          <span>普通样式</span>
+                          <b>--du-border-1 / Divider color</b>
+                          <em>被风格化覆盖</em>
+                          <strong>frame/divider recipe：作用域、线宽、角线或 asset fallback、排除区</strong>
+                        </div>
                         <div class="divider-scale-list evidence-scale-list">
                           <div
                             v-for="item in dividerScaleRows"
