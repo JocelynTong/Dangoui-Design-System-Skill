@@ -115,7 +115,7 @@ Spacing/Mini = 2
 
 ### Radius / Border / Shadow 分层
 
-圆角、边框、阴影不能互相代偿，也不能从控件习惯泛化到页面容器。
+圆角、边框、divider/frame、阴影不能互相代偿，也不能从控件习惯泛化到页面容器。
 
 Radius 判断：
 
@@ -130,6 +130,12 @@ Border 判断：
 - 替换品牌边框时，优先替换目标容器本身的 border；不要默认在容器内部再画一层框。
 - 如果用伪元素表达装饰边框，必须标明它模拟的是外沿角线、内框还是 asset fallback。
 - 边框选择器必须限定到 demo/组件目标，避免证据面板、频次表、mapping 区被误套。
+
+Divider / Frame 判断：
+
+- 每个参考站都要提取 `hairline`、`frame`、`selection divider` 三类；没有特殊框也要记录 `none / plain hairline`。
+- 普通分割线可以映射到 `--du-border-*`；装饰框、斜切框、角线、图片边框必须进入 `demoOnlyVisualControls` 的 frame recipe。
+- Frame recipe 至少包含：目标作用域、线色/线宽、真实容器 border、角线或图片 asset fallback、radius、反例排除区域。
 
 Shadow 判断：
 
@@ -201,7 +207,7 @@ DTCG 表达：
 - `style-only` 只进页面样式层、主题 class、asset 或 demo visual control。
 - `missing` 和 `ask-user` 不要强行实现成假 token。
 - 如果迁移资产和宿主项目现有设计系统冲突，先保留宿主项目 API 和命名，再用局部 theme class 承接品牌表现。
-- 如果 `dangoui-adapter.json` 暴露 `--style-border-frame`、`--style-divider-color` 或 `ornateMediaFrame.applyRecipe`，必须落地为 CSS recipe。只初始化 `--du-border-1` 或 Divider 颜色会丢失装饰框。
+- 如果 `dangoui-adapter.json` 暴露 `--style-border-frame`、`--style-divider-color`、`*Frame.applyRecipe` 或类似 frame/divider recipe，必须落地为 CSS recipe。只初始化 `--du-border-1` 或 Divider 颜色会丢失装饰框。
 - Frame/divider recipe 至少包含：目标作用域、真实容器 border、贴边角线或 asset fallback、radius、反例排除区域。
 
 ## 5. 废弃层

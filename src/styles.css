@@ -785,6 +785,43 @@ a {
   font-size: 9px;
 }
 
+.recipe-swatch-divider {
+  position: relative;
+  min-height: 58px;
+  color: var(--muted);
+  font-size: 9px;
+}
+
+.recipe-swatch-divider::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  right: 9px;
+  top: 50%;
+  height: 1px;
+  background: var(--recipe-divider, var(--style-accent));
+}
+
+.recipe-swatch-divider::after {
+  content: "";
+  position: absolute;
+  inset: 10px;
+  opacity: var(--recipe-frame-opacity, 0);
+  background:
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left top / 14px 1px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left top / 1px 14px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right top / 14px 1px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right top / 1px 14px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left bottom / 14px 1px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left bottom / 1px 14px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right bottom / 14px 1px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right bottom / 1px 14px no-repeat;
+}
+
+.recipe-swatch-divider span {
+  align-self: end;
+}
+
 .recipe-swatch-typography {
   min-height: 58px;
   font-family: Inter, ui-sans-serif, system-ui, sans-serif;

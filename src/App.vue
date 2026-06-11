@@ -1322,6 +1322,11 @@ const styleRecipeDetails = {
       { title: "Card gap", value: "10-14px", note: "卡片之间不宜过松，保留活动页的资讯密度。" },
       { title: "CTA", value: "8-12px", note: "按钮、二维码、下载块之间用紧凑间距强化行动入口。" },
     ],
+    divider: [
+      { title: "Hairline", value: "rgba(255,90,31,.38) / 1px", note: "资讯区和导航分隔使用橙色低透明 hairline，映射到 --du-border-1 / --du-primary-border。" },
+      { title: "Frame", value: "angled HUD frame", note: "卡片边界是斜切线框 recipe，不是普通 Divider；需要 style-only frame pattern。" },
+      { title: "Selection", value: "orange active underline", note: "选中态用底线和斜切边界，不额外加无依据阴影。" },
+    ],
     radius: [
       { title: "Card", value: "10px", note: "卡片圆角较克制，配合斜切/HUD 边界，不走柔和卡片风。" },
       { title: "Control", value: "6px", note: "按钮和输入类控件更硬朗，强调游戏工具属性。" },
@@ -1338,6 +1343,11 @@ const styleRecipeDetails = {
       { title: "Page", value: "16px", note: "信息密度中等，既能承接官网新闻，也保留沉浸式视觉空间。" },
       { title: "Media gap", value: "12-16px", note: "媒体卡、壁纸和视频缩略图之间保持清晰网格，不把插画色混进 token。" },
       { title: "CTA", value: "10-14px", note: "下载、预约、查看更多等行动入口靠近内容面板，保持游戏站节奏。" },
+    ],
+    divider: [
+      { title: "Hairline", value: "rgba(200,176,139,.72) / 1px", note: "普通分割线使用古铜金 hairline，可映射到 --du-border-1。" },
+      { title: "Frame", value: "ornate corner frame / 22px", note: "媒体框和卡牌框需要贴边角线 recipe；只设置 border 色不算完成。" },
+      { title: "Scope", value: "demo/page frames only", note: "装饰框只能套到目标页面框体、媒体壳、卡牌壳；证据区和 mapping 区必须排除。" },
     ],
     radius: [
       { title: "Card", value: "0px", note: "官网装饰框和媒体框更接近直角，主要识别来自边框、纹理和手绘资产。" },
@@ -1356,6 +1366,11 @@ const styleRecipeDetails = {
       { title: "Section", value: "20-28px", note: "模块之间用明显间距，而不是依赖分割线。" },
       { title: "Card inner", value: "16-20px", note: "卡片内部留白偏大，承接产品展陈气质。" },
     ],
+    divider: [
+      { title: "Hairline", value: "rgba(0,0,0,.08) / 1px", note: "分割线极弱，主要依靠留白和模块节奏建立层级。" },
+      { title: "Frame", value: "none / spacing-led", note: "不需要装饰框；卡片形态来自大圆角和留白。" },
+      { title: "Selection", value: "blue text link", note: "选中/行动更多依赖蓝色文字入口，不把 divider 做成强样式。" },
+    ],
     radius: [
       { title: "Card", value: "28px", note: "大圆角是主要识别点，只作为 demo 视觉控制，不强行写入 dangoui token。" },
       { title: "Control", value: "999px", note: "主要行动和标签倾向 pill 形态。" },
@@ -1372,6 +1387,11 @@ const styleRecipeDetails = {
       { title: "Page", value: "16px", note: "中等密度，贴近设计工具工作区。" },
       { title: "Grid", value: "8px", note: "控件和标签之间使用 8px 基准，便于形成系统感。" },
       { title: "Panel", value: "12-16px", note: "面板内距清楚但不松散，适合属性面板与列表。" },
+    ],
+    divider: [
+      { title: "Hairline", value: "#d9d9d9 / 1px", note: "工具面板、列表和属性区使用清晰 hairline，映射到 --du-border-1。" },
+      { title: "Frame", value: "plain panel border", note: "边框是普通面板线，不需要图片或角线 recipe。" },
+      { title: "Selection", value: "#1e1e1e focus border", note: "焦点态强调边框清晰度，不靠装饰。" },
     ],
     radius: [
       { title: "Card", value: "14px", note: "卡片圆角中等，配合清晰边界。" },
@@ -1390,6 +1410,11 @@ const styleRecipeDetails = {
       { title: "Row", value: "8-12px", note: "列表、表格、卡片行之间保持清楚但不松散。" },
       { title: "Block", value: "12-16px", note: "内容块之间用稳定留白承接文档节奏。" },
     ],
+    divider: [
+      { title: "Hairline", value: "#e6e6e6 / 1px", note: "文档表格、抽屉和列表使用低对比 hairline，映射到 --du-border-1。" },
+      { title: "Frame", value: "paper card border", note: "卡片是纸面 hairline，不需要装饰框 recipe。" },
+      { title: "Selection", value: "#0075de underline", note: "蓝色行动入口是选中/链接信号，divider 维持安静。" },
+    ],
     radius: [
       { title: "Card", value: "12px", note: "卡片圆角温和，贴近纸面容器。" },
       { title: "Control", value: "999px", note: "按钮和 badge 可用 pill，作为轻量行动入口。" },
@@ -1407,6 +1432,11 @@ const styleRecipeDetails = {
       { title: "Media gap", value: "12-16px", note: "封面、标题、按钮之间保持清晰分组。" },
       { title: "Stack", value: "8-12px", note: "列表和推荐流使用紧凑堆叠，保留音乐 App 密度。" },
     ],
+    divider: [
+      { title: "Hairline", value: "rgba(255,255,255,.12) / 1px", note: "暗色页面使用弱白分隔线，避免破坏封面图和品牌绿。" },
+      { title: "Frame", value: "dark elevated media card", note: "卡片边界主要由暗色表面和阴影形成，不需要装饰框。" },
+      { title: "Selection", value: "#1ed760 underline", note: "选中态使用品牌绿线条或文字，不加无证据阴影。" },
+    ],
     radius: [
       { title: "Card", value: "12px", note: "暗色卡片保持中等圆角，主要质感来自阴影和表面色。" },
       { title: "Control", value: "999px", note: "播放、收藏、筛选等控件倾向 pill。" },
@@ -1418,6 +1448,7 @@ const styleRecipeDetails = {
 const recipeStatsByCategory = {
   typography: ["4 次 · 40%", "4 次 · 40%", "2 次 · 20%"],
   spacing: ["5 次 · 45%", "3 次 · 27%", "3 次 · 27%"],
+  divider: ["6 次 · 50%", "4 次 · 33%", "2 次 · 17%"],
   radius: ["4 次 · 40%", "4 次 · 40%", "2 次 · 20%"],
 };
 
@@ -1896,6 +1927,12 @@ function styleRecipeMappingTarget(category, item) {
     const adapter = item.title === "Page" ? "--style-page-spacing" : "demo layout CSS";
     return `Echo ${primitive.label} (${primitive.status}) · dangoui style-only: ${adapter}`;
   }
+  if (category === "divider") {
+    if (/frame|角线|ornate|HUD|panel|card/i.test(`${item.title} ${item.value}`)) {
+      return "dangoui --du-border-1 + style-only frame/divider recipe";
+    }
+    return "--du-border-1 / --du-primary-border";
+  }
   if (category === "radius") {
     const primitive = item.value.includes("999")
       ? { label: "Radius/Pill", status: "fallback" }
@@ -1909,6 +1946,7 @@ function styleRecipeMappingTarget(category, item) {
 function recipeSwatchText(item) {
   if (selectedStyleCategoryId.value === "typography") return "Aa";
   if (selectedStyleCategoryId.value === "spacing") return `${firstNumber(item.value, 8)}px`;
+  if (selectedStyleCategoryId.value === "divider") return item.title === "Frame" ? "frame" : "1px";
   if (selectedStyleCategoryId.value === "radius") return item.value.includes("999") ? "pill" : `${firstNumber(item.value, 8)}px`;
   return item.value;
 }
@@ -1932,6 +1970,13 @@ function recipeSwatchStyle(item) {
     const radius = item.value.includes("999") ? 999 : firstNumber(item.value, 8);
     return {
       "--recipe-radius": radius === 999 ? "999px" : `${Math.min(radius, 28)}px`,
+    };
+  }
+  if (category === "divider") {
+    return {
+      "--recipe-divider": selectedStyleTokenMap.value["--du-border-1"] || selectedStyleTokenMap.value["--du-primary-border"] || "#d9d9d9",
+      "--recipe-divider-accent": selectedStyleTokenMap.value["--du-primary-border"] || selectedStyleTokenMap.value["--du-primary-color"] || "#8e6140",
+      "--recipe-frame-opacity": item.title === "Frame" ? 1 : 0,
     };
   }
   return {};
