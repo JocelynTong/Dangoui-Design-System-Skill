@@ -220,7 +220,8 @@ GET /api/brand-migrations?source={encodedUrl}
 
 Color 产物必须分成 `完整色板` 和 `高频映射证据` 两层：
 
-- 完整色板先列出本次口径内所有颜色，包括低频但稳定的 UI 色、媒体资产色、截图采样色和 token 色。
+- 完整色板先列出本次口径内所有颜色，并按频次从高到低排序，包括低频但稳定的 UI 色、媒体资产色、截图采样色和 token 色。
+- 存在于 token / 候选映射但证据未命中的颜色也要保留，count 记为 `0`。
 - 高频映射证据再说明 count、percent、上下文和 target mapping。
 - 不允许只输出 Top N 频次表后声称完成 color 学习；Top N 只能解释优先级，不能代表全部 color inventory。
 
