@@ -231,6 +231,26 @@
                           </div>
                         </div>
                       </div>
+                      <div v-else-if="selectedStyleCategoryId === 'divider' && dividerScaleRows.length" class="recipe-scale-panel mockup-scale-panel evidence-scale-panel divider-scale" aria-label="divider and frame evidence">
+                        <strong>Divider / Frame recipe</strong>
+                        <small>拆分普通分割线、框体边界和选中线；特殊框必须落到 frame recipe。</small>
+                        <div class="divider-scale-list evidence-scale-list">
+                          <div
+                            v-for="item in dividerScaleRows"
+                            :key="`page-divider-evidence-${item.title}`"
+                            class="divider-scale-card evidence-scale-item"
+                            :class="`divider-scale-card-${item.kind}`"
+                            :style="recipeSwatchStyle(item)"
+                          >
+                            <i></i>
+                            <span>{{ item.title }}</span>
+                            <em>{{ item.stat }}</em>
+                            <small>{{ item.target }}</small>
+                            <b>{{ item.value }}</b>
+                            <p>{{ item.note }}</p>
+                          </div>
+                        </div>
+                      </div>
                       <div v-else-if="selectedStyleRecipeRows.length" class="palette-list">
                         <div
                           v-for="item in selectedStyleRecipeRows"
@@ -1776,6 +1796,20 @@ const radiusScaleRows = computed(() =>
       target: item.target,
       value: item.value,
       note: item.note,
+    };
+  }),
+);
+const dividerScaleRows = computed(() =>
+  selectedStyleRecipeRows.value.map((item) => {
+    const text = `${item.title} ${item.value}`.toLowerCase();
+    const kind = text.includes("selection") || text.includes("underline")
+      ? "selection"
+      : text.includes("frame") || text.includes("hud") || text.includes("ornate") || text.includes("card") || text.includes("panel")
+        ? "frame"
+        : "hairline";
+    return {
+      ...item,
+      kind,
     };
   }),
 );

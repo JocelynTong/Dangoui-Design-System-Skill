@@ -861,7 +861,8 @@ a {
 }
 
 .spacing-scale-track,
-.radius-scale-track {
+.radius-scale-track,
+.divider-scale-list {
   display: flex;
   gap: 10px;
   min-width: 0;
@@ -937,6 +938,80 @@ a {
   font-weight: 760;
   line-height: 1.2;
   text-align: center;
+}
+
+.divider-scale-card {
+  display: grid;
+  gap: 6px;
+  align-content: start;
+  flex: 0 0 auto;
+  width: 118px;
+  min-width: 118px;
+}
+
+.divider-scale-card i {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 46px;
+  border-radius: 0;
+  background: color-mix(in srgb, var(--style-card-bg) 78%, transparent);
+}
+
+.divider-scale-card i::before,
+.divider-scale-card i::after {
+  content: "";
+  position: absolute;
+}
+
+.divider-scale-card-hairline i::before {
+  left: 8px;
+  right: 8px;
+  top: 50%;
+  height: 1px;
+  background: var(--recipe-divider, var(--style-accent));
+}
+
+.divider-scale-card-frame i {
+  box-shadow: inset 0 0 0 1px var(--recipe-divider, var(--style-accent-soft));
+}
+
+.divider-scale-card-frame i::before {
+  inset: 7px;
+  background:
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left top / 16px 1px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left top / 1px 16px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right top / 16px 1px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right top / 1px 16px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left bottom / 16px 1px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) left bottom / 1px 16px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right bottom / 16px 1px no-repeat,
+    linear-gradient(var(--recipe-divider-accent, var(--style-accent)), var(--recipe-divider-accent, var(--style-accent))) right bottom / 1px 16px no-repeat;
+}
+
+.divider-scale-card-selection i::before {
+  left: 14px;
+  right: 14px;
+  bottom: 10px;
+  height: 2px;
+  background: var(--recipe-divider-accent, var(--style-accent));
+}
+
+.divider-scale-card-selection i::after {
+  left: 50%;
+  bottom: 7px;
+  width: 6px;
+  height: 6px;
+  border-right: 1px solid var(--recipe-divider-accent, var(--style-accent));
+  border-bottom: 1px solid var(--recipe-divider-accent, var(--style-accent));
+  transform: translateX(-50%) rotate(45deg);
+}
+
+.divider-scale-card span {
+  color: #25252a;
+  font-size: 10px;
+  font-weight: 760;
+  line-height: 1.2;
 }
 
 .palette-meta {
