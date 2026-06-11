@@ -1935,32 +1935,32 @@ const dangoColorStructureRows = computed(() => {
       name,
       value: value || "当前 token 快照未包含",
       swatch: firstColor(tokenMap[ref] || value),
-      chain: ref ? `${name} -> ${ref} -> ${tokenMap[ref] || "unresolved"}` : "当前快照未保留 var 引用",
+      chain: ref ? `${name} -> ${ref} -> ${tokenMap[ref] || "未解析"}` : "当前快照未保留 var 引用",
     };
   };
   const placeholder = (message) => ({
     name: message,
     value: "当前 token 快照未包含",
     swatch: "transparent",
-    chain: "--du-c-* 是废弃层，不可作为一级色板替代",
+    chain: "",
   });
   return [
     {
       title: "一级：基础色板",
       description: "无具体业务语义的色阶族，例如 purplegray-9。这里只表达颜色家族和色阶，不表达业务状态。",
       items: [
-        placeholder("等待 purplegray-* / gray-* 一级色板源"),
+        placeholder("purplegray-9 / gray-9"),
       ],
     },
     {
       title: "二级：语义 token",
-      description: "语义层应该引用一级色阶；当前 demo 快照多为 resolved hex，所以标出应回溯到一级色阶。",
+      description: "语义层引用一级色板；当前快照缺少一级源时只显示 token 名和值。",
       items: [
-        item("--du-bg-1", "--du-bg-1 -> 一级 surface 色阶 -> resolved #ffffff"),
-        item("--du-text-1", "--du-text-1 -> 一级 ink 色阶 -> resolved #000000"),
-        item("--du-border-1", "--du-border-1 -> 一级 translucent/line 色阶 -> resolved #0000001f"),
-        item("--du-primary-color", "--du-primary-color -> 一级 brand/purple 色阶 -> resolved #7c66ff"),
-        item("--du-default-color", "--du-default-color -> 一级 neutral 色阶 -> resolved #000000a3"),
+        item("--du-bg-1"),
+        item("--du-text-1"),
+        item("--du-border-1"),
+        item("--du-primary-color"),
+        item("--du-default-color"),
       ],
     },
     {

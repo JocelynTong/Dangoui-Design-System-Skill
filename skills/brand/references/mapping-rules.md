@@ -56,7 +56,7 @@ Color 输出至少拆成两组：
 
 - `colorInventory`：完整颜色清单，按 count 降序记录 raw value、归一化 value、count、percent、来源、上下文、是否 UI color / media color / asset color；无证据命中的候选色 count 记 `0`。
 - `rankedColorEvidence`：高频或关键颜色证据，记录 count、percent、target mapping、理由。
-- `dangoColorStructure`：默认 DangoUI baseline 不做频次统计，也不要平铺全部 token；必须展示典型引用链：一级基础色板 -> 二级语义 token -> 三级组件别名。一级基础色板是 `purplegray-9` 这类无具体业务语义的色阶族；废弃 `--du-c-*` 不能作为一级色板。二级要记录如何引用/解析一级，三级要记录 `var(--du-*)` 如何引用二级，不能只显示最终 16 进制值。
+- `dangoColorStructure`：默认 DangoUI baseline 不做频次统计，也不要平铺全部 token；展示典型三级关系即可：一级基础色板、二级语义 token、三级组件别名。一级基础色板是 `purplegray-9` 这类无具体业务语义的色阶族；废弃 `--du-c-*` 不能作为一级色板。三级要记录 `var(--du-*)` 如何引用二级，不能只显示最终 16 进制值。
 
 不要在一级色板层命名为 `primary`、`secondary`、`success`、`warning`、`error`、`trade`。
 
