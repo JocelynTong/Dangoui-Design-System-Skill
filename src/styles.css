@@ -775,9 +775,16 @@ a {
   line-height: 1.2;
 }
 
+.color-hierarchy-panel > small {
+  color: var(--style-muted);
+  font-size: 10px;
+  font-weight: 600;
+  line-height: 1.35;
+}
+
 .color-hierarchy-grid {
   display: grid;
-  gap: 7px;
+  gap: 10px;
   min-width: 0;
 }
 
@@ -802,21 +809,51 @@ a {
 }
 
 .color-hierarchy-group div {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 5px;
+  display: grid;
+  gap: 4px;
   min-width: 0;
+  max-height: 156px;
+  overflow-y: auto;
 }
 
 .color-hierarchy-group b {
-  max-width: 100%;
-  padding: 3px 5px;
-  color: var(--style-text);
-  font-size: 9px;
-  font-weight: 720;
-  line-height: 1.2;
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1fr) auto;
+  gap: 6px;
+  align-items: center;
+  min-width: 0;
+  padding: 4px 5px;
+  background: color-mix(in srgb, var(--style-accent) 7%, transparent);
+}
+
+.color-hierarchy-group b i {
+  display: block;
+  width: 16px;
+  height: 16px;
+  border: 1px solid color-mix(in srgb, var(--style-text) 12%, transparent);
+  background-image:
+    linear-gradient(45deg, color-mix(in srgb, var(--style-text) 10%, transparent) 25%, transparent 25%),
+    linear-gradient(-45deg, color-mix(in srgb, var(--style-text) 10%, transparent) 25%, transparent 25%);
+  background-size: 8px 8px;
+}
+
+.color-hierarchy-group b strong,
+.color-hierarchy-group b em {
+  min-width: 0;
   overflow-wrap: anywhere;
-  background: color-mix(in srgb, var(--style-accent) 9%, transparent);
+  font-size: 9px;
+  line-height: 1.2;
+}
+
+.color-hierarchy-group b strong {
+  color: var(--style-text);
+  font-weight: 760;
+}
+
+.color-hierarchy-group b em {
+  color: var(--style-muted);
+  font-style: normal;
+  font-weight: 650;
 }
 
 .compact-heading {
