@@ -808,19 +808,17 @@ a {
   line-height: 1.35;
 }
 
-.color-hierarchy-group div {
+.color-hierarchy-group .color-chain-list {
   display: grid;
   gap: 4px;
   min-width: 0;
-  max-height: 156px;
-  overflow-y: auto;
 }
 
 .color-hierarchy-group b {
   display: grid;
-  grid-template-columns: 16px minmax(0, 1fr) auto;
+  grid-template-columns: 16px minmax(0, 1fr);
   gap: 6px;
-  align-items: center;
+  align-items: start;
   min-width: 0;
   padding: 4px 5px;
   background: color-mix(in srgb, var(--style-accent) 7%, transparent);
@@ -837,8 +835,15 @@ a {
   background-size: 8px 8px;
 }
 
+.color-hierarchy-group b span {
+  display: grid;
+  gap: 2px;
+  min-width: 0;
+}
+
 .color-hierarchy-group b strong,
-.color-hierarchy-group b em {
+.color-hierarchy-group b em,
+.color-hierarchy-group b small {
   min-width: 0;
   overflow-wrap: anywhere;
   font-size: 9px;
@@ -854,6 +859,11 @@ a {
   color: var(--style-muted);
   font-style: normal;
   font-weight: 650;
+}
+
+.color-hierarchy-group b small {
+  color: var(--style-accent);
+  font-weight: 700;
 }
 
 .compact-heading {

@@ -180,11 +180,14 @@
                               >
                                 <span>{{ group.title }}</span>
                                 <p>{{ group.description }}</p>
-                                <div>
+                                <div class="color-chain-list">
                                   <b v-for="(item, itemIndex) in group.items" :key="`${group.title}-${item.name || itemIndex}`">
                                     <i :style="{ background: item.swatch }"></i>
-                                    <strong>{{ item.name }}</strong>
-                                    <em>{{ item.value }}</em>
+                                    <span>
+                                      <strong>{{ item.name }}</strong>
+                                      <em>{{ item.value }}</em>
+                                      <small v-if="item.chain">{{ item.chain }}</small>
+                                    </span>
                                   </b>
                                 </div>
                               </div>
@@ -1916,48 +1919,61 @@ const selectedStyleTokenMap = computed(() =>
   Object.fromEntries(selectedStyle.value.tokens.map((token) => [token.name, token.value])),
 );
 const dangoColorStructureRows = computed(() => {
-  const colorTokens = catalog.value.tokens.filter((token) => extractColorValues(token.value).length);
-  const makeItem = (token) => ({
-    name: token.name,
-    value: token.value,
-    swatch: extractColorValues(token.value)[0] || "transparent",
+  const tokenMap = Object.fromEntries(catalog.value.tokens.map((token) => [token.name, token.value]));
+  const firstColor = (value) => extractColorValues(value)[0] || "transparent";
+  const refName = (value) => String(value).match(/var\((--[^)]+)\)/)?.[1] || "";
+  const item = (name, chain = "") => ({
+    name,
+    value: tokenMap[name] || "当前 token 快照未包含",
+    swatch: firstColor(tokenMap[name]),
+    chain,
   });
-  const pick = (matcher) => colorTokens.filter((token) => matcher(token.name)).map(makeItem);
-  const componentPrefixes = /^--du-(bt|in|tabs|steps|checkbox|radio|switch|input|c-badge|empty|notice-bar|navigation-bar)-/;
-  const level1 = pick((name) =>
-    /^--du-(?:[a-z]+gray|gray|neutral|default|white|trans-black)-[1-9]$/.test(name),
-  );
-  const level3 = pick((name) => componentPrefixes.test(name));
-  const level2 = pick((name) =>
-    !/^--du-c-/.test(name)
-      && !componentPrefixes.test(name)
-      && !/^--du-(?:[a-z]+gray|gray|neutral|default|white|trans-black)-[1-9]$/.test(name)
-      && /^--du-(bg|text|border|icon|mask|primary|secondary|success|warning|error|trade|vip|default|white|trans-black)-/.test(name),
-  );
-  const placeholder = (message) => [{
+  const refItem = (name) => {
+    const value = tokenMap[name] || "";
+    const ref = refName(value);
+    return {
+      name,
+      value: value || "当前 token 快照未包含",
+      swatch: firstColor(tokenMap[ref] || value),
+      chain: ref ? `${name} -> ${ref} -> ${tokenMap[ref] || "unresolved"}` : "当前快照未保留 var 引用",
+    };
+  };
+  const placeholder = (message) => ({
     name: message,
     value: "当前 token 快照未包含",
     swatch: "transparent",
-  }];
-  const deprecatedCount = colorTokens.filter((token) => /^--du-c-/.test(token.name)).length;
-  if (deprecatedCount) {
-    // Keep the old layer visible in the source inventory only; do not promote it into the three-layer structure.
-  };
+    chain: "--du-c-* 是废弃层，不可作为一级色板替代",
+  });
   return [
     {
       title: "一级：基础色板",
-      description: "无具体业务语义的色阶族，例如 purplegray-9；当前快照不再把废弃 --du-c-* 当一级。",
-      items: level1.length ? level1 : placeholder("等待 purplegray-* / gray-* 一级色板源"),
+      description: "无具体业务语义的色阶族，例如 purplegray-9。这里只表达颜色家族和色阶，不表达业务状态。",
+      items: [
+        placeholder("等待 purplegray-* / gray-* 一级色板源"),
+      ],
     },
     {
       title: "二级：语义 token",
-      description: "把颜色分配到背景、文字、边框、状态和品牌行动角色。",
-      items: level2,
+      description: "语义层应该引用一级色阶；当前 demo 快照多为 resolved hex，所以标出应回溯到一级色阶。",
+      items: [
+        item("--du-bg-1", "--du-bg-1 -> 一级 surface 色阶 -> resolved #ffffff"),
+        item("--du-text-1", "--du-text-1 -> 一级 ink 色阶 -> resolved #000000"),
+        item("--du-border-1", "--du-border-1 -> 一级 translucent/line 色阶 -> resolved #0000001f"),
+        item("--du-primary-color", "--du-primary-color -> 一级 brand/purple 色阶 -> resolved #7c66ff"),
+        item("--du-default-color", "--du-default-color -> 一级 neutral 色阶 -> resolved #000000a3"),
+      ],
     },
     {
       title: "三级：组件别名",
-      description: "组件内部 token 继承或派生自二级语义层。",
-      items: level3,
+      description: "组件别名层必须通过 var(...) 继承二级语义 token，不直接写最终色值。",
+      items: [
+        refItem("--du-bt-color"),
+        refItem("--du-bt-border"),
+        refItem("--du-bt-solid-bg"),
+        refItem("--du-in-solid-bg"),
+        refItem("--du-checkbox-color"),
+        refItem("--du-switch-bg"),
+      ],
     },
   ];
 });
