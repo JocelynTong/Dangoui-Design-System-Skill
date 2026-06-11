@@ -1893,33 +1893,94 @@ const dividerScaleRows = computed(() =>
 const selectedStyleTokenMap = computed(() =>
   Object.fromEntries(selectedStyle.value.tokens.map((token) => [token.name, token.value])),
 );
-const selectedColorInventoryRows = computed(() => {
+const catalogColorInventoryRows = computed(() => {
   const rows = new Map();
+  catalog.value.tokens.forEach((token) => {
+    extractColorValues(token.value).forEach((color) => {
+      const key = color.toLowerCase();
+      const row = rows.get(key) || {
+        raw: color,
+        count: 0,
+        percent: "token refs",
+        targetNames: [],
+        value: "dangoui 初始化 token 色值",
+        swatch: color,
+        sortCount: 0,
+      };
+      row.count += 1;
+      row.sortCount = row.count;
+      if (row.targetNames.length < 8) row.targetNames.push(token.name);
+      rows.set(key, row);
+    });
+  });
+  return Array.from(rows.values()).map((row) => ({
+    ...row,
+    target: row.targetNames.join(" / "),
+  }));
+});
+const selectedColorInventoryRows = computed(() => {
+  if (selectedStyle.value.id === "dumpling" && catalogColorInventoryRows.value.length) {
+    return catalogColorInventoryRows.value.sort((a, b) => b.sortCount - a.sortCount || a.raw.localeCompare(b.raw));
+  }
+
+  const rows = new Map();
+  const addCandidate = ({ raw, count = 0, percent = "0%", target, value, swatch, source }) => {
+    extractColorValues(raw).forEach((color) => {
+      const key = color.toLowerCase();
+      const row = rows.get(key) || {
+        raw: color,
+        count: 0,
+        percent,
+        targetNames: [],
+        value,
+        swatch: swatch || color,
+        sortCount: 0,
+        sources: [],
+      };
+      row.count += count;
+      row.sortCount = row.count;
+      if (count > 0) {
+        row.percent = percent;
+        row.value = value;
+      }
+      if (target && row.targetNames.length < 8) row.targetNames.push(target);
+      if (source && row.sources.length < 4) row.sources.push(source);
+      rows.set(key, row);
+    });
+  };
+
   selectedStyle.value.tokens.filter((token) => isColorSignal(token.value)).forEach((token) => {
-    rows.set(token.value, {
+    addCandidate({
       raw: token.value,
-      count: 0,
-      percent: "0%",
       target: token.name,
-      value: "token 候选色，当前证据频次为 0",
-      swatch: token.value,
-      sortCount: 0,
+      value: "token / 候选映射色，当前证据频次为 0",
+      source: "token",
     });
   });
   selectedStyle.value.signals.forEach((signal) => {
-    const raw = String(signal.raw);
     const count = typeof signal.count === "number" ? signal.count : 0;
-    rows.set(raw, {
-      raw,
+    addCandidate({
+      raw: signal.raw,
       count,
       percent: signal.percent === "baseline" ? "0%" : signal.percent,
       target: signal.target,
       value: signal.value,
       swatch: signalSwatch(signal),
-      sortCount: count,
+      source: "evidence",
     });
   });
-  return Array.from(rows.values()).sort((a, b) => b.sortCount - a.sortCount || a.raw.localeCompare(b.raw));
+  Object.values(selectedStyle.value.style || {}).forEach((value) => {
+    addCandidate({
+      raw: value,
+      target: "demoOnlyVisualControls",
+      value: "style recipe 中出现的候选颜色，当前证据频次为 0",
+      source: "style",
+    });
+  });
+  return Array.from(rows.values()).map((row) => ({
+    ...row,
+    target: row.targetNames.join(" / "),
+  })).sort((a, b) => b.sortCount - a.sortCount || a.raw.localeCompare(b.raw));
 });
 const themeVars = computed(() => ({
   "--du-bg-2": selectedStyleTokenMap.value["--du-bg-2"],
@@ -2023,16 +2084,21 @@ function isMissing(name) {
 }
 
 function isColorSignal(value) {
-  return /^#[0-9a-f]{3,8}$/i.test(String(value));
+  return extractColorValues(value).length > 0;
 }
 
 function signalSwatch(signal) {
-  if (isColorSignal(signal.raw)) return signal.raw;
+  const firstColor = extractColorValues(signal.raw)[0];
+  if (firstColor) return firstColor;
   if (String(signal.raw).includes("/")) {
     return `linear-gradient(135deg, ${String(signal.raw).split("/").map((item) => item.trim()).join(", ")})`;
   }
   if (String(signal.raw).includes("palette")) return selectedStyle.value.style.media;
   return "linear-gradient(135deg, #f6f5f4, #e6e6e6)";
+}
+
+function extractColorValues(value) {
+  return Array.from(String(value).matchAll(/#[0-9a-f]{3,8}|rgba?\([^)]*\)/gi), (match) => match[0]);
 }
 
 function firstNumber(value, fallback) {

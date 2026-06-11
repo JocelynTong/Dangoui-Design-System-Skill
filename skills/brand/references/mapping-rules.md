@@ -42,7 +42,7 @@ Figma alias: primary/bt/border -> {primary.border} -> {primary.5}
 
 只描述颜色本身，不赋予 UI 语义。
 
-一级色板必须是完整 inventory，不是 Top N 高频表。所有从 CSS、token、截图采样、图片资产中进入本次口径的颜色都要先列出，并按频次从高到低排序；存在于 token / 候选映射但证据未命中的颜色保留为 `0 次`。频次、占比和上下文用于排序与解释映射决策，不能替代完整色板。
+一级色板必须先从源资产做全量抽取，不是 Top N 高频表，也不是最终 token mapping 的反推结果。所有从 CSS token、CSS declaration、截图采样、图片资产、已有 design token 中进入本次口径的颜色都要先列出，并按频次从高到低排序；存在于 token / 候选映射但证据未命中的颜色保留为 `0 次`。频次、占比和上下文用于排序与解释映射决策，不能替代完整色板。
 
 判断维度：
 
