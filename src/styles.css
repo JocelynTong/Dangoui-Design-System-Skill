@@ -10,6 +10,13 @@
   --style-card-radius-base: 12px;        /* mockup 缩放前的卡片圆角基准(自定) */
   --style-control-radius-base: 8px;      /* mockup 缩放前的控件圆角基准(自定) */
   --style-page-spacing-base: 12px;       /* mockup 缩放前的页面间距基准(自定) */
+
+  /* === 自定 shadow / media token(06-17 激活 · 之前是 dead variable) ===
+     dangoui 没通用 shadow / media 命名 token,自定
+     默认值保守:轻阴影 + transparent,不破坏现有视觉
+     后续可让研发加进 dangoui:card-shadow / dangoui:media */
+  --style-card-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);  /* 卡片轻阴影 */
+  --style-media: transparent;                           /* 媒体叠加层底色(默认透明) */
   --mockup-radius: 30px;
   --mockup-screen-width: 375px;
   --mockup-screen-height: 812px;
