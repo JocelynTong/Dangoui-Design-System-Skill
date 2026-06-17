@@ -8982,7 +8982,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
   --style-control-radius: calc(var(--style-control-radius-base, 8px) * var(--mockup-scale));
   border: var(--mockup-frame-border-scaled) solid var(--mockup-frame-color);
   border-radius: var(--mockup-frame-radius-scaled);
-  background: var(--du-bg-1);
+  /* background 删 · 06-17 原则:底层背景统一继承 body,不每层单独设 */
   box-shadow: 0 14px 42px #0000000a;
   overflow: hidden;
   position: relative;
