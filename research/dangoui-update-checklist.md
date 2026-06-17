@@ -128,25 +128,60 @@
 主题卡   .re1999-hero 等  主题渐变 bg 覆盖 .group
 ```
 
-#### 已落地(2026-06-17)
+#### 已落地(2026-06-17,共 142 处直接引用 + 删 9 个 :root alias)
 
+##### Phase 1 · 立规范
 - [x] **删 :root --bg 自定 token**(跟 --du-bg-* 重复)
 - [x] **body background: var(--bg) → var(--du-bg-1)**
-- [x] **.group background: var(--style-card-bg, #ffffff) → var(--du-bg-2)**
+- [x] **.group background: var(--style-card-bg, #ffffff) → var(--du-bg-2)**(后续用 var(--du-bg-2) 直接)
 - [x] **.contents 不设 bg(继承 body bg-1)**
+- [x] **.group 卡片基类建立 + 6 处 publish card 加 class="group"**
 
-#### 待审查(后续规范,优先级由你定)
+##### Phase 2 · :root 自定 token 映射到 dangoui
+- [x] **8 个 :root alias 删除**(--bg/--panel/--panel-soft/--text/--muted/--line/--accent/--accent-soft/--orange)
+- [x] 78 处 var(--X) → var(--du-*) 直接引用(panel/text/muted/line/accent/accent-soft/orange/bg)
 
-- [ ] `--panel` (#ffffff) → 是否用 `--du-bg-1` 或 `--du-bg-3`
-- [ ] `--panel-soft` (#fbfbfd) → 是否用 `--du-bg-2` 或新建 semantic
-- [ ] `--text` (#000000e0) → 是否用 `--du-text-1`
-- [ ] `--muted` (#00000066) → 是否用 `--du-text-3`
-- [ ] `--line` (#0000001f) → 是否用 `--du-border-1` 或 `--du-line-1`
-- [ ] `--accent` (#7c66ff) → 是否用 `--du-primary-color` 或 `--du-accent`
-- [ ] `--accent-soft` (#f2f0ff) → 是否用 `--du-accent-soft`
-- [ ] `--orange` (#fc7e22) → 是否用 `--du-warning-color`
-- [ ] `--style-card-bg` 用了 512 次 → 大头,需要批量替换
-- [ ] `--style-card-radius` `--style-control-radius` `--style-page-spacing` → 是否要新建 semantic token 映射到 du-*
+##### Phase 3 · --style-card-bg 彻底 token 化
+- [x] **55 处 var(--style-card-bg) → var(--du-bg-2)**(卡片底色)
+- [x] **1 处 autofill inset → var(--du-bg-1)**(input 底色用白)
+
+##### Phase 4 · Mockup scale 简化
+- [x] **3 个 derived calc 删**(--style-card-radius / --style-control-radius / --style-page-spacing)
+- [x] **64 处改用 base**(--style-card-radius-base / --style-control-radius-base / --style-page-spacing-base)
+- [x] 因为 --mockup-scale 写死 1,calc 永远是 no-op,简化后语义清晰
+
+##### Phase 5 · 激活 dead variable
+- [x] **--style-card-shadow 定义**:0 1px 3px rgba(0, 0, 0, 0.08)(10 处 box-shadow 激活)
+- [x] **--style-media 定义**:transparent(5 处 background 激活,等价 dead 状态)
+
+#### Commit 链(06-17 token 化完整历史)
+
+| commit | 说明 | 影响 |
+|---|---|---|
+| `71fb53b` | 06-17 立 token 体系规范 | 立原则 + 6 处 .group |
+| `18ed0b5` | :root 自定 8 token 映射到 dangoui | 9 个 :root 改动 |
+| `7981616` | 56 处 var(--style-card-bg) → --du-bg-2 | 删 :root alias + 56 处迁移 |
+| `88f0353` | 78 处 var(--bg/panel/text/...) → --du-* | 删 8 个 :root 旧 alias |
+| `2247c2e` | 简化 mockup scale | 删 3 derived + 64 处改 base |
+| `1627ff9` | 激活 2 个 dead variable | 10 box-shadow + 5 bg 激活 |
+
+#### :root 最终状态(06-17 收尾,6 类自定 token)
+
+```css
+:root {
+  --shadow: 0 18px 60px ...;             /* 自定:demo 全局阴影 */
+  --style-card-radius-base: 12px;       /* 自定:卡片圆角 */
+  --style-control-radius-base: 8px;     /* 自定:控件圆角 */
+  --style-page-spacing-base: 12px;      /* 自定:页面间距 */
+  --style-card-shadow: 0 1px 3px ...;  /* 自定:卡片轻阴影(06-17 激活) */
+  --style-media: transparent;            /* 自定:媒体层底色(06-17 激活) */
+  --mockup-radius / --mockup-screen-*   /* mockup 内部 */
+  --mock-type-*                          /* mockup 内部 */
+}
+```
+
+dangoui 100% 接管色板/bg/border,自定 6 类都是 dangoui 没对应(mockup 几何 / 自定阴影 / 自定 media)
+
 
 #### 触发场景
 
