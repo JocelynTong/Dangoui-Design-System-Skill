@@ -13,11 +13,7 @@
   --orange: var(--du-c-warning);       /* 橙色警示 = #fc7e22 完全匹配 */
   --shadow: 0 18px 60px rgba(29, 29, 31, 0.12);  /* 阴影:demo 自定,跟 token 体系无关 */
 
-  /* === 卡片层 token 统一映射(2026-06-17 立 · 一行让 512 处跟着变) ===
-     --style-card-bg 用了 512 次,以前靠 fallback #ffffff 渲染(白)
-     现在映射到 --du-bg-2 (浅灰),跟 .group 卡片基类保持一致
-     → 视觉反转:白底页面 + 浅灰卡(原来是浅灰底页面 + 白卡) === */
-  --style-card-bg: var(--du-bg-2);
+  /* 06-17 立:原 --style-card-bg alias 已废止,55 处都改用 var(--du-bg-2) 直接引用 */
   --style-card-radius-base: 12px;        /* mockup 缩放前的卡片圆角基准(自定) */
   --style-control-radius-base: 8px;      /* mockup 缩放前的控件圆角基准(自定) */
   --style-page-spacing-base: 12px;       /* mockup 缩放前的页面间距基准(自定) */
@@ -272,7 +268,7 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 textarea:-webkit-autofill,
 select:-webkit-autofill {
-  -webkit-box-shadow: 0 0 0 1000px var(--style-card-bg, #ffffff) inset;
+  -webkit-box-shadow: 0 0 0 1000px var(--du-bg-1) inset  /* autofill inset:input 底色用白(du-bg-1) */;
   -webkit-text-fill-color: var(--style-text, inherit);
   caret-color: var(--style-text, inherit);
   transition: background-color 9999s ease-in-out 0s;
@@ -1842,7 +1838,7 @@ a {
   content: "";
   width: 36px;
   height: 28px;
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   box-shadow: var(--recipe-shadow, var(--style-card-shadow));
 }
 
@@ -2089,7 +2085,7 @@ a {
   width: 44px;
   height: 44px;
   border-radius: var(--recipe-radius, 8px);
-  background: color-mix(in srgb, var(--style-card-bg) 72%, var(--style-accent-soft));
+  background: color-mix(in srgb, var(--du-bg-2) 72%, var(--style-accent-soft));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 10%, transparent);
 }
 
@@ -2116,7 +2112,7 @@ a {
   width: 100%;
   height: 56px;
   border-radius: 0;
-  background: color-mix(in srgb, var(--style-card-bg) 78%, transparent);
+  background: color-mix(in srgb, var(--du-bg-2) 78%, transparent);
 }
 
 .divider-scale-card i::before,
@@ -2567,7 +2563,7 @@ pre {
   padding: 8px 10px;
   border: 1px solid color-mix(in srgb, var(--style-text) 12%, transparent);
   border-radius: var(--style-control-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   color: var(--style-text);
   cursor: pointer;
   text-align: left;
@@ -2575,7 +2571,7 @@ pre {
 
 .template-tabs button.active {
   border-color: color-mix(in srgb, var(--style-accent) 70%, transparent);
-  background: color-mix(in srgb, var(--style-accent-soft) 72%, var(--style-card-bg));
+  background: color-mix(in srgb, var(--style-accent-soft) 72%, var(--du-bg-2));
   box-shadow: inset 0 -3px 0 var(--style-accent);
 }
 
@@ -2625,7 +2621,7 @@ pre {
   margin-bottom: 14px;
   padding: 12px;
   border-radius: var(--style-card-radius);
-  background: color-mix(in srgb, var(--style-card-bg) 94%, var(--style-page-bg));
+  background: color-mix(in srgb, var(--du-bg-2) 94%, var(--style-page-bg));
   color: var(--style-text);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 8%, transparent);
 }
@@ -2764,7 +2760,7 @@ pre {
   font-size: 12px;
   color: var(--style-text);
   font-weight: 720;
-  background: color-mix(in srgb, var(--style-text) 4%, var(--style-card-bg));
+  background: color-mix(in srgb, var(--style-text) 4%, var(--du-bg-2));
   border-radius: 6px;
   padding: 6px 10px;
   margin-top: 4px;
@@ -2879,7 +2875,7 @@ pre {
   gap: 9px;
   padding: 14px;
   border-radius: 15px;
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 8%, transparent);
 }
 
@@ -2910,7 +2906,7 @@ pre {
   min-height: 32px;
   border: 0;
   border-radius: var(--style-control-radius);
-  background: color-mix(in srgb, var(--style-accent) 12%, var(--style-card-bg));
+  background: color-mix(in srgb, var(--style-accent) 12%, var(--du-bg-2));
   color: var(--style-accent);
   font: inherit;
   font-weight: 780;
@@ -2928,7 +2924,7 @@ pre {
   margin-inline: calc(-1 * var(--style-page-spacing));
   padding: 14px 14px 18px;
   border-radius: 15px 15px 0 0;
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   box-shadow: none;
 }
 
@@ -3065,7 +3061,7 @@ pre {
   min-height: 64px;
   padding: 10px 12px;
   border-radius: var(--style-control-radius);
-  background: color-mix(in srgb, var(--style-card-bg) 92%, var(--style-page-bg));
+  background: color-mix(in srgb, var(--du-bg-2) 92%, var(--style-page-bg));
 }
 
 .component-swiper-example {
@@ -3081,7 +3077,7 @@ pre {
   gap: 6px;
   width: 100%;
   height: 100%;
-  background: color-mix(in srgb, var(--style-accent) 18%, var(--style-card-bg));
+  background: color-mix(in srgb, var(--style-accent) 18%, var(--du-bg-2));
   color: var(--style-text);
   text-align: center;
 }
@@ -3106,7 +3102,7 @@ pre {
   padding: 10px 12px;
   border: 0;
   border-radius: var(--style-control-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   color: var(--style-text);
   font: inherit;
   text-align: left;
@@ -3131,7 +3127,7 @@ pre {
   min-height: 42px;
   padding: 0 8px;
   border-radius: 8px;
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   color: var(--style-text);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 10%, transparent);
 }
@@ -3178,7 +3174,7 @@ pre {
 .du-cascader__search .du-search,
 .navigation-doc-tabs-examples .du-cascader__search .du-search,
 .component-example-stack .du-cascader__search .du-search {
-  background: color-mix(in srgb, var(--style-text) 4%, var(--style-card-bg));
+  background: color-mix(in srgb, var(--style-text) 4%, var(--du-bg-2));
   border: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
   border-radius: 8px;
   padding: 0 8px;
@@ -3364,7 +3360,7 @@ pre {
 }
 
 .mock-segment-control button.active {
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   color: var(--style-text);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
@@ -3378,7 +3374,7 @@ pre {
   padding: 8px var(--style-page-spacing);
   border-top: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
   border-radius: 0;
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
 }
 
 .mock-menu-list {
@@ -3414,7 +3410,7 @@ pre {
   min-height: 44px;
   padding: 10px 12px;
   border-radius: var(--style-control-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 8%, transparent);
 }
 
@@ -3430,7 +3426,7 @@ pre {
   padding: 10px 12px;
   border-left: 3px solid var(--style-accent);
   border-radius: 8px;
-  background: color-mix(in srgb, var(--style-accent) 10%, var(--style-card-bg));
+  background: color-mix(in srgb, var(--style-accent) 10%, var(--du-bg-2));
 }
 
 .mock-tips-card strong {
@@ -3478,7 +3474,7 @@ pre {
   min-height: 40px;
   padding: 8px 10px;
   border-radius: 9px;
-  background: color-mix(in srgb, var(--style-card-bg) 88%, var(--style-page-bg));
+  background: color-mix(in srgb, var(--du-bg-2) 88%, var(--style-page-bg));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 7%, transparent);
 }
 
@@ -3525,7 +3521,7 @@ pre {
   border: 1px solid color-mix(in srgb, var(--style-text) 12%, transparent);
   border-radius: 8px;
   outline: none;
-  background: color-mix(in srgb, var(--style-card-bg) 96%, var(--style-page-bg));
+  background: color-mix(in srgb, var(--du-bg-2) 96%, var(--style-page-bg));
   color: var(--style-text);
   font: 700 11px / 1 var(--font-sans);
 }
@@ -3569,7 +3565,7 @@ pre {
   overflow: auto;
   border: 1px solid color-mix(in srgb, var(--style-text) 12%, transparent);
   border-radius: 9px;
-  background: color-mix(in srgb, var(--style-card-bg) 98%, var(--style-page-bg));
+  background: color-mix(in srgb, var(--du-bg-2) 98%, var(--style-page-bg));
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
@@ -3605,7 +3601,7 @@ pre {
   min-width: 0;
   padding: 8px 10px;
   border-radius: 8px;
-  background: color-mix(in srgb, var(--style-card-bg) 88%, var(--style-page-bg));
+  background: color-mix(in srgb, var(--du-bg-2) 88%, var(--style-page-bg));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--style-text) 7%, transparent);
 }
 
@@ -3634,7 +3630,7 @@ pre {
   display: block;
   padding: 8px 10px 8px 28px;
   border-radius: 8px;
-  background: color-mix(in srgb, var(--style-accent) 10%, var(--style-card-bg));
+  background: color-mix(in srgb, var(--style-accent) 10%, var(--du-bg-2));
   color: var(--style-text);
   font-size: 11px;
   font-weight: 760;
@@ -3692,7 +3688,7 @@ pre {
   grid-template-columns: 22px minmax(0, 1fr);
   gap: 8px;
   padding: 8px;
-  background: color-mix(in srgb, var(--style-card-bg) 92%, #fff);
+  background: color-mix(in srgb, var(--du-bg-2) 92%, #fff);
 }
 
 .component-token-grid .token > span:last-child {
@@ -3718,7 +3714,7 @@ pre {
   padding: 10px;
   border: 1px solid color-mix(in srgb, var(--style-text) 8%, transparent);
   border-radius: 8px;
-  background: color-mix(in srgb, var(--style-card-bg) 86%, #fff);
+  background: color-mix(in srgb, var(--du-bg-2) 86%, #fff);
   color: var(--style-muted);
   font-size: 10px;
   line-height: 1.45;
@@ -3879,7 +3875,7 @@ pre {
   width: fit-content;
   padding: 4px 7px;
   border-radius: 7px;
-  background: color-mix(in srgb, var(--style-accent-soft) 80%, var(--style-card-bg));
+  background: color-mix(in srgb, var(--style-accent-soft) 80%, var(--du-bg-2));
   color: var(--style-accent);
   font-size: 11px;
   font-weight: 850;
@@ -3906,7 +3902,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--style-text) 12%, transparent);
   border-radius: var(--style-control-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
 }
 
 .selected-node-summary strong {
@@ -3929,7 +3925,7 @@ pre {
 .preview-token-list i {
   padding: 4px 7px;
   border-radius: 6px;
-  background: color-mix(in srgb, var(--style-accent-soft) 82%, var(--style-card-bg));
+  background: color-mix(in srgb, var(--style-accent-soft) 82%, var(--du-bg-2));
   color: var(--style-accent);
   font-size: 11px;
   font-style: normal;
@@ -3962,7 +3958,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
   border-radius: var(--style-card-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   box-shadow: var(--style-card-shadow);
 }
 
@@ -4000,7 +3996,7 @@ pre {
   background:
     linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--style-page-bg) 82%, #000) 100%),
     radial-gradient(circle at 72% 24%, color-mix(in srgb, var(--style-accent) 34%, transparent), transparent 36%),
-    linear-gradient(135deg, color-mix(in srgb, var(--style-accent) 38%, var(--style-page-bg)), var(--style-card-bg));
+    linear-gradient(135deg, color-mix(in srgb, var(--style-accent) 38%, var(--style-page-bg)), var(--du-bg-2));
   color: var(--style-text);
   box-shadow: var(--style-card-shadow);
 }
@@ -4131,7 +4127,7 @@ pre {
   border: 0;
   border-top: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
   border-radius: 0;
-  background: color-mix(in srgb, var(--style-card-bg) 96%, var(--style-page-bg));
+  background: color-mix(in srgb, var(--du-bg-2) 96%, var(--style-page-bg));
 }
 
 .mock-tabbar button {
@@ -4157,7 +4153,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
   border-radius: var(--style-card-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
 }
 
 .mock-grid i {
@@ -4176,7 +4172,7 @@ pre {
   display: grid;
   border: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
   border-radius: var(--style-card-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   overflow: hidden;
 }
 
@@ -4205,7 +4201,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
   border-radius: var(--style-card-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
 }
 
 .mock-tabs-scene article {
@@ -4250,7 +4246,7 @@ pre {
   height: 34px;
   border-radius: var(--style-control-radius);
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--style-accent) 58%, var(--style-card-bg)), var(--style-accent-soft));
+    linear-gradient(135deg, color-mix(in srgb, var(--style-accent) 58%, var(--du-bg-2)), var(--style-accent-soft));
 }
 
 .mock-list p > span {
@@ -4277,7 +4273,7 @@ pre {
 .mock-list em {
   padding: 3px 7px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--style-accent-soft) 72%, var(--style-card-bg));
+  background: color-mix(in srgb, var(--style-accent-soft) 72%, var(--du-bg-2));
   color: var(--style-accent);
   font-size: 10px;
   font-style: normal;
@@ -4301,7 +4297,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
   border-radius: var(--style-control-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
 }
 
 .mock-time-row strong {
@@ -4321,7 +4317,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
   border-radius: var(--style-control-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   color: var(--style-text);
   font-size: 16px;
   line-height: 1.15;
@@ -4339,7 +4335,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
   border-radius: var(--style-card-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   box-shadow: var(--style-card-shadow);
 }
 
@@ -4355,7 +4351,7 @@ pre {
   padding: 22px 14px;
   border: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
   border-radius: var(--style-card-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   text-align: center;
 }
 
@@ -4472,7 +4468,7 @@ pre {
   padding: 10px 12px;
   border: 1px solid color-mix(in srgb, var(--style-text) 10%, transparent);
   border-radius: var(--style-control-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
 }
 
 .mock-datetime-picker strong,
@@ -4565,7 +4561,7 @@ pre {
   padding: 14px;
   border: 1px solid color-mix(in srgb, var(--style-text) 12%, transparent);
   border-radius: var(--style-control-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   color: var(--style-text);
 }
 
@@ -4687,7 +4683,7 @@ pre {
   padding: 16px;
   border: 1px solid color-mix(in srgb, var(--style-text) 12%, transparent);
   border-radius: var(--style-card-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   color: var(--style-text);
   box-shadow: var(--style-card-shadow);
   cursor: pointer;
@@ -4696,7 +4692,7 @@ pre {
 
 .showcase-block.placeholder {
   min-height: 150px;
-  background: color-mix(in srgb, var(--style-card-bg) 82%, var(--style-page-bg));
+  background: color-mix(in srgb, var(--du-bg-2) 82%, var(--style-page-bg));
   box-shadow: none;
 }
 
@@ -4869,7 +4865,7 @@ pre {
 
 .theme-czn .placeholder-card,
 .theme-czn .display-summary {
-  background: color-mix(in srgb, var(--style-card-bg) 82%, transparent);
+  background: color-mix(in srgb, var(--du-bg-2) 82%, transparent);
 }
 
 .theme-czn .placeholder-card {
@@ -4920,7 +4916,7 @@ pre {
   padding: 16px;
   border: 0;
   border-radius: 0;
-  background: color-mix(in srgb, var(--style-card-bg) 82%, transparent);
+  background: color-mix(in srgb, var(--du-bg-2) 82%, transparent);
   color: var(--style-text);
 }
 
@@ -6187,7 +6183,7 @@ pre {
     linear-gradient(var(--hpma-frame), var(--hpma-frame)) left bottom / 1px 20px no-repeat,
     linear-gradient(var(--hpma-frame), var(--hpma-frame)) right bottom / 20px 1px no-repeat,
     linear-gradient(var(--hpma-frame), var(--hpma-frame)) right bottom / 1px 20px no-repeat,
-    linear-gradient(var(--style-card-bg), var(--style-card-bg));
+    linear-gradient(var(--du-bg-2), var(--du-bg-2));
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.42);
 }
 
@@ -6446,7 +6442,7 @@ pre {
   border-radius: 0;
   background:
     linear-gradient(180deg, rgba(59, 40, 27, 0.9), rgba(29, 21, 15, 0.92)),
-    var(--style-card-bg);
+    var(--du-bg-2);
 }
 
 .theme-hpma .hpma-platform-row {
@@ -7294,7 +7290,7 @@ pre {
   border-radius: 0;
   background:
     linear-gradient(180deg, rgba(233, 220, 205, 0.045), transparent 42%),
-    var(--style-card-bg);
+    var(--du-bg-2);
   box-shadow: var(--style-card-shadow);
 }
 
@@ -9192,7 +9188,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
    想要"裸"卡片带基础底色,就在元素上加 .group 类 === */
 .group {
   position: relative;
-  background: var(--style-card-bg, #ffffff);
+  background: var(--du-bg-2);  /* 卡片基类底色,直接用 dangoui token,不绕 --style-card-bg alias */
   border-radius: var(--style-card-radius, 12px);
   transition: background 150ms ease, box-shadow 150ms ease;
 }
@@ -9756,7 +9752,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
   width: 100%;
   margin: 0;
   border-radius: var(--style-card-radius);
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   color: var(--style-text);
   box-shadow: var(--style-card-shadow);
   overflow: hidden;
@@ -9931,7 +9927,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
 
 .tab-bar {
   padding: 10px 24px 18px;
-  background: var(--style-card-bg);
+  background: var(--du-bg-2);
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
@@ -9968,7 +9964,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
   height: var(--mockup-tabbar-height);
   padding: calc(4px * var(--mockup-scale)) calc(14px * var(--mockup-scale));
   border-top: calc(1px * var(--mockup-scale)) solid color-mix(in srgb, var(--style-text) 12%, transparent);
-  background: color-mix(in srgb, var(--style-card-bg) 94%, var(--style-page-bg));
+  background: color-mix(in srgb, var(--du-bg-2) 94%, var(--style-page-bg));
   box-shadow: 0 calc(-2px * var(--mockup-scale)) calc(8px * var(--mockup-scale)) rgba(0, 0, 0, 0.04);
 }
 
@@ -10017,7 +10013,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
   justify-content: center;
   height: var(--mockup-home-indicator-height);
   padding-top: calc(14px * var(--mockup-scale));
-  background: color-mix(in srgb, var(--style-card-bg) 94%, var(--style-page-bg));
+  background: color-mix(in srgb, var(--du-bg-2) 94%, var(--style-page-bg));
 }
 
 .mock-home-indicator span {
