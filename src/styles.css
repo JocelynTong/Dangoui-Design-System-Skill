@@ -9086,17 +9086,6 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
   padding-top: 0;
 }
 
-.phone-screen--publish {
-  background: var(--du-bg-1);
-}
-
-.theme-czn .phone-screen.phone-screen--publish,
-.theme-hpma .phone-screen.phone-screen--publish,
-.theme-re1999 .phone-screen.phone-screen--publish {
-  background: var(--du-bg-1);
-  background-image: none;
-}
-
 .theme-czn .phone-screen.phone-screen--publish::before,
 .theme-hpma .phone-screen.phone-screen--publish::before,
 .theme-re1999 .phone-screen.phone-screen--publish::before {
