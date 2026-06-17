@@ -1,13 +1,29 @@
 :root {
-  --panel: #ffffff;
-  --panel-soft: #fbfbfd;
-  --text: #000000e0;
-  --muted: #00000066;
-  --line: #0000001f;
-  --accent: #7c66ff;
-  --accent-soft: #f2f0ff;
-  --orange: #fc7e22;
-  --shadow: 0 18px 60px rgba(29, 29, 31, 0.12);
+  /* === 06-17 立 token 体系 · :root 自定 token 全部映射到 dangoui ===
+     旧代码 var(--bg) / var(--text) 等继续可用,自动解析到对应 dangoui token
+     主题切换(dark/mp)时,dangoui token 自动反转,自定变量自动跟随 === */
+  --bg: var(--du-bg-1);                /* 底层 = 白(light) */
+  --panel: var(--du-bg-1);             /* 面板层 = 白 */
+  --panel-soft: var(--du-bg-2);        /* 浅色面板 = du-bg-2 浅灰 */
+  --text: var(--du-default-8);         /* 主文本 = #000000e0 完全匹配 */
+  --muted: var(--du-default-6);        /* 二级文本 = #00000066 完全匹配 */
+  --line: var(--du-border-1);          /* 分隔线 = #0000001f 完全匹配 */
+  --accent: var(--du-color-main);      /* 主色 = rgb(124,102,255) = #7c66ff */
+  --accent-soft: var(--du-c-bg-primary);/* 主色软背景 = #f2f0ff 完全匹配 */
+  --orange: var(--du-c-warning);       /* 橙色警示 = #fc7e22 完全匹配 */
+  --shadow: 0 18px 60px rgba(29, 29, 31, 0.12);  /* 阴影:demo 自定,跟 token 体系无关 */
+
+  /* === 卡片层 token 统一映射(2026-06-17 立 · 一行让 512 处跟着变) ===
+     --style-card-bg 用了 512 次,以前靠 fallback #ffffff 渲染(白)
+     现在映射到 --du-bg-2 (浅灰),跟 .group 卡片基类保持一致
+     → 视觉反转:白底页面 + 浅灰卡(原来是浅灰底页面 + 白卡) === */
+  --style-card-bg: var(--du-bg-2);
+  --style-card-radius-base: 12px;        /* mockup 缩放前的卡片圆角基准(自定) */
+  --style-control-radius-base: 8px;      /* mockup 缩放前的控件圆角基准(自定) */
+  --style-page-spacing-base: 12px;       /* mockup 缩放前的页面间距基准(自定) */
+  --style-card-radius: calc(var(--style-card-radius-base) * var(--mockup-scale, 1));
+  --style-control-radius: calc(var(--style-control-radius-base) * var(--mockup-scale, 1));
+  --style-page-spacing: calc(var(--style-page-spacing-base) * var(--mockup-scale, 1));
   --mockup-radius: 30px;
   --mockup-screen-width: 375px;
   --mockup-screen-height: 812px;
