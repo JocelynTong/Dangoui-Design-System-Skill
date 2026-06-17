@@ -21,7 +21,7 @@ CZN 的视觉不是极简品牌站，而是游戏内容站 / 工具站：首屏�
 
 | 类型 | 原始值 | 次数 | 占比 | 证据 | 角色判断 | 承接 |
 |---|---|---:|---:|---|---|---|
-| color | `#ff5a1f` | 6 | 30% | 导航激活、官网按钮、下载 CTA、轮播边框 | 主行动 / 品牌强调 | `--du-primary-color` |
+| color | `#ff5514` | 6 | 30% | 导航激活、官网按钮、下载 CTA、轮播边框 | 主行动 / 品牌强调 | `--du-primary-color` |
 | color | `#0b0710` | 4 | 20% | 角色页黑紫背景 | 沉浸式页面底 | `--du-bg-2` |
 | color | `#17111f` | 4 | 20% | 暗色 HUD 面板 | 卡片/容器表面 | `--du-bg-1` |
 | color | `#fff7f0` | 3 | 15% | 大标题、按钮文字 | 暗底一级文字 | `--du-text-1` |
@@ -66,6 +66,7 @@ DOM class / dangoui component
 
 ## 8. 机器可读资产
 
+- `style.json`：主入口。`document` 使用 Figma REST-like 节点树表达首页、公测内容、角色详情结构；`tokens` 使用 DTCG 表达颜色和 HUD radius；`assets` 记录本地 mask 与缺失角色图；`brandMetadata` 记录 DangoUI / Vue / UnoCSS 转译目标。
 - `preview-gate.json`
 - `brand-evidence.json`
 - `brand-profile.dtcg.json`

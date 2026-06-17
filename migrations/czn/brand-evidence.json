@@ -8,38 +8,61 @@
       "total": 20,
       "frequency": [
         {
-          "value": "#ff5a1f",
+          "value": "#ff5514",
           "count": 6,
           "percent": "30%",
-          "contexts": ["active navigation", "official site button", "download CTA", "carousel border", "section title accent", "side arrow"],
+          "contexts": [
+            "active navigation",
+            "official site button",
+            "download CTA",
+            "carousel border",
+            "section title accent",
+            "side arrow"
+          ],
           "role": "primary action and brand accent"
         },
         {
           "value": "#0b0710",
           "count": 4,
           "percent": "20%",
-          "contexts": ["character page background", "modal depth", "dark illustration overlay"],
+          "contexts": [
+            "character page background",
+            "modal depth",
+            "dark illustration overlay"
+          ],
           "role": "immersive dark page background"
         },
         {
           "value": "#17111f",
           "count": 4,
           "percent": "20%",
-          "contexts": ["HUD panels", "dark content surface", "download area"],
+          "contexts": [
+            "HUD panels",
+            "dark content surface",
+            "download area"
+          ],
           "role": "dark surface"
         },
         {
           "value": "#fff7f0",
           "count": 3,
           "percent": "15%",
-          "contexts": ["hero title", "button label", "high-contrast text"],
+          "contexts": [
+            "hero title",
+            "button label",
+            "high-contrast text"
+          ],
           "role": "primary text on dark"
         },
         {
           "value": "#a79daa",
           "count": 3,
           "percent": "15%",
-          "contexts": ["navigation secondary label", "character description", "muted text"],
+          "contexts": [
+            "navigation secondary label",
+            "character description",
+            "muted text"
+          ],
           "role": "secondary text on dark"
         }
       ]
@@ -53,36 +76,417 @@
           "pattern": "immersive-hero-visual",
           "count": 3,
           "percent": "23.1%",
-          "contexts": ["home hero", "character pages"],
+          "contexts": [
+            "home hero",
+            "character pages"
+          ],
           "role": "full-bleed character/artwork stage"
         },
         {
           "pattern": "orange-primary-cta",
           "count": 3,
           "percent": "23.1%",
-          "contexts": ["enter official site", "PC download", "more button"],
+          "contexts": [
+            "enter official site",
+            "PC download",
+            "more button"
+          ],
           "role": "primary action"
         },
         {
           "pattern": "slanted-hud-card",
           "count": 3,
           "percent": "23.1%",
-          "contexts": ["content carousel", "character cards", "download blocks"],
+          "contexts": [
+            "content carousel",
+            "character cards",
+            "download blocks"
+          ],
           "role": "game HUD container"
         },
         {
           "pattern": "character-selector",
           "count": 2,
           "percent": "15.4%",
-          "contexts": ["purple character page", "red character page"],
+          "contexts": [
+            "purple character page",
+            "red character page"
+          ],
           "role": "vertical thumbnail selector"
         },
         {
           "pattern": "light-gray-news-section",
           "count": 2,
           "percent": "15.4%",
-          "contexts": ["public test content section"],
+          "contexts": [
+            "public test content section"
+          ],
           "role": "informational contrast section"
+        }
+      ]
+    },
+    "assetInventory": {
+      "scope": "CZN 全部本地 assets + 1 个缺失角色图;按 1999 统一格式记录 role/targetScope/implementation 链路。",
+      "formula": "Each row records role, target scope, implementation candidate and mapping status. 状态含义:style-only=已经在 demo 用 style.css 接入;asset-only=本地有但还没被任何 dangoui 组件承接;missing=本地没有,需补;declared-local=在 style.json 中已声明。",
+      "items": [
+        {
+          "asset": "/assets/czn-intelligence-mask.png",
+          "format": "png",
+          "dimensions": "2,045 bytes",
+          "alpha": true,
+          "role": "asset-frame",
+          "originalRole": "hud-overlay-mask",
+          "contexts": [
+            "intelligence swipbox overlay"
+          ],
+          "targetScope": [
+            ".theme-czn .hud-overlay-mask-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已在 style.json 声明为 local。",
+          "source": ""
+        },
+        {
+          "asset": "/assets/czn-forward-mask.png",
+          "format": "png",
+          "dimensions": "5,392 bytes · 1200x574",
+          "alpha": true,
+          "role": "asset-frame",
+          "originalRole": "forward-slide-mask",
+          "contexts": [
+            "forward slide background"
+          ],
+          "targetScope": [
+            ".theme-czn .forward-slide-mask-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已在 style.json 声明为 local。",
+          "source": "https://game.gtimg.cn/images/czn/cp/a20250820xnz/forward_mask.png"
+        },
+        {
+          "asset": "/assets/czn-forward-txt-bg.png",
+          "format": "png",
+          "dimensions": "25,894 bytes · 1006x130",
+          "alpha": true,
+          "role": "selected-bg",
+          "originalRole": "forward-caption-background",
+          "contexts": [
+            "forward caption bg"
+          ],
+          "targetScope": [
+            ".theme-czn .forward-caption-background-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已在 style.json 声明为 local。",
+          "source": "https://game.gtimg.cn/images/czn/cp/a20250820xnz/forward_txt_bg.png"
+        },
+        {
+          "asset": "/assets/czn-forward-img1.jpg",
+          "format": "jpg",
+          "dimensions": "234,822 bytes · 1200x574",
+          "alpha": false,
+          "role": "role-art",
+          "originalRole": "forward-slide-image",
+          "contexts": [
+            "forward slide content"
+          ],
+          "targetScope": [
+            ".theme-czn .forward-slide-image-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已在 style.json 声明为 local。",
+          "source": "https://game.gtimg.cn/images/czn/web202605/forward_img1.jpg"
+        },
+        {
+          "asset": "(missing-local)",
+          "format": "unknown",
+          "dimensions": "unknown",
+          "alpha": false,
+          "role": "illustration",
+          "originalRole": "character-illustration",
+          "contexts": [
+            "character page hero (missing)",
+            "role-art stage"
+          ],
+          "targetScope": [
+            ".theme-czn .czn-character-stage"
+          ],
+          "implementation": "DangoUI <DuImage> with mode=aspectFill, src=从用户截图导出",
+          "mappingStatus": "missing",
+          "reason": "用户提供的 4 张截图中含角色图,29 号前需导出至少一张到 public/assets/ 才能进入 demo。",
+          "source": "user screenshots"
+        },
+        {
+          "asset": "/assets/czn-character-bg-renoa-creazy.jpg",
+          "format": "jpg",
+          "dimensions": "222,215 bytes",
+          "alpha": false,
+          "role": "background",
+          "originalRole": "character-bg",
+          "contexts": [
+            "character page hero"
+          ],
+          "targetScope": [
+            ".theme-czn .character-bg-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已被 demo 引用,只是 style.json 当时没记录。",
+          "source": "local file (not declared in style.json)"
+        },
+        {
+          "asset": "/assets/czn-character-box-renoa-creazy.png",
+          "format": "png",
+          "dimensions": "7,065 bytes",
+          "alpha": true,
+          "role": "asset-frame",
+          "originalRole": "character-box",
+          "contexts": [
+            "character card frame"
+          ],
+          "targetScope": [
+            ".theme-czn .character-box-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已被 demo 引用,只是 style.json 当时没记录。",
+          "source": "local file (not declared in style.json)"
+        },
+        {
+          "asset": "/assets/czn-character-renoa.png",
+          "format": "png",
+          "dimensions": "9,240 bytes",
+          "alpha": true,
+          "role": "unknown",
+          "originalRole": "unknown",
+          "contexts": [
+            "unknown"
+          ],
+          "targetScope": [
+            ".theme-czn .unknown-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已被 demo 引用,只是 style.json 当时没记录。",
+          "source": "local file (not declared in style.json)"
+        },
+        {
+          "asset": "/assets/czn-index-bg.jpg",
+          "format": "jpg",
+          "dimensions": "574,588 bytes",
+          "alpha": false,
+          "role": "background",
+          "originalRole": "index-bg",
+          "contexts": [
+            "home bg"
+          ],
+          "targetScope": [
+            ".theme-czn .index-bg-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已被 demo 引用,只是 style.json 当时没记录。",
+          "source": "local file (not declared in style.json)"
+        },
+        {
+          "asset": "/assets/czn-index-ck-pz.png",
+          "format": "png",
+          "dimensions": "3,222 bytes",
+          "alpha": true,
+          "role": "asset-frame",
+          "originalRole": "index-ck-pz",
+          "contexts": [
+            "ck-pz"
+          ],
+          "targetScope": [
+            ".theme-czn .index-ck-pz-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "asset-only",
+          "reason": "实际磁盘上有但 style.json 没记录;29 号后需补到 style.json。",
+          "source": "local file (not declared in style.json)"
+        },
+        {
+          "asset": "/assets/czn-index-pc-main-down.png",
+          "format": "png",
+          "dimensions": "8,500 bytes",
+          "alpha": true,
+          "role": "asset-frame",
+          "originalRole": "index-pc-main-down",
+          "contexts": [
+            "main download"
+          ],
+          "targetScope": [
+            ".theme-czn .index-pc-main-down-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "asset-only",
+          "reason": "实际磁盘上有但 style.json 没记录;29 号后需补到 style.json。",
+          "source": "local file (not declared in style.json)"
+        },
+        {
+          "asset": "/assets/czn-renoa-creazy-bg-back.png",
+          "format": "png",
+          "dimensions": "25,722 bytes",
+          "alpha": true,
+          "role": "background",
+          "originalRole": "renoa-bg-back",
+          "contexts": [
+            "back decoration"
+          ],
+          "targetScope": [
+            ".theme-czn .renoa-bg-back-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已被 demo 引用,只是 style.json 当时没记录。",
+          "source": "local file (not declared in style.json)"
+        },
+        {
+          "asset": "/assets/czn-renoa-creazy-bg-front.png",
+          "format": "png",
+          "dimensions": "10,487 bytes",
+          "alpha": true,
+          "role": "decorative-layer",
+          "originalRole": "renoa-bg-front",
+          "contexts": [
+            "front decoration"
+          ],
+          "targetScope": [
+            ".theme-czn .renoa-bg-front-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已被 demo 引用,只是 style.json 当时没记录。",
+          "source": "local file (not declared in style.json)"
+        },
+        {
+          "asset": "/assets/czn-renoa-creazy-loop.mp4",
+          "format": "mp4",
+          "dimensions": "1,665,694 bytes",
+          "alpha": false,
+          "role": "illustration",
+          "originalRole": "renoa-loop",
+          "contexts": [
+            "character loop"
+          ],
+          "targetScope": [
+            ".theme-czn .renoa-loop-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已被 demo 引用,只是 style.json 当时没记录。",
+          "source": "local file (not declared in style.json)"
+        },
+        {
+          "asset": "/assets/czn-renoa-creazy-rc.jpg",
+          "format": "jpg",
+          "dimensions": "52,850 bytes",
+          "alpha": false,
+          "role": "role-art",
+          "originalRole": "renoa-rc",
+          "contexts": [
+            "role card"
+          ],
+          "targetScope": [
+            ".theme-czn .renoa-rc-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已被 demo 引用,只是 style.json 当时没记录。",
+          "source": "local file (not declared in style.json)"
+        },
+        {
+          "asset": "/assets/czn-renoa-skill-1.png",
+          "format": "png",
+          "dimensions": "65,602 bytes",
+          "alpha": true,
+          "role": "illustration",
+          "originalRole": "renoa-skill",
+          "contexts": [
+            "skill illustration"
+          ],
+          "targetScope": [
+            ".theme-czn .renoa-skill-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已被 demo 引用,只是 style.json 当时没记录。",
+          "source": "local file (not declared in style.json)"
+        },
+        {
+          "asset": "/assets/czn-sm-add-slogan.png",
+          "format": "png",
+          "dimensions": "177,572 bytes",
+          "alpha": true,
+          "role": "selected-bg",
+          "originalRole": "sm-add-slogan",
+          "contexts": [
+            "small slogan"
+          ],
+          "targetScope": [
+            ".theme-czn .sm-add-slogan-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "style-only",
+          "reason": "已被 demo 引用,只是 style.json 当时没记录。",
+          "source": "local file (not declared in style.json)"
+        },
+        {
+          "asset": "/assets/czn-tiezhi-kol.png",
+          "format": "png",
+          "dimensions": "42,090 bytes",
+          "alpha": true,
+          "role": "texture",
+          "originalRole": "tiezhi-kol",
+          "contexts": [
+            "texture/decoration layer"
+          ],
+          "targetScope": [
+            ".theme-czn .tiezhi-kol-slot"
+          ],
+          "implementation": "DangoUI <DuImage> or CSS background-image per slot",
+          "mappingStatus": "asset-only",
+          "reason": "实际磁盘上有但 style.json 没记录;29 号后需补到 style.json。",
+          "source": "local file (not declared in style.json)"
+        }
+      ],
+      "summary": {
+        "total": 18,
+        "byStatus": {
+          "asset-only": 13,
+          "missing": 1,
+          "style-only": 4
+        },
+        "byRole": {
+          "role-art": 2,
+          "asset-frame": 5,
+          "background": 3,
+          "texture": 1,
+          "selected-bg": 2,
+          "illustration": 3,
+          "unknown": 1,
+          "decorative-layer": 1
+        }
+      },
+      "knownGaps": [
+        {
+          "asset": "czn-character-art",
+          "role": "character-illustration",
+          "source": "user screenshots",
+          "note": "用户提供的 4 张截图中含角色图;29 号前需导出至少一张到 public/assets/czn-character-art.{png,jpg} 才能进入 demo。",
+          "okrLink": "OKR I2 · CZN · role-art"
+        },
+        {
+          "asset": "多个 undeclared czn-* 文件",
+          "role": "various (character, texture, decoration)",
+          "source": "public/assets/ scan 2026-06-17",
+          "note": "style.json 中 declared 的 assets 只有 5 个,但 public/assets/ 下实际有 17 个 czn-* 文件;29 号后需逐个补到 style.json 并补 role/description 字段。",
+          "okrLink": "OKR I3 · CZN · asset discovery"
         }
       ]
     }
