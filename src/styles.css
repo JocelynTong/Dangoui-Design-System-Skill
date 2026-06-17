@@ -10,9 +10,6 @@
   --style-card-radius-base: 12px;        /* mockup 缩放前的卡片圆角基准(自定) */
   --style-control-radius-base: 8px;      /* mockup 缩放前的控件圆角基准(自定) */
   --style-page-spacing-base: 12px;       /* mockup 缩放前的页面间距基准(自定) */
-  --style-card-radius: calc(var(--style-card-radius-base) * var(--mockup-scale, 1));
-  --style-control-radius: calc(var(--style-control-radius-base) * var(--mockup-scale, 1));
-  --style-page-spacing: calc(var(--style-page-spacing-base) * var(--mockup-scale, 1));
   --mockup-radius: 30px;
   --mockup-screen-width: 375px;
   --mockup-screen-height: 812px;
@@ -1776,7 +1773,7 @@ a {
   position: absolute;
   width: var(--recipe-button-width, 74px);
   height: var(--recipe-button-height, 32px);
-  border-radius: var(--recipe-button-radius, var(--style-control-radius));
+  border-radius: var(--recipe-button-radius, var(--style-control-radius-base));
   background: var(--recipe-button-bg, var(--du-color-main));
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, var(--recipe-button-fg, #fff) 18%, transparent),
@@ -2555,7 +2552,7 @@ pre {
   min-height: 48px;
   padding: 8px 10px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: var(--du-bg-2);
   color: var(--du-default-8);
   cursor: pointer;
@@ -2613,7 +2610,7 @@ pre {
   min-width: 0;
   margin-bottom: 14px;
   padding: 12px;
-  border-radius: var(--style-card-radius);
+  border-radius: var(--style-card-radius-base);
   background: color-mix(in srgb, var(--du-bg-2) 94%, var(--du-bg-1));
   color: var(--du-default-8);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--du-default-8) 8%, transparent);
@@ -2636,7 +2633,7 @@ pre {
 }
 
 .component-phone-feed {
-  padding-top: calc(var(--style-page-spacing) + 16px);
+  padding-top: calc(var(--style-page-spacing-base) + 16px);
 }
 
 .style-mockup-page {
@@ -2798,7 +2795,7 @@ pre {
 .bar-component-preview--navigation-bar,
 .bar-component-preview--tab-bar,
 .bar-component-preview--bottom-bar {
-  margin-inline: calc(-1 * var(--style-page-spacing));
+  margin-inline: calc(-1 * var(--style-page-spacing-base));
   padding: 0;
   border: 0;
   border-radius: 0;
@@ -2898,7 +2895,7 @@ pre {
 .mock-share-sheet button {
   min-height: 32px;
   border: 0;
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: color-mix(in srgb, var(--du-color-main) 12%, var(--du-bg-2));
   color: var(--du-color-main);
   font: inherit;
@@ -2914,7 +2911,7 @@ pre {
   display: grid;
   gap: 6px;
   align-self: end;
-  margin-inline: calc(-1 * var(--style-page-spacing));
+  margin-inline: calc(-1 * var(--style-page-spacing-base));
   padding: 14px 14px 18px;
   border-radius: 15px 15px 0 0;
   background: var(--du-bg-2);
@@ -3053,7 +3050,7 @@ pre {
 .component-avatar-examples .mock-avatar-row {
   min-height: 64px;
   padding: 10px 12px;
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: color-mix(in srgb, var(--du-bg-2) 92%, var(--du-bg-1));
 }
 
@@ -3094,7 +3091,7 @@ pre {
   width: 100%;
   padding: 10px 12px;
   border: 0;
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: var(--du-bg-2);
   color: var(--du-default-8);
   font: inherit;
@@ -3364,7 +3361,7 @@ pre {
   gap: 8px;
   align-items: center;
   min-height: 56px;
-  padding: 8px var(--style-page-spacing);
+  padding: 8px var(--style-page-spacing-base);
   border-top: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: 0;
   background: var(--du-bg-2);
@@ -3402,7 +3399,7 @@ pre {
   gap: 12px;
   min-height: 44px;
   padding: 10px 12px;
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: var(--du-bg-2);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--du-default-8) 8%, transparent);
 }
@@ -3724,7 +3721,7 @@ pre {
 .mockup-color-strip i {
   display: block;
   height: 34px;
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--du-default-8) 10%, transparent);
 }
 
@@ -3894,7 +3891,7 @@ pre {
   margin-top: 8px;
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: var(--du-bg-2);
 }
 
@@ -3950,7 +3947,7 @@ pre {
   align-items: center;
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
-  border-radius: var(--style-card-radius);
+  border-radius: var(--style-card-radius-base);
   background: var(--du-bg-2);
   box-shadow: var(--style-card-shadow);
 }
@@ -3984,7 +3981,7 @@ pre {
   min-height: 190px;
   padding: 18px;
   border: 0;
-  border-radius: var(--style-card-radius);
+  border-radius: var(--style-card-radius-base);
   overflow: hidden;
   background:
     linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--du-bg-1) 82%, #000) 100%),
@@ -3996,8 +3993,8 @@ pre {
 
 .phone-screen--home > .contents > .mock-hero-header {
   min-height: 344px;
-  margin: calc(var(--style-page-spacing) * -1) calc(var(--style-page-spacing) * -1) 0;
-  padding: 126px var(--style-page-spacing) 30px;
+  margin: calc(var(--style-page-spacing-base) * -1) calc(var(--style-page-spacing-base) * -1) 0;
+  padding: 126px var(--style-page-spacing-base) 30px;
   border-radius: 0;
   box-shadow: none;
 }
@@ -4083,7 +4080,7 @@ pre {
   min-height: 116px;
   padding: 14px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
-  border-radius: var(--style-card-radius);
+  border-radius: var(--style-card-radius-base);
   overflow: hidden;
   background:
     linear-gradient(90deg, color-mix(in srgb, var(--du-color-main) 20%, transparent), transparent 62%),
@@ -4116,7 +4113,7 @@ pre {
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
   min-height: 56px;
-  padding: 6px var(--style-page-spacing);
+  padding: 6px var(--style-page-spacing-base);
   border: 0;
   border-top: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: 0;
@@ -4145,7 +4142,7 @@ pre {
   gap: 8px;
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
-  border-radius: var(--style-card-radius);
+  border-radius: var(--style-card-radius-base);
   background: var(--du-bg-2);
 }
 
@@ -4153,7 +4150,7 @@ pre {
   display: grid;
   place-items: center;
   min-height: 54px;
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: color-mix(in srgb, var(--du-c-bg-primary) 70%, var(--du-bg-1));
   color: var(--du-default-8);
   font-size: 11px;
@@ -4164,7 +4161,7 @@ pre {
 .mock-list {
   display: grid;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
-  border-radius: var(--style-card-radius);
+  border-radius: var(--style-card-radius-base);
   background: var(--du-bg-2);
   overflow: hidden;
 }
@@ -4193,7 +4190,7 @@ pre {
   gap: 10px;
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
-  border-radius: var(--style-card-radius);
+  border-radius: var(--style-card-radius-base);
   background: var(--du-bg-2);
 }
 
@@ -4201,7 +4198,7 @@ pre {
   display: grid;
   gap: 4px;
   padding: 10px;
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: color-mix(in srgb, var(--du-c-bg-primary) 52%, var(--du-bg-1));
 }
 
@@ -4237,7 +4234,7 @@ pre {
   display: block;
   width: 34px;
   height: 34px;
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background:
     linear-gradient(135deg, color-mix(in srgb, var(--du-color-main) 58%, var(--du-bg-2)), var(--du-c-bg-primary));
 }
@@ -4289,7 +4286,7 @@ pre {
   gap: 12px;
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: var(--du-bg-2);
 }
 
@@ -4309,7 +4306,7 @@ pre {
   min-height: 66px;
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: var(--du-bg-2);
   color: var(--du-default-8);
   font-size: 16px;
@@ -4327,14 +4324,14 @@ pre {
   gap: 10px;
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
-  border-radius: var(--style-card-radius);
+  border-radius: var(--style-card-radius-base);
   background: var(--du-bg-2);
   box-shadow: var(--style-card-shadow);
 }
 
 .mock-feed-card .media {
   min-height: 112px;
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
 }
 
 .mock-result-page {
@@ -4343,7 +4340,7 @@ pre {
   gap: 10px;
   padding: 22px 14px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
-  border-radius: var(--style-card-radius);
+  border-radius: var(--style-card-radius-base);
   background: var(--du-bg-2);
   text-align: center;
 }
@@ -4397,7 +4394,7 @@ pre {
   display: block;
   width: 100%;
   height: 34px;
-  border-radius: calc(var(--style-control-radius) * 0.75);
+  border-radius: calc(var(--style-control-radius-base) * 0.75);
   background:
     linear-gradient(90deg, var(--du-color-main) 0 28%, color-mix(in srgb, var(--du-default-8) 10%, transparent) 28% 100%);
   opacity: 0.82;
@@ -4460,7 +4457,7 @@ pre {
   min-height: 48px;
   padding: 10px 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: var(--du-bg-2);
 }
 
@@ -4553,7 +4550,7 @@ pre {
 .right-card {
   padding: 14px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: var(--du-bg-2);
   color: var(--du-default-8);
 }
@@ -4617,7 +4614,7 @@ pre {
   width: 96px;
   height: 48px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: var(--style-media);
 }
 
@@ -4675,7 +4672,7 @@ pre {
   min-width: 0;
   padding: 16px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
-  border-radius: var(--style-card-radius);
+  border-radius: var(--style-card-radius-base);
   background: var(--du-bg-2);
   color: var(--du-default-8);
   box-shadow: var(--style-card-shadow);
@@ -4710,7 +4707,7 @@ pre {
   min-height: 84px;
   padding: 12px;
   border: 1px dashed color-mix(in srgb, var(--du-default-8) 22%, transparent);
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: color-mix(in srgb, var(--du-bg-1) 72%, transparent);
 }
 
@@ -4917,11 +4914,11 @@ pre {
   position: relative;
   display: grid;
   min-height: 360px;
-  margin: calc(var(--style-page-spacing) * -1) calc(var(--style-page-spacing) * -1) 16px;
+  margin: calc(var(--style-page-spacing-base) * -1) calc(var(--style-page-spacing-base) * -1) 16px;
   align-content: end;
   gap: 8px;
   overflow: hidden;
-  padding: 22px var(--style-page-spacing) 24px;
+  padding: 22px var(--style-page-spacing-base) 24px;
   border: 0;
   border-radius: 0;
   color: var(--du-default-8);
@@ -5959,8 +5956,8 @@ pre {
 
 .theme-notion .phone-screen--home > .contents > .notion-hero {
   min-height: 382px;
-  margin: calc(var(--style-page-spacing) * -1) calc(var(--style-page-spacing) * -1) 0;
-  padding: 126px var(--style-page-spacing) 30px;
+  margin: calc(var(--style-page-spacing-base) * -1) calc(var(--style-page-spacing-base) * -1) 0;
+  padding: 126px var(--style-page-spacing-base) 30px;
   border: 0;
   border-radius: 0;
   box-shadow: none;
@@ -6811,8 +6808,8 @@ pre {
 
 .theme-hpma .hpma-hero {
   min-height: 360px;
-  margin: calc(var(--style-page-spacing) * -1) calc(var(--style-page-spacing) * -1) 16px;
-  padding: 22px var(--style-page-spacing) 24px;
+  margin: calc(var(--style-page-spacing-base) * -1) calc(var(--style-page-spacing-base) * -1) 16px;
+  padding: 22px var(--style-page-spacing-base) 24px;
   background:
     linear-gradient(180deg, rgba(18, 13, 9, 0.04) 0%, rgba(18, 13, 9, 0.12) 42%, rgba(18, 13, 9, 0.9) 88%),
     radial-gradient(circle at 78% 18%, rgba(239, 204, 92, 0.34), transparent 18%),
@@ -6828,7 +6825,7 @@ pre {
 
 .theme-hpma .phone-screen--home .hpma-hero {
   min-height: 430px;
-  margin: 0 calc(var(--style-page-spacing) * -1) 16px;
+  margin: 0 calc(var(--style-page-spacing-base) * -1) 16px;
   background:
     linear-gradient(180deg, rgba(18, 13, 9, 0.02) 0%, rgba(18, 13, 9, 0.12) 46%, rgba(18, 13, 9, 0.9) 88%),
     radial-gradient(circle at 78% 18%, rgba(239, 204, 92, 0.34), transparent 18%),
@@ -7296,7 +7293,7 @@ pre {
 
 .theme-re1999 .du-button,
 .theme-re1999 .du-button.du-button--primary {
-  border-radius: var(--style-control-radius) !important;
+  border-radius: var(--style-control-radius-base) !important;
   border-color: var(--du-primary-border) !important;
   background:
     linear-gradient(180deg, rgba(219, 111, 57, 0.32), transparent 48%),
@@ -7344,9 +7341,9 @@ pre {
 
 .theme-re1999 .re1999-hero {
   min-height: 430px;
-  margin: calc(var(--style-page-spacing) * -1) calc(var(--style-page-spacing) * -1) 16px;
+  margin: calc(var(--style-page-spacing-base) * -1) calc(var(--style-page-spacing-base) * -1) 16px;
   align-content: end;
-  padding: 22px var(--style-page-spacing) 24px;
+  padding: 22px var(--style-page-spacing-base) 24px;
   background:
     linear-gradient(180deg, rgba(0, 0, 0, 0.02) 0 46%, rgba(0, 0, 0, 0.9) 88%),
     linear-gradient(90deg, rgba(0, 0, 0, 0.42), transparent 22% 74%, rgba(0, 0, 0, 0.32)),
@@ -8350,7 +8347,7 @@ pre {
 .brand-publish-form .du-input--bordered,
 .generic-publish-form .du-input,
 .generic-publish-form .du-input--bordered {
-  border-radius: var(--style-control-radius) !important;
+  border-radius: var(--style-control-radius-base) !important;
 }
 
 .re1999-publish-form .du-textarea,
@@ -8362,7 +8359,7 @@ pre {
 .generic-publish-form .du-textarea,
 .generic-publish-form .du-textarea--bordered,
 .generic-publish-form .du-upload__item-add {
-  border-radius: min(var(--style-control-radius), 12px) !important;
+  border-radius: min(var(--style-control-radius-base), 12px) !important;
 }
 
 .phone .du-input__input {
@@ -8466,7 +8463,7 @@ pre {
   min-height: 40px;
   padding: 0 14px;
   overflow: hidden;
-  border-radius: var(--publish-card-radius, min(var(--style-control-radius), 16px));
+  border-radius: var(--publish-card-radius, min(var(--style-control-radius-base), 16px));
   color: var(--du-text-1);
   background:
     linear-gradient(110deg, color-mix(in srgb, var(--du-color-main) 22%, transparent), transparent 72%),
@@ -8494,7 +8491,7 @@ pre {
   display: grid;
   gap: 10px;
   overflow: visible;
-  --publish-card-radius: min(var(--style-control-radius), 16px);
+  --publish-card-radius: min(var(--style-control-radius-base), 16px);
   border-radius: var(--publish-card-radius);
   background: var(--du-bg-2);
 }
@@ -8818,7 +8815,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
 .publish-option-grid .du-checkbox {
   min-height: 48px;
   padding: 0 12px;
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: var(--du-bg-1);
 }
 
@@ -8835,9 +8832,9 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
 
 .publish-bottom-actions {
   position: absolute;
-  right: var(--style-page-spacing);
+  right: var(--style-page-spacing-base);
   bottom: calc(14px * var(--mockup-scale));
-  left: var(--style-page-spacing);
+  left: var(--style-page-spacing-base);
   z-index: 22;
   margin: 0 !important;
   padding: 10px 0 calc(8px * var(--mockup-scale)) !important;
@@ -8917,7 +8914,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
   margin: 0;
   padding: 8px 10px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: color-mix(in srgb, var(--du-bg-1) 80%, #fff);
 }
 
@@ -8927,7 +8924,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
   min-height: 34px;
   padding: 0 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
-  border-radius: var(--style-control-radius);
+  border-radius: var(--style-control-radius-base);
   background: var(--du-bg-1);
   color: var(--du-default-8);
   font-size: 11px;
@@ -9060,7 +9057,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
 }
 
 .phone-screen--bottom-actions > .contents {
-  padding-bottom: calc(var(--style-page-spacing) + var(--mockup-tabbar-height) + var(--mockup-home-indicator-height));
+  padding-bottom: calc(var(--style-page-spacing-base) + var(--mockup-tabbar-height) + var(--mockup-home-indicator-height));
 }
 
 .phone-screen--bottom-actions .mock-home-indicator,
@@ -9657,7 +9654,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding: var(--style-page-spacing);
+  padding: var(--style-page-spacing-base);
   overflow-y: auto;
   overflow-x: hidden;
   /* background 删 —— 通栏不设底色 */
@@ -9744,7 +9741,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
 .phone .du-card {
   width: 100%;
   margin: 0;
-  border-radius: var(--style-card-radius);
+  border-radius: var(--style-card-radius-base);
   background: var(--du-bg-2);
   color: var(--du-default-8);
   box-shadow: var(--style-card-shadow);
@@ -9753,7 +9750,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
 
 .media {
   height: 176px;
-  border-radius: calc(var(--style-card-radius) * 0.7);
+  border-radius: calc(var(--style-card-radius-base) * 0.7);
   background: var(--style-media);
 }
 
