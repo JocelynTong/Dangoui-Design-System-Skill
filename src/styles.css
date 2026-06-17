@@ -6,7 +6,7 @@
 
   --shadow: 0 18px 60px rgba(29, 29, 31, 0.12);  /* 阴影:demo 自定,跟 token 体系无关 */
 
-  /* 06-17 立:原 --style-card-bg alias 已废止,55 处都改用 var(--du-bg-2) 直接引用 + 8 个 :root 旧 alias(--bg/--panel/--text/--muted/--line/--accent/--accent-soft/--orange) 全部清空 */
+  /* 06-17 立:原 --style-card-bg alias 已废止,55 处都改用 var(--du-bg-1) 直接引用 + 8 个 :root 旧 alias(--bg/--panel/--text/--muted/--line/--accent/--accent-soft/--orange) 全部清空 */
   --style-card-radius-base: 12px;        /* mockup 缩放前的卡片圆角基准(自定) */
   --style-control-radius-base: 8px;      /* mockup 缩放前的控件圆角基准(自定) */
   --style-page-spacing-base: 12px;       /* mockup 缩放前的页面间距基准(自定) */
@@ -63,7 +63,7 @@ body {
   margin: 0;
   height: 100vh;
   overflow: hidden;
-  background: var(--du-bg-1);
+  background: var(--du-bg-2);  /* 06-17 反转:page 浅灰(--du-bg-2),卡片白(--du-bg-1) */
   color: var(--du-default-8);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
@@ -955,7 +955,7 @@ a {
   max-width: 100%;
   padding: 8px;
   border-radius: 7px;
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
 }
 
 .style-evidence-card {
@@ -1056,7 +1056,7 @@ a {
   min-width: 0;
   padding: 8px;
   border-radius: 8px;
-  background: color-mix(in srgb, var(--du-bg-2) 78%, var(--du-c-bg-primary));
+  background: color-mix(in srgb, var(--du-bg-1) 78%, var(--du-c-bg-primary));
 }
 
 .recipe-placeholder span {
@@ -1667,7 +1667,7 @@ a {
   display: block;
   width: 56px;
   min-height: 100%;
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
 }
 
 .recipe-swatch {
@@ -1700,7 +1700,7 @@ a {
   width: 34px;
   height: 34px;
   border-radius: var(--recipe-radius, 8px);
-  background: color-mix(in srgb, var(--du-color-main) 72%, var(--du-bg-2));
+  background: color-mix(in srgb, var(--du-color-main) 72%, var(--du-bg-1));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--du-color-main) 24%, transparent);
 }
 
@@ -1835,7 +1835,7 @@ a {
   content: "";
   width: 36px;
   height: 28px;
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   box-shadow: var(--recipe-shadow, var(--style-card-shadow));
 }
 
@@ -2039,7 +2039,7 @@ a {
   width: var(--scale-width, 32px);
   height: 34px;
   border-radius: 0;
-  background: color-mix(in srgb, var(--du-color-main) 70%, var(--du-bg-2));
+  background: color-mix(in srgb, var(--du-color-main) 70%, var(--du-bg-1));
 }
 
 .spacing-scale-item span {
@@ -2082,7 +2082,7 @@ a {
   width: 44px;
   height: 44px;
   border-radius: var(--recipe-radius, 8px);
-  background: color-mix(in srgb, var(--du-bg-2) 72%, var(--du-c-bg-primary));
+  background: color-mix(in srgb, var(--du-bg-1) 72%, var(--du-c-bg-primary));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--du-default-8) 10%, transparent);
 }
 
@@ -2109,7 +2109,7 @@ a {
   width: 100%;
   height: 56px;
   border-radius: 0;
-  background: color-mix(in srgb, var(--du-bg-2) 78%, transparent);
+  background: color-mix(in srgb, var(--du-bg-1) 78%, transparent);
 }
 
 .divider-scale-card i::before,
@@ -2485,7 +2485,7 @@ pre {
   min-height: 34px;
   border: 1px dashed var(--du-border-1);
   border-radius: 8px;
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   color: var(--du-color-main);
   font-size: 11px;
   font-weight: 750;
@@ -2560,7 +2560,7 @@ pre {
   padding: 8px 10px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
   border-radius: var(--style-control-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   color: var(--du-default-8);
   cursor: pointer;
   text-align: left;
@@ -2568,7 +2568,7 @@ pre {
 
 .template-tabs button.active {
   border-color: color-mix(in srgb, var(--du-color-main) 70%, transparent);
-  background: color-mix(in srgb, var(--du-c-bg-primary) 72%, var(--du-bg-2));
+  background: color-mix(in srgb, var(--du-c-bg-primary) 72%, var(--du-bg-1));
   box-shadow: inset 0 -3px 0 var(--du-color-main);
 }
 
@@ -2618,7 +2618,7 @@ pre {
   margin-bottom: 14px;
   padding: 12px;
   border-radius: var(--style-card-radius-base);
-  background: color-mix(in srgb, var(--du-bg-2) 94%, var(--du-bg-1));
+  background: color-mix(in srgb, var(--du-bg-1) 94%, var(--du-bg-1));
   color: var(--du-default-8);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--du-default-8) 8%, transparent);
 }
@@ -2744,7 +2744,7 @@ pre {
 }
 
 .component-example-popup-layer .du-calendar {
-  background: var(--du-bg-2);  /* 卡片基类底色 = dangoui bg-2,跟最底层 bg-1 形成层次 */
+  background: var(--du-bg-1);  /* 卡片基类底色 = dangoui bg-2,跟最底层 bg-1 形成层次 */
   border-radius: 12px;
   box-shadow: 0 18px 60px rgba(29, 29, 31, 0.25);
   max-width: 90vw;
@@ -2757,7 +2757,7 @@ pre {
   font-size: 12px;
   color: var(--du-default-8);
   font-weight: 720;
-  background: color-mix(in srgb, var(--du-default-8) 4%, var(--du-bg-2));
+  background: color-mix(in srgb, var(--du-default-8) 4%, var(--du-bg-1));
   border-radius: 6px;
   padding: 6px 10px;
   margin-top: 4px;
@@ -2872,7 +2872,7 @@ pre {
   gap: 9px;
   padding: 14px;
   border-radius: 15px;
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--du-default-8) 8%, transparent);
 }
 
@@ -2903,7 +2903,7 @@ pre {
   min-height: 32px;
   border: 0;
   border-radius: var(--style-control-radius-base);
-  background: color-mix(in srgb, var(--du-color-main) 12%, var(--du-bg-2));
+  background: color-mix(in srgb, var(--du-color-main) 12%, var(--du-bg-1));
   color: var(--du-color-main);
   font: inherit;
   font-weight: 780;
@@ -2921,7 +2921,7 @@ pre {
   margin-inline: calc(-1 * var(--style-page-spacing-base));
   padding: 14px 14px 18px;
   border-radius: 15px 15px 0 0;
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   box-shadow: none;
 }
 
@@ -3058,7 +3058,7 @@ pre {
   min-height: 64px;
   padding: 10px 12px;
   border-radius: var(--style-control-radius-base);
-  background: color-mix(in srgb, var(--du-bg-2) 92%, var(--du-bg-1));
+  background: color-mix(in srgb, var(--du-bg-1) 92%, var(--du-bg-1));
 }
 
 .component-swiper-example {
@@ -3074,7 +3074,7 @@ pre {
   gap: 6px;
   width: 100%;
   height: 100%;
-  background: color-mix(in srgb, var(--du-color-main) 18%, var(--du-bg-2));
+  background: color-mix(in srgb, var(--du-color-main) 18%, var(--du-bg-1));
   color: var(--du-default-8);
   text-align: center;
 }
@@ -3099,7 +3099,7 @@ pre {
   padding: 10px 12px;
   border: 0;
   border-radius: var(--style-control-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   color: var(--du-default-8);
   font: inherit;
   text-align: left;
@@ -3124,7 +3124,7 @@ pre {
   min-height: 42px;
   padding: 0 8px;
   border-radius: 8px;
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   color: var(--du-default-8);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--du-default-8) 10%, transparent);
 }
@@ -3171,7 +3171,7 @@ pre {
 .du-cascader__search .du-search,
 .navigation-doc-tabs-examples .du-cascader__search .du-search,
 .component-example-stack .du-cascader__search .du-search {
-  background: color-mix(in srgb, var(--du-default-8) 4%, var(--du-bg-2));
+  background: color-mix(in srgb, var(--du-default-8) 4%, var(--du-bg-1));
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: 8px;
   padding: 0 8px;
@@ -3357,7 +3357,7 @@ pre {
 }
 
 .mock-segment-control button.active {
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   color: var(--du-default-8);
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
@@ -3371,7 +3371,7 @@ pre {
   padding: 8px var(--style-page-spacing-base);
   border-top: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: 0;
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
 }
 
 .mock-menu-list {
@@ -3407,7 +3407,7 @@ pre {
   min-height: 44px;
   padding: 10px 12px;
   border-radius: var(--style-control-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--du-default-8) 8%, transparent);
 }
 
@@ -3423,7 +3423,7 @@ pre {
   padding: 10px 12px;
   border-left: 3px solid var(--du-color-main);
   border-radius: 8px;
-  background: color-mix(in srgb, var(--du-color-main) 10%, var(--du-bg-2));
+  background: color-mix(in srgb, var(--du-color-main) 10%, var(--du-bg-1));
 }
 
 .mock-tips-card strong {
@@ -3471,7 +3471,7 @@ pre {
   min-height: 40px;
   padding: 8px 10px;
   border-radius: 9px;
-  background: color-mix(in srgb, var(--du-bg-2) 88%, var(--du-bg-1));
+  background: color-mix(in srgb, var(--du-bg-1) 88%, var(--du-bg-1));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--du-default-8) 7%, transparent);
 }
 
@@ -3518,7 +3518,7 @@ pre {
   border: 1px solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
   border-radius: 8px;
   outline: none;
-  background: color-mix(in srgb, var(--du-bg-2) 96%, var(--du-bg-1));
+  background: color-mix(in srgb, var(--du-bg-1) 96%, var(--du-bg-1));
   color: var(--du-default-8);
   font: 700 11px / 1 var(--font-sans);
 }
@@ -3562,7 +3562,7 @@ pre {
   overflow: auto;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
   border-radius: 9px;
-  background: color-mix(in srgb, var(--du-bg-2) 98%, var(--du-bg-1));
+  background: color-mix(in srgb, var(--du-bg-1) 98%, var(--du-bg-1));
   box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
 }
 
@@ -3598,7 +3598,7 @@ pre {
   min-width: 0;
   padding: 8px 10px;
   border-radius: 8px;
-  background: color-mix(in srgb, var(--du-bg-2) 88%, var(--du-bg-1));
+  background: color-mix(in srgb, var(--du-bg-1) 88%, var(--du-bg-1));
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--du-default-8) 7%, transparent);
 }
 
@@ -3627,7 +3627,7 @@ pre {
   display: block;
   padding: 8px 10px 8px 28px;
   border-radius: 8px;
-  background: color-mix(in srgb, var(--du-color-main) 10%, var(--du-bg-2));
+  background: color-mix(in srgb, var(--du-color-main) 10%, var(--du-bg-1));
   color: var(--du-default-8);
   font-size: 11px;
   font-weight: 760;
@@ -3685,7 +3685,7 @@ pre {
   grid-template-columns: 22px minmax(0, 1fr);
   gap: 8px;
   padding: 8px;
-  background: color-mix(in srgb, var(--du-bg-2) 92%, #fff);
+  background: color-mix(in srgb, var(--du-bg-1) 92%, #fff);
 }
 
 .component-token-grid .token > span:last-child {
@@ -3711,7 +3711,7 @@ pre {
   padding: 10px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 8%, transparent);
   border-radius: 8px;
-  background: color-mix(in srgb, var(--du-bg-2) 86%, #fff);
+  background: color-mix(in srgb, var(--du-bg-1) 86%, #fff);
   color: var(--du-default-6);
   font-size: 10px;
   line-height: 1.45;
@@ -3872,7 +3872,7 @@ pre {
   width: fit-content;
   padding: 4px 7px;
   border-radius: 7px;
-  background: color-mix(in srgb, var(--du-c-bg-primary) 80%, var(--du-bg-2));
+  background: color-mix(in srgb, var(--du-c-bg-primary) 80%, var(--du-bg-1));
   color: var(--du-color-main);
   font-size: 11px;
   font-weight: 850;
@@ -3899,7 +3899,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
   border-radius: var(--style-control-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
 }
 
 .selected-node-summary strong {
@@ -3922,7 +3922,7 @@ pre {
 .preview-token-list i {
   padding: 4px 7px;
   border-radius: 6px;
-  background: color-mix(in srgb, var(--du-c-bg-primary) 82%, var(--du-bg-2));
+  background: color-mix(in srgb, var(--du-c-bg-primary) 82%, var(--du-bg-1));
   color: var(--du-color-main);
   font-size: 11px;
   font-style: normal;
@@ -3955,7 +3955,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: var(--style-card-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   box-shadow: var(--style-card-shadow);
 }
 
@@ -3993,7 +3993,7 @@ pre {
   background:
     linear-gradient(180deg, transparent 0%, color-mix(in srgb, var(--du-bg-1) 82%, #000) 100%),
     radial-gradient(circle at 72% 24%, color-mix(in srgb, var(--du-color-main) 34%, transparent), transparent 36%),
-    linear-gradient(135deg, color-mix(in srgb, var(--du-color-main) 38%, var(--du-bg-1)), var(--du-bg-2));
+    linear-gradient(135deg, color-mix(in srgb, var(--du-color-main) 38%, var(--du-bg-1)), var(--du-bg-1));
   color: var(--du-default-8);
   box-shadow: var(--style-card-shadow);
 }
@@ -4124,7 +4124,7 @@ pre {
   border: 0;
   border-top: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: 0;
-  background: color-mix(in srgb, var(--du-bg-2) 96%, var(--du-bg-1));
+  background: color-mix(in srgb, var(--du-bg-1) 96%, var(--du-bg-1));
 }
 
 .mock-tabbar button {
@@ -4150,7 +4150,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: var(--style-card-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
 }
 
 .mock-grid i {
@@ -4169,7 +4169,7 @@ pre {
   display: grid;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: var(--style-card-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   overflow: hidden;
 }
 
@@ -4198,7 +4198,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: var(--style-card-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
 }
 
 .mock-tabs-scene article {
@@ -4243,7 +4243,7 @@ pre {
   height: 34px;
   border-radius: var(--style-control-radius-base);
   background:
-    linear-gradient(135deg, color-mix(in srgb, var(--du-color-main) 58%, var(--du-bg-2)), var(--du-c-bg-primary));
+    linear-gradient(135deg, color-mix(in srgb, var(--du-color-main) 58%, var(--du-bg-1)), var(--du-c-bg-primary));
 }
 
 .mock-list p > span {
@@ -4270,7 +4270,7 @@ pre {
 .mock-list em {
   padding: 3px 7px;
   border-radius: 999px;
-  background: color-mix(in srgb, var(--du-c-bg-primary) 72%, var(--du-bg-2));
+  background: color-mix(in srgb, var(--du-c-bg-primary) 72%, var(--du-bg-1));
   color: var(--du-color-main);
   font-size: 10px;
   font-style: normal;
@@ -4294,7 +4294,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: var(--style-control-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
 }
 
 .mock-time-row strong {
@@ -4314,7 +4314,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: var(--style-control-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   color: var(--du-default-8);
   font-size: 16px;
   line-height: 1.15;
@@ -4332,7 +4332,7 @@ pre {
   padding: 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: var(--style-card-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   box-shadow: var(--style-card-shadow);
 }
 
@@ -4348,7 +4348,7 @@ pre {
   padding: 22px 14px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: var(--style-card-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   text-align: center;
 }
 
@@ -4465,7 +4465,7 @@ pre {
   padding: 10px 12px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 10%, transparent);
   border-radius: var(--style-control-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
 }
 
 .mock-datetime-picker strong,
@@ -4558,7 +4558,7 @@ pre {
   padding: 14px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
   border-radius: var(--style-control-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   color: var(--du-default-8);
 }
 
@@ -4680,7 +4680,7 @@ pre {
   padding: 16px;
   border: 1px solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
   border-radius: var(--style-card-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   color: var(--du-default-8);
   box-shadow: var(--style-card-shadow);
   cursor: pointer;
@@ -4689,7 +4689,7 @@ pre {
 
 .showcase-block.placeholder {
   min-height: 150px;
-  background: color-mix(in srgb, var(--du-bg-2) 82%, var(--du-bg-1));
+  background: color-mix(in srgb, var(--du-bg-1) 82%, var(--du-bg-1));
   box-shadow: none;
 }
 
@@ -4862,7 +4862,7 @@ pre {
 
 .theme-czn .placeholder-card,
 .theme-czn .display-summary {
-  background: color-mix(in srgb, var(--du-bg-2) 82%, transparent);
+  background: color-mix(in srgb, var(--du-bg-1) 82%, transparent);
 }
 
 .theme-czn .placeholder-card {
@@ -4913,7 +4913,7 @@ pre {
   padding: 16px;
   border: 0;
   border-radius: 0;
-  background: color-mix(in srgb, var(--du-bg-2) 82%, transparent);
+  background: color-mix(in srgb, var(--du-bg-1) 82%, transparent);
   color: var(--du-default-8);
 }
 
@@ -6180,7 +6180,7 @@ pre {
     linear-gradient(var(--hpma-frame), var(--hpma-frame)) left bottom / 1px 20px no-repeat,
     linear-gradient(var(--hpma-frame), var(--hpma-frame)) right bottom / 20px 1px no-repeat,
     linear-gradient(var(--hpma-frame), var(--hpma-frame)) right bottom / 1px 20px no-repeat,
-    linear-gradient(var(--du-bg-2), var(--du-bg-2));
+    linear-gradient(var(--du-bg-1), var(--du-bg-1));
   box-shadow: 0 20px 48px rgba(0, 0, 0, 0.42);
 }
 
@@ -6439,7 +6439,7 @@ pre {
   border-radius: 0;
   background:
     linear-gradient(180deg, rgba(59, 40, 27, 0.9), rgba(29, 21, 15, 0.92)),
-    var(--du-bg-2);
+    var(--du-bg-1);
 }
 
 .theme-hpma .hpma-platform-row {
@@ -7287,7 +7287,7 @@ pre {
   border-radius: 0;
   background:
     linear-gradient(180deg, rgba(233, 220, 205, 0.045), transparent 42%),
-    var(--du-bg-2);
+    var(--du-bg-1);
   box-shadow: var(--style-card-shadow);
 }
 
@@ -8474,7 +8474,7 @@ pre {
   color: var(--du-text-1);
   background:
     linear-gradient(110deg, color-mix(in srgb, var(--du-color-main) 22%, transparent), transparent 72%),
-    color-mix(in srgb, var(--du-color-main) 14%, var(--du-bg-2));
+    color-mix(in srgb, var(--du-color-main) 14%, var(--du-bg-1));
 }
 
 .publish-template-tip strong {
@@ -8500,7 +8500,7 @@ pre {
   overflow: visible;
   --publish-card-radius: min(var(--style-control-radius-base), 16px);
   border-radius: var(--publish-card-radius);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
 }
 
 /* ============================================================
@@ -8694,7 +8694,7 @@ html[data-mockup-popup="select"] .du-popup__content.du-popup--bottom .du-cascade
   min-height: 36px;
   border: 0 !important;
   border-radius: min(var(--style-control-radius, 12px), 12px);
-  background: var(--du-c-bg-2, var(--du-bg-2)) !important;
+  background: var(--du-c-bg-2, var(--du-bg-1)) !important;
   color: var(--du-text-1);
   outline: 0 !important;
   box-shadow: none !important;
@@ -9178,14 +9178,14 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
 }
 
 /* === 卡片基类 .group(2026-06-17 立 · 06-17 改 token) ===
-   底色 = var(--du-bg-2)(dangoui 标准卡片层 token)
+   底色 = var(--du-bg-1)(dangoui 标准卡片层 token)
    最底层 = var(--du-bg-1)(dangoui 标准页面层 token)
    通栏 .contents 无 bg(继承最底层 bg-1)
    主题卡(re1999-hero / hpma-hero / czn-* / mock-hero-header 等)用自己的渐变 bg 覆盖 .group
    想要"裸"卡片带基础底色,就在元素上加 .group 类 === */
 .group {
   position: relative;
-  background: var(--du-bg-2);  /* 卡片基类底色,直接用 dangoui token,不绕 --style-card-bg alias */
+  background: var(--du-bg-1);  /* 卡片基类底色,直接用 dangoui token,不绕 --style-card-bg alias */
   border-radius: var(--style-card-radius, 12px);
   transition: background 150ms ease, box-shadow 150ms ease;
 }
@@ -9749,7 +9749,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
   width: 100%;
   margin: 0;
   border-radius: var(--style-card-radius-base);
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   color: var(--du-default-8);
   box-shadow: var(--style-card-shadow);
   overflow: hidden;
@@ -9924,7 +9924,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
 
 .tab-bar {
   padding: 10px 24px 18px;
-  background: var(--du-bg-2);
+  background: var(--du-bg-1);
   border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
@@ -9961,7 +9961,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
   height: var(--mockup-tabbar-height);
   padding: calc(4px * var(--mockup-scale)) calc(14px * var(--mockup-scale));
   border-top: calc(1px * var(--mockup-scale)) solid color-mix(in srgb, var(--du-default-8) 12%, transparent);
-  background: color-mix(in srgb, var(--du-bg-2) 94%, var(--du-bg-1));
+  background: color-mix(in srgb, var(--du-bg-1) 94%, var(--du-bg-1));
   box-shadow: 0 calc(-2px * var(--mockup-scale)) calc(8px * var(--mockup-scale)) rgba(0, 0, 0, 0.04);
 }
 
@@ -10010,7 +10010,7 @@ html[data-mockup-popup="select"] .du-popup:has(.du-popup__content.du-popup--bott
   justify-content: center;
   height: var(--mockup-home-indicator-height);
   padding-top: calc(14px * var(--mockup-scale));
-  background: color-mix(in srgb, var(--du-bg-2) 94%, var(--du-bg-1));
+  background: color-mix(in srgb, var(--du-bg-1) 94%, var(--du-bg-1));
 }
 
 .mock-home-indicator span {
