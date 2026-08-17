@@ -4906,6 +4906,10 @@ function inferBrandKey(value) {
   if (demo?.brand) return demo.brand;
   try {
     const url = new URL(text);
+    const lastPath = url.pathname.split("/").filter(Boolean).at(-1);
+    if (lastPath && /^[a-z0-9-]{2,32}$/i.test(lastPath)) {
+      return lastPath.toLowerCase();
+    }
     const hostPart = url.hostname.split(".").filter((part) => !["www", "com", "cn", "net", "org", "localhost", "127"].includes(part))[0];
     if (hostPart && /^[a-z0-9-]{2,32}$/i.test(hostPart)) return hostPart.toLowerCase();
   } catch {}
