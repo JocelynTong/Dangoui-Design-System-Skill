@@ -1,0 +1,636 @@
+{
+  "name": "czn",
+  "schemaVersion": 1,
+  "source": {
+    "type": "web+screenshot",
+    "url": "https://czn.qq.com/",
+    "evidence": [
+      "migrations/czn/brand-evidence.json",
+      "migrations/czn/dangoui-adapter.json",
+      "migrations/czn/component-mapping.json"
+    ],
+    "note": "Current evidence is based on user-provided screenshots because the site could not be resolved in the local environment."
+  },
+  "document": {
+    "id": "style:czn",
+    "name": "CZN Brand Style",
+    "type": "DOCUMENT",
+    "children": [
+      {
+        "id": "page:czn-home",
+        "name": "CZN / 官网首页",
+        "type": "CANVAS",
+        "children": [
+          {
+            "id": "web:czn:home:hero",
+            "name": "Hero / 沉浸主视觉",
+            "type": "FRAME",
+            "absoluteBoundingBox": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 320
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "boundVariable": "{color.page.darkImmersive}"
+              },
+              {
+                "type": "GRADIENT_RADIAL",
+                "name": "orange and purple character energy"
+              }
+            ],
+            "strokes": [],
+            "cornerRadius": 0,
+            "children": [],
+            "pluginData": {
+              "echo.brand": {
+                "assetRole": "immersive-hero-visual",
+                "migrationIntent": "full-bleed-character-stage",
+                "targets": {
+                  "dangoui": {
+                    "component": "Hero"
+                  },
+                  "vue": {
+                    "component": "section"
+                  },
+                  "unocss": {
+                    "shortcut": "czn-immersive-hero"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "web:czn:home:primary-cta",
+            "name": "Button / 橙色主行动",
+            "type": "INSTANCE",
+            "componentId": "dangoui:Button",
+            "componentProperties": {
+              "type": {
+                "value": "primary",
+                "type": "VARIANT"
+              },
+              "state": {
+                "value": "default",
+                "type": "VARIANT"
+              }
+            },
+            "boundVariables": {
+              "solidBg": {
+                "type": "VARIABLE_ALIAS",
+                "id": "{color.action.orange}"
+              },
+              "border": {
+                "type": "VARIABLE_ALIAS",
+                "id": "{color.action.orange}"
+              }
+            },
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "page:czn-forward",
+        "name": "CZN / 公测内容",
+        "type": "CANVAS",
+        "children": [
+          {
+            "id": "web:czn:forward:carousel-card",
+            "name": "Swiper / 公测内容轮播",
+            "type": "FRAME",
+            "absoluteBoundingBox": {
+              "x": 0,
+              "y": 0,
+              "width": 343,
+              "height": 228
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "boundVariable": "{color.surface.darkHud}"
+              },
+              {
+                "type": "IMAGE",
+                "imageRef": "asset:czn:forward-mask",
+                "scaleMode": "FILL"
+              }
+            ],
+            "strokes": [
+              {
+                "type": "SOLID",
+                "boundVariable": "{color.action.orange}"
+              }
+            ],
+            "cornerRadius": 0,
+            "children": [],
+            "pluginData": {
+              "echo.brand": {
+                "assetRole": "slanted-hud-card",
+                "migrationIntent": "forward-mask-clips-slide-image-and-replaces-default-card-border",
+                "targets": {
+                  "dangoui": {
+                    "component": "Swiper"
+                  },
+                  "vue": {
+                    "component": "DuCard"
+                  },
+                  "unocss": {
+                    "shortcut": "czn-hud-frame"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "web:czn:forward:light-news",
+            "name": "Card / 浅灰资讯区",
+            "type": "FRAME",
+            "fills": [
+              {
+                "type": "SOLID",
+                "boundVariable": "{color.surface.lightNews}"
+              }
+            ],
+            "strokes": [],
+            "cornerRadius": 0,
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "page:czn-character",
+        "name": "CZN / 角色详情",
+        "type": "CANVAS",
+        "children": [
+          {
+            "id": "web:czn:character:stage",
+            "name": "CharacterPanel / 角色展示舞台",
+            "type": "FRAME",
+            "absoluteBoundingBox": {
+              "x": 0,
+              "y": 0,
+              "width": 343,
+              "height": 300
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "boundVariable": "{color.page.darkImmersive}"
+              },
+              {
+                "type": "GRADIENT_RADIAL",
+                "name": "purple red character glow"
+              }
+            ],
+            "strokes": [],
+            "cornerRadius": 0,
+            "children": [],
+            "pluginData": {
+              "echo.brand": {
+                "assetRole": "character-art-stage",
+                "migrationIntent": "use-artwork-and-energy-backdrop-as-primary-style",
+                "targets": {
+                  "dangoui": {
+                    "component": "CharacterPanel"
+                  },
+                  "vue": {
+                    "component": "section"
+                  },
+                  "unocss": {
+                    "shortcut": "czn-character-stage"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "web:czn:character:selector",
+            "name": "Avatar / 角色选择器",
+            "type": "INSTANCE",
+            "componentId": "dangoui:Avatar",
+            "componentProperties": {
+              "state": {
+                "value": "selected",
+                "type": "VARIANT"
+              }
+            },
+            "boundVariables": {
+              "selectedBorder": {
+                "type": "VARIABLE_ALIAS",
+                "id": "{color.action.orange}"
+              }
+            },
+            "children": []
+          }
+        ]
+      }
+    ]
+  },
+  "components": {
+    "dangoui:NavigationBar": {
+      "name": "NavigationBar",
+      "status": "composed",
+      "unsupported": [
+        "game-site top chrome"
+      ]
+    },
+    "dangoui:Button": {
+      "name": "Button",
+      "status": "mapped",
+      "componentProperties": [
+        "type=primary"
+      ]
+    },
+    "dangoui:Card": {
+      "name": "Card",
+      "status": "fallback",
+      "unsupported": [
+        "slanted clipping",
+        "animated HUD frame"
+      ]
+    },
+    "dangoui:Swiper": {
+      "name": "Swiper",
+      "status": "composed",
+      "unsupported": [
+        "official carousel feed",
+        "slanted frame"
+      ]
+    },
+    "dangoui:Avatar": {
+      "name": "Avatar",
+      "status": "composed",
+      "unsupported": [
+        "vertical thumbnail selector artwork"
+      ]
+    },
+    "dangoui:CharacterPanel": {
+      "name": "CharacterPanel",
+      "status": "style-only",
+      "unsupported": [
+        "not a formal DangoUI component"
+      ]
+    }
+  },
+  "componentSets": {},
+  "styles": {
+    "style:czn:orange-action": {
+      "key": "style:czn:orange-action",
+      "name": "CZN / Orange Action",
+      "style_type": "FILL"
+    },
+    "style:czn:hud-frame": {
+      "key": "style:czn:hud-frame",
+      "name": "CZN / Slanted HUD Frame",
+      "style_type": "STROKE"
+    }
+  },
+  "tokens": {
+    "$extensions": {
+      "com.figma.modeName": "czn"
+    },
+    "color": {
+      "page": {
+        "darkImmersive": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.043,
+              0.027,
+              0.063
+            ],
+            "alpha": 1,
+            "hex": "#0B0710"
+          },
+          "$description": "Immersive dark page background."
+        }
+      },
+      "surface": {
+        "darkHud": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.09,
+              0.067,
+              0.122
+            ],
+            "alpha": 1,
+            "hex": "#17111F"
+          },
+          "$description": "Dark HUD surface."
+        },
+        "lightNews": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.94,
+              0.93,
+              0.92
+            ],
+            "alpha": 1,
+            "hex": "#F0EDEC"
+          },
+          "$description": "Light gray information section used as contrast."
+        }
+      },
+      "text": {
+        "primaryOnDark": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              0.969,
+              0.941
+            ],
+            "alpha": 1,
+            "hex": "#FFF7F0"
+          },
+          "$description": "Primary text on dark."
+        },
+        "secondaryOnDark": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.655,
+              0.616,
+              0.667
+            ],
+            "alpha": 1,
+            "hex": "#A79DAA"
+          },
+          "$description": "Secondary text on dark."
+        }
+      },
+      "action": {
+        "orange": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              1,
+              0.353,
+              0.122
+            ],
+            "alpha": 1,
+            "hex": "#FF5514"
+          },
+          "$description": "Primary action and brand accent.",
+          "$extensions": {
+            "echo.brand.role": "primary-action"
+          }
+        },
+        "orangeSoftBg": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.196,
+              0.094,
+              0.059
+            ],
+            "alpha": 1,
+            "hex": "#32180F"
+          },
+          "$description": "Soft orange action background."
+        }
+      },
+      "border": {
+        "hud": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.227,
+              0.169,
+              0.247
+            ],
+            "alpha": 1,
+            "hex": "#3A2B3F"
+          },
+          "$description": "HUD border and dark card line."
+        }
+      }
+    },
+    "radius": {
+      "hudFrame": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "Slanted HUD and character media frames should not inherit soft card radius."
+      }
+    }
+  },
+  "assets": {
+    "asset:czn:intelligence-mask": {
+      "type": "IMAGE",
+      "local": "/assets/czn-intelligence-mask.png",
+      "status": "local",
+      "role": "hud-overlay-mask"
+    },
+    "asset:czn:forward-mask": {
+      "type": "IMAGE",
+      "local": "/assets/czn-forward-mask.png",
+      "source": "https://game.gtimg.cn/images/czn/cp/a20250820xnz/forward_mask.png",
+      "status": "local",
+      "role": "forward-slide-mask",
+      "dimensions": {
+        "width": 1200,
+        "height": 574
+      }
+    },
+    "asset:czn:forward-text-bg": {
+      "type": "IMAGE",
+      "local": "/assets/czn-forward-txt-bg.png",
+      "source": "https://game.gtimg.cn/images/czn/cp/a20250820xnz/forward_txt_bg.png",
+      "status": "local",
+      "role": "forward-caption-background",
+      "dimensions": {
+        "width": 1006,
+        "height": 130
+      }
+    },
+    "asset:czn:forward-image-1": {
+      "type": "IMAGE",
+      "local": "/assets/czn-forward-img1.jpg",
+      "source": "https://game.gtimg.cn/images/czn/web202605/forward_img1.jpg",
+      "status": "local",
+      "role": "forward-slide-image",
+      "dimensions": {
+        "width": 1200,
+        "height": 574
+      }
+    },
+    "asset:czn:character-art": {
+      "type": "IMAGE",
+      "local": null,
+      "status": "missing-local",
+      "role": "character-illustration",
+      "source": "user screenshots"
+    }
+  },
+  "brandMetadata": {
+    "targets": [
+      "dangoui",
+      "vue",
+      "unocss",
+      "assets"
+    ],
+    "status": "draft",
+    "reviewQueue": [
+      "Replace gradient character-stage fallback with real local character artwork assets.",
+      "Verify slanted HUD frame geometry from source DOM/CSS when czn.qq.com becomes accessible.",
+      "Keep orange primary CTA mapped to DangoUI, but keep character energy and slanted HUD as style-only assets."
+    ],
+    "demoWorkflow": {
+      "pages": [
+        {
+          "id": "page:czn-home",
+          "sourceNavigation": [
+            "官网首页",
+            "前瞻情报",
+            "角色档案",
+            "图像资料"
+          ],
+          "selectedPagesReason": "当前 CZN demo 选择首页、前瞻情报、角色档案、媒体资料，是为了覆盖已采集到的主视觉、情报轮播遮罩、角色舞台和图像资料；不是所有参考站都必须复用这组栏目。",
+          "scenarioRole": "home-distribution",
+          "distributionSide": [
+            "official-site",
+            "public-test",
+            "characters",
+            "media"
+          ],
+          "displaySide": [
+            "full-bleed-character-stage",
+            "orange-primary-cta",
+            "dark-hud-entry"
+          ],
+          "interactiveStates": [
+            "button.hover",
+            "entry.active"
+          ],
+          "assetRoles": [
+            "character-illustration",
+            "energy-backdrop",
+            "orange-cta"
+          ],
+          "antiPatterns": [
+            "generic-download-funnel",
+            "plain-dark-dashboard",
+            "rounded-generic-card"
+          ]
+        },
+        {
+          "id": "page:czn-forward",
+          "sourceNavigation": [
+            "前瞻情报",
+            "内容轮播",
+            "活动卡片"
+          ],
+          "selectedPagesReason": "CZN 已有情报轮播 mask 和橙色焦点边框证据，因此单独保留前瞻/情报页验证媒体框。",
+          "scenarioRole": "feature-showcase",
+          "distributionSide": [
+            "carousel",
+            "content-cards",
+            "more-entry"
+          ],
+          "displaySide": [
+            "light-gray-news-section",
+            "orange-carousel-border",
+            "hud-mask"
+          ],
+          "interactiveStates": [
+            "carousel.active",
+            "tag.selected"
+          ],
+          "assetRoles": [
+            "hud-overlay-mask",
+            "orange-border",
+            "light-section-surface"
+          ],
+          "antiPatterns": [
+            "all-dark-pages-only",
+            "lose-light-gray-content-section"
+          ]
+        },
+        {
+          "id": "page:czn-character",
+          "sourceNavigation": [
+            "角色档案",
+            "作战员",
+            "技能/语音"
+          ],
+          "selectedPagesReason": "CZN 的重风格资产集中在角色舞台、紫黑能量背景和档案式信息区，因此保留角色档案页。",
+          "scenarioRole": "archive-profile",
+          "distributionSide": [
+            "character-selector",
+            "skill-card",
+            "voice-panel"
+          ],
+          "displaySide": [
+            "character-art-stage",
+            "purple-red-energy",
+            "profile-summary"
+          ],
+          "interactiveStates": [
+            "avatar.selected",
+            "tab.selected"
+          ],
+          "assetRoles": [
+            "character-art",
+            "energy-glow",
+            "slanted-hud-frame"
+          ],
+          "antiPatterns": [
+            "replace-character-art-with-gradient-only",
+            "ignore-selector-state"
+          ]
+        },
+        {
+          "id": "page:czn-media",
+          "sourceNavigation": [
+            "图像资料",
+            "PV",
+            "截图/图库"
+          ],
+          "selectedPagesReason": "媒体页用于验证 PV 封面、截图图框和 HUD caption；只有源站存在媒体/图库证据时才生成该页。",
+          "scenarioRole": "media-gallery",
+          "distributionSide": [
+            "pv",
+            "screenshots",
+            "character-wallpaper"
+          ],
+          "displaySide": [
+            "large-cover",
+            "screenshot-grid",
+            "hud-caption"
+          ],
+          "interactiveStates": [
+            "thumbnail.active"
+          ],
+          "assetRoles": [
+            "pv-cover",
+            "screenshot-art",
+            "hud-frame"
+          ],
+          "antiPatterns": [
+            "media-entry-jumps-back-to-news",
+            "no-local-art-assets"
+          ]
+        }
+      ],
+      "requiredDemoUpgrade": [
+        "Collect real character and PV assets before claiming CZN media/profile style complete.",
+        "Verify slanted HUD geometry from source DOM/CSS when czn.qq.com becomes accessible."
+      ]
+    }
+  }
+}

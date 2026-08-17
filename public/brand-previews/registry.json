@@ -1,0 +1,16 @@
+{
+  "schema": "brand-preview-registry.v0.1",
+  "updatedAt": "2026-08-08",
+  "brands": [
+    {
+      "id": "pokemon30",
+      "displayName": "Pokemon 30th",
+      "sourceUrl": "https://www.pokemon.co.jp/30th/",
+      "path": "/brand-previews/pokemon30.json",
+      "migrationRoot": "migrations/pokemon30",
+      "status": "draft-style-pack",
+      "standardDemo": true,
+      "businessApply": false
+    }
+  ]
+}

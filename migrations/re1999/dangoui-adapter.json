@@ -1,0 +1,163 @@
+{
+  "brand": "re1999",
+  "tokens": {
+    "--du-bg-2": { "value": "#000000", "status": "mapped", "source": "dark site canvas" },
+    "--du-bg-1": { "value": "#131818", "status": "mapped", "source": "archive panel surface" },
+    "--du-text-1": { "value": "#E9DCCD", "status": "mapped", "source": "warm paper foreground" },
+    "--du-text-2": { "value": "#BBA893", "status": "mapped", "source": "muted archive copy" },
+    "--du-border-1": { "value": "#45392F", "status": "mapped", "source": "plain divider and panel line" },
+    "--du-primary-color": { "value": "#B55829", "status": "mapped", "source": "copper emphasis" },
+    "--du-primary-outline-color": { "value": "#db6f39", "status": "mapped", "source": "active/selection copper" },
+    "--du-text-3": { "value": "#BBA893", "status": "mapped", "source": "muted archive copy" },
+    "--du-default-6": { "value": "#BBA893", "status": "mapped", "source": "muted archive copy" }
+  },
+  "demoOnlyVisualControls": {
+    "--style-card-radius": {
+      "value": "0px",
+      "status": "style-only",
+      "reason": "Archival frame geometry sets the container radius; plain border cards and panels inherit the same radius."
+    },
+    "--style-large-media-radius": {
+      "value": "0 56px 0 0",
+      "status": "style-only",
+      "reason": "Official news/backstory media shells use a large top-right radius; this is scoped to large media shells and must not affect ordinary Card or Image covers."
+    },
+    "--style-control-radius": {
+      "value": "42px",
+      "status": "style-only",
+      "reason": "Pill controls are separate from card/media/frame radius."
+    },
+    "assetRecipes": {
+      "status": "style-only",
+      "rule": "Image assets are mapped by role and scope. They do not become DangoUI tokens unless a matching Image/icon slot/component API exists.",
+      "items": [
+        {
+          "name": "re1999LogoWatermark",
+          "assetPath": "/assets/re1999-logo.png",
+          "role": "brand-mark",
+          "targetScope": ".theme-re1999 .phone .du-navigation-bar::before",
+          "state": "default",
+          "css": ["background-image: url('/assets/re1999-logo.png')", "background-size: contain", "background-repeat: no-repeat", "opacity: .26"],
+          "fallback": "serif NavigationBar title plus copper divider"
+        },
+        {
+          "name": "re1999FontPackage",
+          "assetPath": ["/assets/brand-assets/re1999/font/Serif.ttf", "/assets/brand-assets/re1999/font/Sans.ttf", "/assets/brand-assets/re1999/font/Didot.ttf"],
+          "rawSrc": ["../font/Serif.ttf", "../font/Sans.ttf", "../font/Didot.ttf"],
+          "resolvedUrl": ["https://re.bluepoch.com/home/font/Serif.ttf", "https://re.bluepoch.com/home/font/Sans.ttf", "https://re.bluepoch.com/home/font/Didot.ttf"],
+          "role": "font",
+          "targetScope": ".theme-re1999 typography",
+          "state": "default",
+          "css": ["@font-face RE1999Serif/Sans/Didot", "font-family applied to title/body/display scopes"],
+          "fallback": "Georgia / Songti SC / system sans-serif"
+        },
+        {
+          "name": "re1999PageTexture",
+          "assetPath": "/assets/brand-assets/re1999/img/BG2.png",
+          "rawSrc": "../img/BG2.png",
+          "resolvedUrl": "https://re.bluepoch.com/home/img/BG2.png",
+          "role": "texture",
+          "targetScope": ".theme-re1999 .phone-screen and media surfaces",
+          "state": "default",
+          "css": ["background-image: url('/assets/brand-assets/re1999/img/BG2.png')", "background-size: cover", "background-position: center"],
+          "fallback": "dark gradient plus CSS line/noise texture"
+        },
+        {
+          "name": "re1999BackgroundCandidates",
+          "assetPath": ["/assets/brand-assets/re1999/img/BG.png", "/assets/brand-assets/re1999/img/BGM.png", "/assets/brand-assets/re1999/img/01.jpg", "/assets/brand-assets/re1999/kv/m.jpg", "/assets/brand-assets/re1999/m/m_00000.jpg", "/assets/brand-assets/re1999/img/login/loginBg.png"],
+          "rawSrc": ["../img/BG.png", "../img/BGM.png", "./img/01.jpg", "./kv/m.jpg", "./m/m_00000.jpg", "../img/login/loginBg.png"],
+          "resolvedUrl": ["https://re.bluepoch.com/home/img/BG.png", "https://re.bluepoch.com/home/img/BGM.png", "https://re.bluepoch.com/home/img/01.jpg", "https://re.bluepoch.com/home/kv/m.jpg", "https://re.bluepoch.com/home/m/m_00000.jpg", "https://re.bluepoch.com/home/img/login/loginBg.png"],
+          "role": "texture",
+          "targetScope": "page shell / mobile shell / hero media / modal background",
+          "state": "candidate",
+          "css": ["background-image candidate; scope must match source context"],
+          "fallback": "Use BG2 texture only when the target page has no stronger page-specific asset."
+        },
+        {
+          "name": "re1999DemoVisibleAssetApplication",
+          "assetPath": ["/assets/brand-assets/re1999/img/BG.png", "/assets/brand-assets/re1999/img/first/1.png", "/assets/brand-assets/re1999/img/first/2.png", "/assets/brand-assets/re1999/img/gallery/01.png", "/assets/brand-assets/re1999/img/News.png", "/assets/brand-assets/re1999/img/01.jpg", "/assets/brand-assets/re1999/img/login/loginBg.png", "/assets/brand-assets/re1999/img/more.png", "/assets/brand-assets/re1999/img/backstory/p1.png", "/assets/brand-assets/re1999/img/role/1.png", "/assets/brand-assets/re1999/img/role/1t.png"],
+          "role": "visible-demo-application",
+          "targetScope": [".theme-re1999 .re1999-hero", ".theme-re1999 .re1999-hero::before/::after", ".theme-re1999 .re1999-news-feature", ".theme-re1999 .re1999-news-poster img", ".theme-re1999 .re1999-download-panel", ".theme-re1999 .re1999-news-actions::after", ".theme-re1999 .re1999-character-panel", ".theme-re1999 .re1999-role-media i", ".theme-re1999 .re1999-character-panel::after"],
+          "state": "default",
+          "css": ["Hero uses BG.png plus first title layers", "NewsFeature uses gallery/01.png over 01.jpg plus News.png title", "DownloadPanel uses loginBg.png", "NewsActions uses more.png", "CharacterPanel uses backstory/p1.png; RoleMedia uses role/1.png plus role/1t.png"],
+          "fallback": "Dark gradient and copper frame if asset is missing"
+        },
+        {
+          "name": "re1999RoleMediaDecor",
+          "assetPath": ["/assets/brand-assets/re1999/img/role/1bg.png", "/assets/brand-assets/re1999/img/role/false.webp"],
+          "rawSrc": ["../img/role/1bg.png", "./img/role/false.webp"],
+          "resolvedUrl": ["https://re.bluepoch.com/home/img/role/1bg.png", "https://re.bluepoch.com/home/img/role/false.webp"],
+          "role": "decorative-layer",
+          "targetScope": ".theme-re1999 .re1999-role-media::before/::after",
+          "state": "default",
+          "css": ["absolute background layer", "absolute orbital overlay layer"],
+          "fallback": "CSS orbital line and radial dark copper field"
+        },
+        {
+          "name": "re1999SelectedIconPair",
+          "assetPath": ["/assets/brand-assets/re1999/img/icon/b.png", "/assets/brand-assets/re1999/img/icon/bc.png"],
+          "rawSrc": ["../img/icon/b.png", "../img/icon/bc.png"],
+          "resolvedUrl": ["https://re.bluepoch.com/home/img/icon/b.png", "https://re.bluepoch.com/home/img/icon/bc.png"],
+          "role": "selected-bg",
+          "targetScope": "state asset evidence / future selected or active slot",
+          "state": "default -> hover/active",
+          "css": ["background-image pair switched by :hover or active state"],
+          "fallback": "copper active line; do not add generic shadow"
+        },
+        {
+          "name": "re1999RoleArtCharacter1",
+          "assetPath": "/assets/brand-assets/re1999/img/character/1.png",
+          "rawSrc": "./img/character/1.png",
+          "resolvedUrl": "https://re.bluepoch.com/home/img/character/1.png",
+          "role": "role-art",
+          "targetScope": ".theme-re1999 .re1999-role-media i",
+          "state": "default",
+          "css": ["background-image: url('/assets/brand-assets/re1999/img/character/1.png')", "background-size: contain", "background-repeat: no-repeat", "background-position: center bottom"],
+          "fallback": "CSS silhouette only when the vendored role-art image is unavailable"
+        },
+        {
+          "name": "selectedBackground",
+          "assetPath": null,
+          "role": "selected-bg",
+          "targetScope": ".theme-re1999 .click-target.selected",
+          "state": "selected",
+          "css": ["state-scoped background layer or pseudo-element"],
+          "fallback": "copper active line; do not add generic shadow"
+        },
+        {
+          "name": "archiveTexture",
+          "assetPath": null,
+          "role": "texture",
+          "targetScope": ".theme-re1999 page and panel surfaces",
+          "state": "default",
+          "css": ["repeat/overlay background image"],
+          "fallback": "repeating-linear-gradient texture"
+        },
+        {
+          "name": "frameAsset",
+          "assetPath": null,
+          "role": "asset-frame",
+          "targetScope": "Hero/Card/Panel/Media containers",
+          "state": "default",
+          "css": ["border-image or parent background edge layer"],
+          "fallback": "copper edge-line CSS"
+        }
+      ],
+      "antiScopes": ["evidence panel", "mapping panel", "frequency table", "DangoUI baseline"]
+    }
+  },
+  "components": {
+    "navigation-logo": {
+      "status": "composed",
+      "dangouiComponents": ["NavigationBar", "Image"],
+      "unsupported": ["official animated logo state"],
+      "tokenChain": "NavigationBar structure -> brand logo asset recipe -> style-only CSS background"
+    },
+    "archive-card-frame": {
+      "status": "style-only",
+      "dangouiComponents": ["Card"],
+      "unsupported": ["formal frame asset component"],
+      "tokenChain": "Card structure -> --du-bg-1 / --du-border-1 -> style-only frame asset or CSS fallback"
+    }
+  }
+}

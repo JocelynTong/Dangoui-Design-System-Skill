@@ -5,6 +5,13 @@
 不在这里解释映射规则；映射规则见 `mapping-rules.md`。
 不在这里解释长期资产架构；资产架构见 `brand-dtcg-migration-asset-standard.md`。
 
+## 目录
+
+- `1. 推荐目录`：`migrations/{brand}/` 文件结构。
+- `2. JSON 文件职责`：各 JSON 负责什么。
+- `3. README 结构`：人工可读迁移说明。
+- `13. Existing Migration Assets 应用记录`：复用 style pack 时的交付记录。
+
 ## 1. 推荐目录
 
 ```text
@@ -47,8 +54,10 @@ preview demo 的临时 class、裸 CSS value 和页面变量只能作为探索�
 - UI color 高频值。
 - radius / spacing / shadow / motion 等非 color 值。
 - component pattern 高频模式。
+- assetInventory：PNG/JPG/WebP/SVG/GIF/Lottie/字体包等资产，记录 assetPath/url、format、dimensions、alpha、role、contexts、targetScope、implementation、placement、state、antiScopes。
 - 每项必须有统计口径、次数、占比、上下文。
 - 边框、圆角、阴影要拆开记录；圆角还要拆成 frame/card/media 与 control。
+- 如果存在 frame / asset frame / texture frame，必须记录 Decorative Boundary Inventory：容器、边界类型、实现方式、radius、asset、是否替代父容器 border。
 
 ### `brand-profile.dtcg.json`
 
@@ -76,6 +85,8 @@ preview demo 的临时 class、裸 CSS value 和页面变量只能作为探索�
 - 未来可能迁移到的 `--du-*` 候选。
 - 当前 dangoui 组件、props、slots 的承接状态。
 - `demoOnlyVisualControls` 要记录用户校准过的字体、icon、边框、圆角、阴影及其作用域。
+- `demoOnlyVisualControls` 中的 Frame / Divider style-only 内容必须说明是父容器边界、border-image、背景角线、asset fallback 还是明确证据支持的内框。
+- `demoOnlyVisualControls.assetRecipes` 要记录图片资产 role、assetPath、targetScope、state、CSS placement、fallback 和 antiScopes；不能只写“使用图片风格化”。
 
 ### `uno-adapter.json`
 
@@ -146,11 +157,49 @@ preview demo 的临时 class、裸 CSS value 和页面变量只能作为探索�
 
 说明 color、radius、spacing、shadow 等如何承接。
 
-## 5. Component Mapping
+## 5. Decorative Boundary Inventory
+
+> 目的：判断风格化边框是否替代父容器 border，以及 radius / divider / background / shadow / asset 是否联动。
+
+| Container | Type | Implementation | Radius | Asset | 承接 | 说明 |
+|---|---|---|---|---|---|---|
+| `Hero panel` | `frame` | parent `background` edge lines | `0px` | none | `style-only Frame CSS` | frame 替代父容器 border |
+| `Card list` | `frame` | parent `background` edge lines | `0px` | none | `style-only Frame CSS` | Card 跟随站点边界语言 |
+| `Video thumbnail` | `asset frame` | `border-image` / PNG | follows asset | `media_border.png` | `style-only asset` | 不能只映射到 `--du-border-1` |
+| `List divider` | `divider` | `border-bottom` | n/a | none | `--du-border-1` | 普通分割线 |
+
+必须说明：
+
+- `frame / asset frame / texture frame` 是否替代父容器 border。
+- 是否存在真实内外双层框证据；没有证据时不要使用 inset 伪元素内框。
+- Card / Media / Hero / Panel 是否全部检查过。
+- Radius 是否跟 frame 几何一致。
+- 哪些区域是反例，不能被 frame 污染。
+
+## 6. Asset Inventory
+
+> 目的：保证 PNG / WebP / SVG 等资产不会在抽色后丢失，尤其是背景图、选中背景、装饰图、frame 图和 texture。
+
+| Asset | Role | Source | Target Scope | State | Implementation | Fallback | 承接 |
+|---|---|---|---|---|---|---|---|
+| `/assets/re1999-logo.png` | `brand-mark` | local png 333x132 RGBA | nav logo / watermark | default | CSS background-image | serif title | `style-only asset recipe` |
+| `selected-bg.png` | `selected-bg` | source css/img | selected card / active tab | selected | state background | active line | `style-only state asset` |
+| `media_border.png` | `asset-frame` | source image | media/card frame | default | border-image / edge background | CSS frame | `style-only Frame asset` |
+| `paper-texture.webp` | `texture` | source image | page/panel bg | default | repeat overlay | gradient texture | `style-only texture` |
+
+必须说明：
+
+- 资产是 background、selected-bg、frame、texture、icon、brand-mark、illustration 还是 divider。
+- 能否由 DangoUI `Image`、icon slot、Button icon 或组件 slot 承接。
+- 如果不能承接，进入 `demoOnlyVisualControls.assetRecipes`，并写清 CSS placement。
+- selected/active 资产必须绑定状态 selector，不能用无依据 shadow 或 outline 替代。
+- 不得套用资产的 antiScopes。
+
+## 7. Component Mapping
 
 说明品牌组件模式如何落到 Echo/Figma 和 dangoui。
 
-## 6. 客观 Token Chain
+## 8. 客观 Token Chain
 
 当涉及组件样式问题，列出真实链路：
 
@@ -162,7 +211,7 @@ DOM class
 → adapter
 ```
 
-## 7. 承接缺口
+## 9. 承接缺口
 
 分为：
 
@@ -171,15 +220,15 @@ DOM class
 - props / slots / variant 缺口。
 - style-only 内容。
 
-## 8. 机器可读资产
+## 10. 机器可读资产
 
 列出本次产出的 JSON 文件。
 
-## 9. UnoCSS 渲染适配
+## 11. UnoCSS 渲染适配
 
 说明哪些 utility 来自 `uno-preset-echo`，哪些只是 demo 布局，哪些 `--style-*` 属于 `style-only` 或 `fallback`。不要把 Tailwind 配置列为默认产物。
 
-## 10. Demo 应用说明
+## 12. Demo 应用说明
 
 说明哪些值进入 `--du-*`，哪些值只是 `--style-*`，哪些组件是真实渲染、组合或占位。
 
@@ -190,8 +239,9 @@ DOM class
 - 正例：目标 demo 元素确实应用品牌样式。
 - 反例：证据区、mapping 区、频次表等非目标容器没有被误套。
 - 若用伪元素表达边框，说明是贴边外沿还是内框；默认不接受“容器里又套一层框”作为替代。
+- 若使用风格化 Frame，优先说明它如何替代父容器 border；只有源站证据明确存在内框时才接受 inset 伪元素。
 
-## 11. Existing Migration Assets 应用记录
+## 13. Existing Migration Assets 应用记录
 
 当本次任务是应用已有 `migrations/{brand}` 时，README 或交付说明必须列出：
 

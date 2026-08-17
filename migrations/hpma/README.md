@@ -75,10 +75,11 @@ demo hpma nav/card class
 - props / slots / variant 缺口：center logo nav、official download panel、gallery/video overlay。
 - style-only 内容：角色图、场景图、蓝色魔法光、金色装饰框。
 
-HPMA 的特殊边框不能只靠 `--du-border-1` 初始化。应用到业务项目时必须同时初始化 style-only frame recipe：设置 `--hpma-frame`、`--hpma-frame-soft`、`--hpma-gold-bright`、`--style-divider-color`、`--style-frame-corner-size`，并在目标框体上生成贴边角线。不要把这套角线套到证据区、mapping 区或频次表。
+HPMA 的特殊边框不能只靠 `--du-border-1` 初始化。应用到业务项目时必须同时初始化 style-only Frame CSS：设置 `--hpma-frame`、`--hpma-frame-soft`、`--hpma-gold-bright`、`--style-divider-color`、`--style-frame-corner-size`，并让贴边角线替代目标框体的普通父容器 border。不要默认做成“普通外框 + 内部 inset 装饰框”；除非源站证据明确存在内外双层框。不要把这套角线套到证据区、mapping 区或频次表。
 
 ## 8. 机器可读资产
 
+- `style.json`：主入口。`document` 使用 Figma REST-like 节点树表达首页、资讯、魔咒卡牌结构；`tokens` 使用 DTCG 表达颜色、圆角；`assets` 记录字体、media border 等素材状态；`brandMetadata` 记录 DangoUI / Vue / UnoCSS 转译目标。
 - `preview-gate.json`
 - `brand-evidence.json`
 - `brand-profile.dtcg.json`

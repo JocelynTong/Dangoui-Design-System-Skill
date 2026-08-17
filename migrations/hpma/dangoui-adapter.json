@@ -11,12 +11,13 @@
     "--du-primary-border": { "value": "#8e6140", "status": "mapped", "source": "antique border" },
     "--du-primary-outline-color": { "value": "#c8b08b", "status": "mapped", "source": "gold outline text" },
     "--du-primary-soft-bg": { "value": "#2f241b", "status": "mapped", "source": "dark brown action soft bg" },
-    "--du-primary-solid-bg": { "value": "#996540", "status": "mapped", "source": "brown action control" }
+    "--du-primary-solid-bg": { "value": "#996540", "status": "mapped", "source": "brown action control" },
+    "--du-default-6": { "value": "#c8b08b", "status": "mapped", "source": "gold-muted label" }
   },
   "demoOnlyVisualControls": {
     "--style-card-radius": { "value": "0px", "status": "style-only", "reason": "Ornate HPMA frames and media shells are straight-edged; do not infer rounded cards from control evidence." },
     "--style-control-radius": { "value": "5px", "status": "fallback", "echoToken": "Radius/Small" },
-    "--style-card-shadow": { "value": "0 20px 48px rgba(0,0,0,.42), inset 0 0 0 1px rgba(200,176,139,.22)", "status": "style-only" },
+    "--style-card-shadow": { "value": "0 20px 48px rgba(0,0,0,.42)", "status": "style-only", "reason": "Frame hairlines replace the card border; do not add an inset border shadow unless source evidence shows a second inner frame." },
     "--style-media": { "value": "magical brown/gold/blue illustration gradient", "status": "style-only" },
     "--style-font-display": { "value": "uifont_cn_title", "status": "style-only", "reason": "Official site ships a custom title font; dangoui has no typography token for this." },
     "--style-font-nav": { "value": "navfont", "status": "style-only", "reason": "Official navigation uses a custom font package; keep it as demo typography control." },
@@ -29,8 +30,9 @@
       "reason": "Requires an image/border asset or a formal media-frame component.",
       "applyRecipe": {
         "scope": "Only apply to target demo/page frames, media shells, cards and selected navigation dividers; never apply to evidence/mapping/frequency panels.",
-        "container": ["position: relative", "border: 1px solid var(--hpma-frame)", "border-radius: 0"],
-        "cornerOverlay": ["::after", "content: \"\"", "position: absolute", "inset: 0", "pointer-events: none", "background: eight corner hairlines using --hpma-gold-bright and --style-frame-corner-size"],
+        "container": ["position: relative", "border: 0", "border-radius: 0", "background includes edge/corner hairlines on the parent container"],
+        "cornerOverlay": ["optional ::after only when stacking requires it", "content: \"\"", "position: absolute", "inset: 0", "pointer-events: none", "background: eight edge-aligned corner hairlines using --hpma-gold-bright and --style-frame-corner-size"],
+        "rule": "HPMA ornate frame replaces the parent container border. Do not combine a normal outer border with an inset decorative frame unless screenshot/CSS evidence shows a true double-frame.",
         "requiredVars": {
           "--hpma-frame": "rgba(200,176,139,.72)",
           "--hpma-frame-soft": "rgba(200,176,139,.28)",

@@ -3,7 +3,7 @@
   "mappings": [
     {
       "intent": "primary action / active state",
-      "rawValues": ["#ff5a1f"],
+      "rawValues": ["#ff5514"],
       "echoCandidate": "primary/solidBg",
       "dangouiTarget": ["--du-primary-color", "--du-primary-solid-bg", "--du-primary-border"],
       "status": "mapped"

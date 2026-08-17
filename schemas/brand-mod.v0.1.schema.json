@@ -1,0 +1,348 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brand-mod.v0.1",
+  "title": "Brand MOD Schema v0.1",
+  "description": "A neutral visual-language package produced by /brand. MOD means modular brand skin package, not game-only content. /brand defines the visual language itself and may apply that language onto a host page or project when a target is provided.",
+  "type": "object",
+  "required": [
+    "schema",
+    "manifest",
+    "tokens",
+    "semanticRoles",
+    "componentVariants",
+    "slots",
+    "assets",
+    "layoutRules",
+    "platformOverrides",
+    "verification"
+  ],
+  "properties": {
+    "schema": {
+      "const": "brand-mod.v0.1"
+    },
+    "manifest": {
+      "type": "object",
+      "required": ["brand", "displayName", "sourceUrl", "createdAt", "version", "scope", "producer"],
+      "properties": {
+        "brand": { "type": "string", "minLength": 1 },
+        "displayName": { "type": "string", "minLength": 1 },
+        "sourceUrl": { "type": "string", "minLength": 1 },
+        "createdAt": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 },
+        "scope": {
+          "type": "object",
+          "description": "Scope describes what this brand mod is for. v0.1 accepts both legacy intent and normalized for during transition.",
+          "required": ["notFor"],
+          "properties": {
+            "intent": { "type": "string", "minLength": 1 },
+            "for": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 },
+              "minItems": 1
+            },
+            "notFor": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "anyOf": [
+            { "required": ["intent"] },
+            { "required": ["for"] }
+          ]
+        },
+        "producer": {
+          "type": "object",
+          "required": ["skill", "decoupledFrom"],
+          "properties": {
+            "skill": { "type": "string" },
+            "decoupledFrom": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "tokens": {
+      "type": "object",
+      "required": ["dtcg", "mapped", "styleOnly"],
+      "properties": {
+        "dtcg": { "$ref": "#/$defs/dtcgGroup" },
+        "mapped": { "$ref": "#/$defs/tokenMap" },
+        "styleOnly": { "$ref": "#/$defs/tokenMap" }
+      }
+    },
+    "semanticRoles": {
+      "type": "object",
+      "additionalProperties": {
+        "$ref": "#/$defs/semanticRole"
+      }
+    },
+    "componentVariants": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/componentVariant" }
+    },
+    "slots": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/slot" }
+    },
+    "assets": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/asset" }
+    },
+    "layoutRules": {
+      "type": "object",
+      "required": ["sectionBackgroundChain", "imageFit", "overlay", "bottomBarReserve"],
+      "properties": {
+        "sectionBackgroundChain": {
+          "type": "object",
+          "required": ["mode", "rules", "layers"],
+          "properties": {
+            "mode": { "type": "string" },
+            "rules": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "layers": {
+              "type": "array",
+              "items": { "$ref": "#/$defs/backgroundLayer" }
+            }
+          }
+        },
+        "imageFit": {
+          "type": "object",
+          "required": ["contentImage", "heroImage"],
+          "properties": {
+            "contentImage": { "type": "string" },
+            "heroImage": { "type": "string" }
+          }
+        },
+        "overlay": {
+          "type": "object",
+          "required": ["inspectorTag"],
+          "properties": {
+            "inspectorTag": {
+              "type": "object",
+              "required": ["positioning", "mustNotAffectLayout"],
+              "properties": {
+                "positioning": { "type": "string" },
+                "mustNotAffectLayout": { "type": "boolean" }
+              }
+            }
+          }
+        },
+        "bottomBarReserve": {
+          "type": "object",
+          "required": ["required", "minPadding"],
+          "properties": {
+            "required": { "type": "boolean" },
+            "minPadding": { "type": "string" }
+          }
+        }
+      }
+    },
+    "platformOverrides": {
+      "type": "object",
+      "description": "Optional platform or consumer specific overrides. /brand stays consumer-agnostic; downstream consumers may add their own namespace here.",
+      "properties": {
+        "h5": { "type": "object" },
+        "miniProgram": { "type": "object" }
+      },
+      "additionalProperties": { "type": "object" }
+    },
+    "verification": {
+      "type": "object",
+      "required": ["sourceFiles", "gates"],
+      "properties": {
+        "sourceFiles": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "gates": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/gate" }
+        },
+        "ruleCandidates": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ruleCandidate" }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "dtcgGroup": {
+      "type": "object",
+      "properties": {
+        "$description": { "type": "string" },
+        "$extensions": { "type": "object" }
+      },
+      "additionalProperties": {
+        "anyOf": [
+          { "$ref": "#/$defs/dtcgGroup" },
+          { "$ref": "#/$defs/dtcgToken" }
+        ]
+      }
+    },
+    "dtcgToken": {
+      "type": "object",
+      "required": ["$type", "$value"],
+      "properties": {
+        "$type": { "type": "string", "minLength": 1 },
+        "$value": {},
+        "$description": { "type": "string" },
+        "$extensions": { "type": "object" }
+      }
+    },
+    "tokenMap": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["value"],
+        "properties": {
+          "value": {},
+          "status": { "type": "string" },
+          "evidence": { "type": "string" },
+          "usage": { "type": "string" },
+          "source": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "semanticRole": {
+      "type": "object",
+      "required": ["kind", "value", "sources", "usage"],
+      "properties": {
+        "kind": { "type": "string" },
+        "value": {},
+        "target": { "type": "string" },
+        "dtcgPath": { "type": "string" },
+        "status": { "type": "string" },
+        "usage": { "type": "string" },
+        "sources": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "evidence": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "protocol": {
+          "type": "object",
+          "properties": {
+            "schema": { "type": "string" },
+            "source": { "type": "string" },
+            "bucket": { "type": "string" },
+            "topCandidates": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "hex": { "type": "string" },
+                  "family": { "type": "string" },
+                  "score": { "type": "number" },
+                  "count": { "type": "number" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "componentVariant": {
+      "type": "object",
+      "required": ["id", "component", "status", "uses", "unsupported"],
+      "properties": {
+        "id": { "type": "string" },
+        "component": { "type": "string" },
+        "status": { "type": "string" },
+        "uses": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "unsupported": {
+          "type": "array",
+          "items": { "type": "string" }
+        }
+      }
+    },
+    "slot": {
+      "type": "object",
+      "required": ["id", "role", "target", "required", "fallback"],
+      "properties": {
+        "id": { "type": "string" },
+        "role": { "type": "string" },
+        "target": { "type": "string" },
+        "required": { "type": "boolean" },
+        "fallback": { "type": "string" }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "required": ["id", "role", "source", "usage", "fit"],
+      "properties": {
+        "id": { "type": "string" },
+        "role": { "type": "string" },
+        "source": { "type": "string" },
+        "usage": { "type": "string" },
+        "fit": { "type": "string" },
+        "selectorEvidence": { "type": "string" },
+        "zIndex": { "type": "number" }
+      }
+    },
+    "backgroundLayer": {
+      "type": "object",
+      "required": ["id", "assetId", "sourceSelector", "order", "coverage"],
+      "properties": {
+        "id": { "type": "string" },
+        "assetId": { "type": "string" },
+        "sourceSelector": { "type": "string" },
+        "order": { "type": "number" },
+        "coverage": { "type": "string" }
+      }
+    },
+    "gate": {
+      "type": "object",
+      "required": ["id", "status", "reason"],
+      "properties": {
+        "id": { "type": "string" },
+        "status": { "type": "string" },
+        "reason": { "type": "string" }
+      }
+    },
+    "ruleCandidate": {
+      "type": "object",
+      "required": [
+        "id",
+        "observedIn",
+        "abstractMechanism",
+        "appliesWhen",
+        "evidenceRequired",
+        "scriptCheck",
+        "promotion"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "observedIn": { "type": "string" },
+        "abstractMechanism": { "type": "string" },
+        "appliesWhen": { "type": "string" },
+        "evidenceRequired": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "scriptCheck": { "type": "string" },
+        "promotion": {
+          "type": "object",
+          "required": ["level", "verifiedBrands"],
+          "properties": {
+            "level": { "type": "string" },
+            "verifiedBrands": {
+              "type": "array",
+              "items": { "type": "string" }
+            },
+            "notes": { "type": "string" }
+          }
+        }
+      }
+    }
+  }
+}

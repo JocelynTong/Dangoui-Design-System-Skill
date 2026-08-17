@@ -3,7 +3,7 @@
   "Color": {
     "PrimaryAction": {
       "$type": "color",
-      "$value": "#ff5a1f",
+      "$value": "#ff5514",
       "$description": "橙色主行动入口：导航激活、官网按钮、下载 CTA、轮播边框。",
       "$extensions": {
         "com.echo.brandMigration": {

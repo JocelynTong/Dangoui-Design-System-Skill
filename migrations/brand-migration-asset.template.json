@@ -134,6 +134,29 @@
       }
     }
   },
+  "BrandSemanticRoles": {
+    "$description": "品牌证据落地后的通用语义角色层。这里是 /brand 对外最稳定的消费协议，不绑定具体品牌，也不绑定 /qdmp。",
+    "$extensions": {
+      "com.echo.semanticRoles": {
+        "surface.page": "",
+        "surface.card": "",
+        "text.primary": "",
+        "text.secondary": "",
+        "text.tertiary": "",
+        "border.subtle": "",
+        "action.primary.fill": "",
+        "action.active.fill": "",
+        "action.neutral.surface": "",
+        "action.text.border": "",
+        "accent.secondary": "",
+        "typography.body.family": "",
+        "typography.display.family": "",
+        "shape.card.radius": "",
+        "shape.control.radius": "",
+        "elevation.card.shadow": ""
+      }
+    }
+  },
   "EchoMapping": {
     "Tokens": {
       "$description": "品牌意图到 Echo/Figma DTCG token 的承接关系。",

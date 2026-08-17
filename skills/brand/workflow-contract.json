@@ -1,0 +1,105 @@
+{
+  "version": "0.1",
+  "command": "/brand",
+  "owner": "brand",
+  "description": "Machine-readable workflow contract for brand learning and host apply.",
+  "workflows": {
+    "learn-brand": {
+      "goal": "Learn a brand visual language and materialize reusable MOD/style-pack/demo assets without touching a host project by default.",
+      "inputs": {
+        "requiredOneOf": ["sourceUrl", "screenshot", "designDoc", "figma", "dtcg", "demoUrl"],
+        "forbidden": ["hostTarget"]
+      },
+      "steps": [
+        {
+          "id": "extract-third-party",
+          "label": "Extract upstream evidence",
+          "acceptedTools": ["dembrandt", "extract-design-system"],
+          "required": true
+        },
+        {
+          "id": "normalize-dtcg",
+          "label": "Normalize and validate DTCG layer",
+          "required": true
+        },
+        {
+          "id": "collect-brand-evidence",
+          "label": "Collect our own computed, asset, and action evidence",
+          "required": true
+        },
+        {
+          "id": "tpp-test",
+          "label": "Run TPP blocking gate before any mapping or preview output",
+          "required": true,
+          "blocking": true
+        },
+        {
+          "id": "map-to-dangoui",
+          "label": "Map brand evidence to dangoui-compatible tokens and roles",
+          "required": true
+        },
+        {
+          "id": "emit-demo-preview",
+          "label": "Generate brand-mod.json and demo preview artifacts",
+          "required": true
+        }
+      ],
+      "outputs": [
+        "migrations/{brand}/brand-mod.json",
+        "migrations/{brand}/brand-evidence.json",
+        "migrations/{brand}/dangoui-adapter.json",
+        "demo preview"
+      ],
+      "boundaries": [
+        "Do not modify host business project by default.",
+        "Brand key is a style identifier, never a route or page name.",
+        "Third-party extraction is seed evidence only, never final mapping truth."
+      ]
+    },
+    "apply-host": {
+      "goal": "Apply an existing learned visual language into a real host project while preserving host business logic and content.",
+      "inputs": {
+        "requiredOneOf": ["brandKey", "sourceUrl", "stylePack"],
+        "required": ["hostTargetOrPlan"]
+      },
+      "steps": [
+        {
+          "id": "load-existing-mod",
+          "label": "Load existing MOD/style-pack/evidence",
+          "required": true
+        },
+        {
+          "id": "diagnose-host",
+          "label": "Detect host entry, selector map, and visual debt",
+          "required": true
+        },
+        {
+          "id": "tpp-test",
+          "label": "Run TPP blocking gate before applying into host",
+          "required": true,
+          "blocking": true
+        },
+        {
+          "id": "map-to-dangoui",
+          "label": "Map learned language to host dangoui and component structure",
+          "required": true
+        },
+        {
+          "id": "apply-preview",
+          "label": "Apply and verify preview in host project",
+          "required": true
+        }
+      ],
+      "outputs": [
+        "host project preview URL",
+        "coverage level",
+        "computed verification result"
+      ],
+      "boundaries": [
+        "Preserve host route, business content, and component API unless user explicitly asks otherwise.",
+        "Do not create a new brand route by default.",
+        "Final preview URL must be the host project URL, not the demo URL."
+      ]
+    }
+  }
+}

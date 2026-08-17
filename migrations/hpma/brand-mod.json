@@ -1,0 +1,704 @@
+{
+  "schema": "brand-mod.v0.1",
+  "manifest": {
+    "brand": "hpma",
+    "displayName": "HPMA",
+    "sourceUrl": "https://www.harrypottermagicawakened.com/cn/index.html",
+    "createdAt": "2026-08-07",
+    "version": "0.1.0",
+    "scope": {
+      "for": [
+        "brand visual migration",
+        "mini-program visual skinning",
+        "demo capability preview"
+      ],
+      "notFor": [
+        "game-only content mod",
+        "business logic rewrite",
+        "new route generation by brand key"
+      ]
+    },
+    "producer": {
+      "skill": "/brand",
+      "decoupledFrom": [
+        "/qdmp"
+      ],
+      "notes": "This MOD is a reusable brand visual package. /qdmp may consume it later, but it is not required to produce it."
+    }
+  },
+  "tokens": {
+    "mapped": {
+      "--du-bg-2": {
+        "value": "#221b15",
+        "source": "warm dark page canvas"
+      },
+      "--du-bg-1": {
+        "value": "#493832",
+        "source": "panel/input surface"
+      },
+      "--du-text-1": {
+        "value": "#f4eedc",
+        "source": "warm parchment foreground"
+      },
+      "--du-text-2": {
+        "value": "#e9d9c5",
+        "source": "parchment copy"
+      },
+      "--du-text-3": {
+        "value": "#c8b08b",
+        "source": "gold-muted label"
+      },
+      "--du-border-1": {
+        "value": "#8e6140",
+        "source": "antique brown frame"
+      },
+      "--du-primary-color": {
+        "value": "#996540",
+        "source": "brown action control"
+      },
+      "--du-primary-outline-color": {
+        "value": "#c8b08b",
+        "source": "gold outline text"
+      }
+    },
+    "styleOnly": {
+      "--style-card-radius": {
+        "value": "0px",
+        "reason": "Ornate frames are straight-edged; do not infer rounded cards from control evidence."
+      },
+      "--style-control-radius": {
+        "value": "5px",
+        "reason": "Inputs and small controls have their own radius."
+      },
+      "--style-card-shadow": {
+        "value": "0 20px 48px rgba(0,0,0,.42)",
+        "reason": "Magical glow belongs to styled frames and media surfaces, not every card."
+      },
+      "--style-divider-color": {
+        "value": "rgba(200,176,139,.72)",
+        "reason": "Gold hairlines and frame dividers are style-only."
+      },
+      "--style-frame-corner-size": {
+        "value": "22px",
+        "reason": "Corner-line fallback for missing ornate media frame assets."
+      },
+      "--style-font-display": {
+        "value": "uifont_cn_title",
+        "reason": "Official title font package, not a DangoUI semantic token."
+      },
+      "--style-font-nav": {
+        "value": "navfont",
+        "reason": "Official navigation font package."
+      }
+    },
+    "evidence": {
+      "sourceFiles": [
+        "migrations/hpma/brand-evidence.json",
+        "migrations/hpma/dangoui-adapter.json",
+        "migrations/hpma/component-mapping.json"
+      ],
+      "method": "computed-first evidence and existing adapter reconciliation"
+    },
+    "dtcg": {
+      "$description": "HPMA DTCG token contract generated from Brand MOD token mirrors.",
+      "$extensions": {
+        "echo.brand.schema": "brand-mod.tokens.dtcg/v0.1",
+        "echo.brand.sourceFile": "migrations/hpma/brand-mod.json",
+        "echo.brand.note": "DTCG is canonical for reusable token values; mapped/styleOnly are compatibility mirrors for current demo consumers."
+      },
+      "mapped": {
+        "du-bg-2": {
+          "$type": "color",
+          "$value": "#221b15",
+          "$description": "warm dark page canvas",
+          "$extensions": {
+            "echo.brand.target": "--du-bg-2",
+            "echo.brand.channel": "mapped",
+            "echo.brand.status": "mapped",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--du-bg-2",
+            "echo.brand.source": "warm dark page canvas"
+          }
+        },
+        "du-bg-1": {
+          "$type": "color",
+          "$value": "#493832",
+          "$description": "panel/input surface",
+          "$extensions": {
+            "echo.brand.target": "--du-bg-1",
+            "echo.brand.channel": "mapped",
+            "echo.brand.status": "mapped",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--du-bg-1",
+            "echo.brand.source": "panel/input surface"
+          }
+        },
+        "du-text-1": {
+          "$type": "color",
+          "$value": "#f4eedc",
+          "$description": "warm parchment foreground",
+          "$extensions": {
+            "echo.brand.target": "--du-text-1",
+            "echo.brand.channel": "mapped",
+            "echo.brand.status": "mapped",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--du-text-1",
+            "echo.brand.source": "warm parchment foreground"
+          }
+        },
+        "du-text-2": {
+          "$type": "color",
+          "$value": "#e9d9c5",
+          "$description": "parchment copy",
+          "$extensions": {
+            "echo.brand.target": "--du-text-2",
+            "echo.brand.channel": "mapped",
+            "echo.brand.status": "mapped",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--du-text-2",
+            "echo.brand.source": "parchment copy"
+          }
+        },
+        "du-text-3": {
+          "$type": "color",
+          "$value": "#c8b08b",
+          "$description": "gold-muted label",
+          "$extensions": {
+            "echo.brand.target": "--du-text-3",
+            "echo.brand.channel": "mapped",
+            "echo.brand.status": "mapped",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--du-text-3",
+            "echo.brand.source": "gold-muted label"
+          }
+        },
+        "du-border-1": {
+          "$type": "color",
+          "$value": "#8e6140",
+          "$description": "antique brown frame",
+          "$extensions": {
+            "echo.brand.target": "--du-border-1",
+            "echo.brand.channel": "mapped",
+            "echo.brand.status": "mapped",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--du-border-1",
+            "echo.brand.source": "antique brown frame"
+          }
+        },
+        "du-primary-color": {
+          "$type": "color",
+          "$value": "#996540",
+          "$description": "brown action control",
+          "$extensions": {
+            "echo.brand.target": "--du-primary-color",
+            "echo.brand.channel": "mapped",
+            "echo.brand.status": "mapped",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--du-primary-color",
+            "echo.brand.source": "brown action control"
+          }
+        },
+        "du-primary-outline-color": {
+          "$type": "color",
+          "$value": "#c8b08b",
+          "$description": "gold outline text",
+          "$extensions": {
+            "echo.brand.target": "--du-primary-outline-color",
+            "echo.brand.channel": "mapped",
+            "echo.brand.status": "mapped",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--du-primary-outline-color",
+            "echo.brand.source": "gold outline text"
+          }
+        }
+      },
+      "styleOnly": {
+        "style-card-radius": {
+          "$type": "dimension",
+          "$value": "0px",
+          "$description": "Ornate frames are straight-edged; do not infer rounded cards from control evidence.",
+          "$extensions": {
+            "echo.brand.target": "--style-card-radius",
+            "echo.brand.channel": "styleOnly",
+            "echo.brand.status": "styleOnly",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--style-card-radius",
+            "echo.brand.reason": "Ornate frames are straight-edged; do not infer rounded cards from control evidence."
+          }
+        },
+        "style-control-radius": {
+          "$type": "dimension",
+          "$value": "5px",
+          "$description": "Inputs and small controls have their own radius.",
+          "$extensions": {
+            "echo.brand.target": "--style-control-radius",
+            "echo.brand.channel": "styleOnly",
+            "echo.brand.status": "styleOnly",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--style-control-radius",
+            "echo.brand.reason": "Inputs and small controls have their own radius."
+          }
+        },
+        "style-card-shadow": {
+          "$type": "shadow",
+          "$value": "0 20px 48px rgba(0,0,0,.42)",
+          "$description": "Magical glow belongs to styled frames and media surfaces, not every card.",
+          "$extensions": {
+            "echo.brand.target": "--style-card-shadow",
+            "echo.brand.channel": "styleOnly",
+            "echo.brand.status": "styleOnly",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--style-card-shadow",
+            "echo.brand.reason": "Magical glow belongs to styled frames and media surfaces, not every card."
+          }
+        },
+        "style-divider-color": {
+          "$type": "color",
+          "$value": "rgba(200,176,139,.72)",
+          "$description": "Gold hairlines and frame dividers are style-only.",
+          "$extensions": {
+            "echo.brand.target": "--style-divider-color",
+            "echo.brand.channel": "styleOnly",
+            "echo.brand.status": "styleOnly",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--style-divider-color",
+            "echo.brand.reason": "Gold hairlines and frame dividers are style-only."
+          }
+        },
+        "style-frame-corner-size": {
+          "$type": "dimension",
+          "$value": "22px",
+          "$description": "Corner-line fallback for missing ornate media frame assets.",
+          "$extensions": {
+            "echo.brand.target": "--style-frame-corner-size",
+            "echo.brand.channel": "styleOnly",
+            "echo.brand.status": "styleOnly",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--style-frame-corner-size",
+            "echo.brand.reason": "Corner-line fallback for missing ornate media frame assets."
+          }
+        },
+        "style-font-display": {
+          "$type": "fontFamily",
+          "$value": "uifont_cn_title",
+          "$description": "Official title font package, not a DangoUI semantic token.",
+          "$extensions": {
+            "echo.brand.target": "--style-font-display",
+            "echo.brand.channel": "styleOnly",
+            "echo.brand.status": "styleOnly",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--style-font-display",
+            "echo.brand.reason": "Official title font package, not a DangoUI semantic token."
+          }
+        },
+        "style-font-nav": {
+          "$type": "fontFamily",
+          "$value": "navfont",
+          "$description": "Official navigation font package.",
+          "$extensions": {
+            "echo.brand.target": "--style-font-nav",
+            "echo.brand.channel": "styleOnly",
+            "echo.brand.status": "styleOnly",
+            "echo.brand.usage": "",
+            "echo.brand.legacyKey": "--style-font-nav",
+            "echo.brand.reason": "Official navigation font package."
+          }
+        }
+      }
+    }
+  },
+  "componentVariants": [
+    {
+      "id": "hpma-ornate-top-nav",
+      "base": [
+        "NavigationBar",
+        "Tabs"
+      ],
+      "visualRole": "top navigation with center logo and ornate hover decoration",
+      "status": "composed",
+      "rules": [
+        "Keep DangoUI navigation behavior.",
+        "Use font/nav/ornate line evidence for visual skin."
+      ]
+    },
+    {
+      "id": "hpma-download-panel",
+      "base": [
+        "Card",
+        "Button",
+        "Image"
+      ],
+      "visualRole": "download and QR panel",
+      "status": "composed",
+      "rules": [
+        "Use brown primary controls.",
+        "Asset badges are slots, not hard-coded emoji or text decoration."
+      ]
+    },
+    {
+      "id": "hpma-news-carousel-with-list",
+      "base": [
+        "Swiper",
+        "Tabs",
+        "Card",
+        "Tag"
+      ],
+      "visualRole": "news banner plus list",
+      "status": "composed",
+      "rules": [
+        "Tabs inherit antique gold selected state.",
+        "List separators use --style-divider-color."
+      ]
+    },
+    {
+      "id": "hpma-media-thumbnail-grid",
+      "base": [
+        "Image",
+        "Card"
+      ],
+      "visualRole": "media grid with ornate frame",
+      "status": "style-only",
+      "rules": [
+        "Decorative frame replaces normal card border.",
+        "Apply only to media thumbnails or target frames."
+      ]
+    },
+    {
+      "id": "hpma-spell-character-card",
+      "base": [
+        "Card",
+        "Image",
+        "Badge"
+      ],
+      "visualRole": "spell or character card",
+      "status": "fallback",
+      "rules": [
+        "Rarity frames and card shells remain asset/component gaps."
+      ]
+    }
+  ],
+  "slots": [
+    {
+      "id": "hero-media",
+      "component": "HeroHeader",
+      "accepts": [
+        "hero-background",
+        "scene-image"
+      ],
+      "required": true,
+      "rules": [
+        "Use real media when available.",
+        "Do not replace source media with abstract gradient when an asset exists."
+      ]
+    },
+    {
+      "id": "ornate-frame",
+      "component": "Card/Image",
+      "accepts": [
+        "frame-asset",
+        "corner-line-css"
+      ],
+      "required": true,
+      "rules": [
+        "Frame is selective.",
+        "Do not put ornate borders on every card."
+      ]
+    },
+    {
+      "id": "display-font",
+      "component": "Typography",
+      "accepts": [
+        "font"
+      ],
+      "required": false,
+      "rules": [
+        "Vendored font preferred.",
+        "Remote-only font must fall back without blocking preview."
+      ]
+    },
+    {
+      "id": "brand-icon-system",
+      "component": "IconButton/Button",
+      "accepts": [
+        "image-icon",
+        "DangoUI icon fallback"
+      ],
+      "required": false,
+      "rules": [
+        "Use official image assets if extracted.",
+        "Do not invent decorative emoji substitutes."
+      ]
+    }
+  ],
+  "assets": [
+    {
+      "id": "hpma-page-atmosphere",
+      "role": "section-background",
+      "source": "migrations/hpma/dangoui-adapter.json#demoOnlyVisualControls.--style-media",
+      "usage": "Brown, gold and blue magical page atmosphere for section surfaces.",
+      "fit": "cover; fallback only until official page assets are available",
+      "status": "style-only"
+    },
+    {
+      "id": "hpma-hero-media",
+      "role": "hero-background",
+      "source": "migrations/hpma/brand-evidence.json#mediaColor",
+      "usage": "Feature split scene or hero media slot.",
+      "fit": "preserve image ratio; cover only for true hero surfaces",
+      "status": "candidate"
+    },
+    {
+      "id": "hpma-ornate-frame",
+      "role": "frame-asset",
+      "source": "media_border_67b7223.png / media_border2_e5450c6.png evidence",
+      "usage": "Media frame or thumbnail shell.",
+      "fit": "border-image or corner-line fallback",
+      "status": "missing-local-asset"
+    },
+    {
+      "id": "hpma-display-font",
+      "role": "font",
+      "source": "uifont_cn_title / navfont evidence",
+      "usage": "Display title and navigation type.",
+      "fit": "font-face with system fallback",
+      "status": "remote-or-missing"
+    }
+  ],
+  "layoutRules": {
+    "sectionBackgroundChain": {
+      "mode": "frame-led-page-sections",
+      "layers": [
+        {
+          "id": "hpma-page-shell",
+          "assetId": "hpma-page-atmosphere",
+          "zIndex": 0,
+          "placement": "page or section background",
+          "rule": "Use atmosphere behind content; never let inspector hover overlays change layout."
+        },
+        {
+          "id": "hpma-hero-layer",
+          "assetId": "hpma-hero-media",
+          "zIndex": 1,
+          "placement": "hero/media slot",
+          "rule": "Media image remains content-bearing and keeps source ratio."
+        }
+      ]
+    },
+    "imageFit": {
+      "default": "preserve-source-ratio",
+      "hero": "cover only when the source is a true full-bleed hero",
+      "thumbnail": "object-fit: cover; stable aspect-ratio",
+      "forbidden": [
+        "stretching raster assets",
+        "using background gradients when source media exists"
+      ]
+    },
+    "overlay": {
+      "inspectorTag": {
+        "mustNotAffectLayout": true,
+        "position": "absolute",
+        "rule": "Hover labels and selected outlines are tooling chrome, not part of component layout."
+      }
+    },
+    "bottomBarReserve": {
+      "required": true,
+      "minPadding": "calc(bottom-bar-height + safe-area + 24px)",
+      "rule": "Scrollable previews must expose the final feed/card above the TabBar."
+    }
+  },
+  "platformOverrides": {
+    "h5": {
+      "cssImport": "Prefer JS entry import for theme CSS when Vite/Taro import ordering is fragile.",
+      "font": "Remote-only fonts use system fallback and do not block preview."
+    },
+    "miniProgram": {
+      "asset": "Use vendored assets or CDN URLs supported by the target mini-program runtime.",
+      "layout": "Keep DangoUI component behavior and change visual shell only."
+    }
+  },
+  "verification": {
+    "requiredGates": [
+      "schema-valid",
+      "computed-style-diff",
+      "selector-hit-check",
+      "asset-load-check",
+      "bottom-bar-scroll-check"
+    ],
+    "previewLevel": "standard-demo-style-pack",
+    "notes": "HPMA requires selective ornate frames; applying them everywhere is a failure."
+  },
+  "semanticRoles": {
+    "surface.page": {
+      "kind": "mappedToken",
+      "value": "#221b15",
+      "target": "--du-bg-2",
+      "dtcgPath": "mapped.du-bg-2",
+      "status": "mapped",
+      "usage": "App/page base surface.",
+      "sources": [
+        "tokens.mapped.--du-bg-2"
+      ],
+      "evidence": [
+        "warm dark page canvas"
+      ]
+    },
+    "surface.card": {
+      "kind": "mappedToken",
+      "value": "#493832",
+      "target": "--du-bg-1",
+      "dtcgPath": "mapped.du-bg-1",
+      "status": "mapped",
+      "usage": "Readable content card surface.",
+      "sources": [
+        "tokens.mapped.--du-bg-1"
+      ],
+      "evidence": [
+        "panel/input surface"
+      ]
+    },
+    "text.primary": {
+      "kind": "mappedToken",
+      "value": "#f4eedc",
+      "target": "--du-text-1",
+      "dtcgPath": "mapped.du-text-1",
+      "status": "mapped",
+      "usage": "Primary readable text.",
+      "sources": [
+        "tokens.mapped.--du-text-1"
+      ],
+      "evidence": [
+        "warm parchment foreground"
+      ]
+    },
+    "text.secondary": {
+      "kind": "mappedToken",
+      "value": "#e9d9c5",
+      "target": "--du-text-2",
+      "dtcgPath": "mapped.du-text-2",
+      "status": "mapped",
+      "usage": "Secondary supporting copy.",
+      "sources": [
+        "tokens.mapped.--du-text-2"
+      ],
+      "evidence": [
+        "parchment copy"
+      ]
+    },
+    "text.tertiary": {
+      "kind": "mappedToken",
+      "value": "#c8b08b",
+      "target": "--du-text-3",
+      "dtcgPath": "mapped.du-text-3",
+      "status": "mapped",
+      "usage": "Weak labels and tertiary metadata.",
+      "sources": [
+        "tokens.mapped.--du-text-3"
+      ],
+      "evidence": [
+        "gold-muted label"
+      ]
+    },
+    "border.subtle": {
+      "kind": "mappedToken",
+      "value": "#8e6140",
+      "target": "--du-border-1",
+      "dtcgPath": "mapped.du-border-1",
+      "status": "mapped",
+      "usage": "Default divider and subtle frame.",
+      "sources": [
+        "tokens.mapped.--du-border-1"
+      ],
+      "evidence": [
+        "antique brown frame"
+      ]
+    },
+    "typography.display.family": {
+      "kind": "styleOnlyToken",
+      "value": "uifont_cn_title",
+      "target": "--style-font-display",
+      "dtcgPath": "styleOnly.style-font-display",
+      "status": "mapped",
+      "usage": "Display or heading font family.",
+      "sources": [
+        "tokens.styleOnly.--style-font-display"
+      ],
+      "evidence": [
+        "Official title font package, not a DangoUI semantic token."
+      ]
+    },
+    "shape.card.radius": {
+      "kind": "styleOnlyToken",
+      "value": "0px",
+      "target": "--style-card-radius",
+      "dtcgPath": "styleOnly.style-card-radius",
+      "status": "mapped",
+      "usage": "Primary content-card radius.",
+      "sources": [
+        "tokens.styleOnly.--style-card-radius"
+      ],
+      "evidence": [
+        "Ornate frames are straight-edged; do not infer rounded cards from control evidence."
+      ]
+    },
+    "shape.control.radius": {
+      "kind": "styleOnlyToken",
+      "value": "5px",
+      "target": "--style-control-radius",
+      "dtcgPath": "styleOnly.style-control-radius",
+      "status": "mapped",
+      "usage": "Action/control radius.",
+      "sources": [
+        "tokens.styleOnly.--style-control-radius"
+      ],
+      "evidence": [
+        "Inputs and small controls have their own radius."
+      ]
+    },
+    "elevation.card.shadow": {
+      "kind": "styleOnlyToken",
+      "value": "0 20px 48px rgba(0,0,0,.42)",
+      "target": "--style-card-shadow",
+      "dtcgPath": "styleOnly.style-card-shadow",
+      "status": "mapped",
+      "usage": "Card or lifted-surface shadow treatment.",
+      "sources": [
+        "tokens.styleOnly.--style-card-shadow"
+      ],
+      "evidence": [
+        "Magical glow belongs to styled frames and media surfaces, not every card."
+      ]
+    },
+    "action.primary.fill": {
+      "kind": "mappedTokenFallback",
+      "value": "#996540",
+      "target": "--du-primary-color",
+      "dtcgPath": "mapped.du-primary-color",
+      "status": "mapped",
+      "usage": "Fallback primary action fill when no action-evidence sample exists yet; replace with actionEvidence once computed CTA sampling is available.",
+      "sources": [
+        "tokens.mapped.--du-primary-color"
+      ],
+      "evidence": [
+        "brown action control"
+      ],
+      "protocol": {
+        "source": "fallback-from-mapped-primary",
+        "reason": "action-evidence-missing"
+      }
+    },
+    "action.primary.token": {
+      "kind": "mappedToken",
+      "value": "#996540",
+      "target": "--du-primary-color",
+      "dtcgPath": "mapped.du-primary-color",
+      "status": "mapped",
+      "usage": "Current demo-consumed CTA token; compare this with action.primary.fill to detect drift.",
+      "sources": [
+        "tokens.mapped.--du-primary-color"
+      ],
+      "evidence": [
+        "brown action control"
+      ]
+    }
+  }
+}

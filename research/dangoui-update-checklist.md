@@ -13,6 +13,7 @@
 
 | 项目 | 类型 | 当前 demo 表达 | 需要 DangoUI 补什么 |
 | --- | --- | --- | --- |
+| PageLayout / Layout | 布局规范 / Token recipe | 通栏、卡片、双列、白底灰卡、灰底白卡、灰底拉通式 | 新增可复用页面布局 recipe，明确 bg、safe-area、gap、radius、content block、BottomBar/NavigationBar 占位规则 |
 | HeroHeader | 组件 | 首屏主视觉、状态栏安全区、导航栏下方内容层、图片层/纹理层 | 新增首屏头图组件或页面模板规范，明确 Image、NavigationBar、安全区、遮罩、CTA 的组合 API |
 | Grid | 组件 | 分发侧宫格入口 | 新增宫格入口组件，支持列数、图标/图片、标题、副标题、间距 |
 | List | 组件 | 信息行、右侧箭头、状态说明 | 新增 List / ListItem，支持左侧图标、主副文案、右侧动作、分割线 |
@@ -23,9 +24,9 @@
 | Menu | 组件 | 左侧/页面菜单 | 新增菜单组件，支持层级、选中、展开 |
 | SegmentControl | 组件 | 分段控制 | 新增分段控制组件，区别于 Tabs |
 | Tips | 组件 | 字段提示/辅助说明 | 新增轻量提示组件，或明确由 FormItem tips / Tooltip / NoticeBar 承接 |
-| Spacing | Token | 页面、模块、表单间距 | 新增 spacing token 结构和命名 |
-| Radius | Token | 风格化站点需要统一直角/圆角 | 新增 radius token 结构，并支持被风格化边框反向约束 |
-| Shadow | Token | FAB、TabBar、卡片阴影需要统一 | 新增 shadow token 结构和强弱层级 |
+| Spacing | Token / Recipe | token scale、safe-area、gap、padding、system inset | 新增 spacing token 结构和命名; demo「风格 / Spacing」作为当前视觉说明 |
+| Radius | Token / Recipe | none、small、normal、medium、large、pill、circle | 新增 radius token 结构，并支持被风格化边框 / frame recipe 反向约束；demo「风格 / Radius」作为当前视觉说明 |
+| Shadow | Token / Effect recipe | none、low、medium、inset line、brand glow | 新增 shadow token 结构和 effect recipe；demo「风格 / Shadow」区分 elevation、边界线和氛围光 |
 
 ## 待更新
 
@@ -85,6 +86,36 @@
 - [ ] **展示规则 7**:左侧菜单 ↔ 右侧预览一一对应
 - [ ] 落地状态:规则 2、3 部分应用;其余待 06-19 集中 review
 
+### 新增 · Demo 初始化布局规则(2026-06-19 校准)
+
+> 目标:运营/开发打开任意参考站或 DangoUI baseline 时,页面一开始就像真实小程序页面,不是组件堆叠清单。以下规则优先于品牌站临时 pageSpacing,除非源站有明确反证。
+
+- [x] **Spacing token / recipe 候选(等待 DangoUI 研发更新)**:
+  - checklist 只保留方向;详细 token 值、视觉示例、用途和表达规则在 demo「DangoUI baseline / 风格 / Spacing」里查看。
+  - Spacing 应输出 token scale / class preset,不要继续散落成页面 CSS 魔法数字。
+- [x] **Radius token / recipe 候选(等待 DangoUI 研发更新)**:
+  - checklist 只保留方向;详细 token 值、视觉示例、用途和表达规则在 demo「DangoUI baseline / 风格 / Radius」里查看。
+- [x] **Shadow token / effect recipe 候选(等待 DangoUI 研发更新)**:
+  - checklist 只保留方向;详细 token 值、视觉示例、用途和表达规则在 demo「DangoUI baseline / 风格 / Shadow」里查看。
+- [x] **通栏与 hero**:
+  - HeroHeader / 首屏图等通栏模块可以用负 margin 抵消页面安全边距,但内部文案 padding 必须继续使用当前页面安全边距。
+  - 通栏模块不额外包卡片框;真实内容区才决定是否需要卡片底。
+- [ ] **Layout recipe 候选(等待 DangoUI 研发更新)**:
+  - checklist 只保留方向;详细 recipe、token 组合、视觉示例和表达规则在 demo「DangoUI baseline / 风格 / Layout」里查看。
+  - Layout 不等同业务组件;它应该输出 token recipe / class preset,供页面、Group、List、Form、BottomBar 等组件组合复用。
+- [x] **待新增 / 待更新组件默认继承规则**:
+  - 组件场景可以是业务组合;具体如何继承 Layout / Spacing / Radius / Shadow,以 demo「DangoUI baseline / 风格」为准。
+  - 需要进入 DangoUI 生产库的差异继续记录在本 checklist。
+- [x] **DangoUI 基础组件展示**:
+  - Tabs / Tag / Grid 这类基础组件不再额外包一层带 border/background/padding 的说明卡。
+  - 组件如果需要说明,说明文案应跟随组件自然排布,不能把组件变成“示意卡片”。
+- [x] **业务组件沉淀**:
+  - Feed 与 SPU 是两个场景,不能混在一个卡片内。
+  - Feed 是内容流,用贪心双列流表达;卡片只承接封面、标题、作者和互动数据。
+  - Swipe 是 Feed 首坑的运营资源位,不作为首页独立模块脱离内容流。
+  - SPU 是商品承接,用横滑 rail 表达一组竖向 SPU item;SPU cover normal 尺寸按 `81px × 108px`。
+  - SPU 横滑 rail 自身需要左右内 padding,默认左 `10px`,右侧额外留露边空间,让横滑语义可见。
+
 ### 新增 · DangoUI API 行为缺口
 
 - [ ] **DuSwitch/Checkbox/Radio 在 showcase 中无 click 响应**:原因是 demo 绑定时只用 `:on`/`:checked` 但缺 `@update:on`/`:update:checked` 处理器;
@@ -101,6 +132,12 @@
       demo 中"单次活动 / 多场次活动"因此被居中,语义不合。
       06-17 已在 styles.css line 3032+ 加 demo 侧覆盖。
       后续:dangoui 决定是否 type="tag" 不应居中,或者补一个 `align` prop(`'start' | 'center'`)。
+- [ ] **DateTimePicker DuCalendar popup escape mockup 区域**:在 demo mockup 环境(phone frame 缩放)下,点击 DateTimePicker 触发 DuCalendar popup 时:
+      popup 用 `position: fixed; width: 100vw` 全屏渲染,不受 mockup 约束;字体大小/容器宽度没有随 mockup 缩放。
+      根本原因:`DuPopup` CSS 用 `position: fixed; width: 100vw; height: 100vh`,渲染到 document.body 外层,demo 侧 CSS override 从外部兜不住。
+      建议修复(dangoui 侧):`DuPopup` 支持定位相关 CSS 覆盖,或提供 `container` prop 让 popup 渲染到指定父容器,或在 `DuCalendar`/`DuDateTimePicker` 提供 `popupPosition: 'viewport' | 'inline'` 选项。
+      推测以下组件有相同问题:`DuSelect`、`DuCascader`、`DuActionSheet`、`DuDialog`。
+
 
 ### 新增 · 浏览器默认样式 demo 侧处理
 
@@ -117,14 +154,14 @@
 
 ### 设计 Token 体系规范(2026-06-17 立)
 
-> 核心原则:**尽可能从 dangoui 标准 token 取,不自定;底层 = bg-1,卡片 = bg-2;通栏不加 bg。**
+> 核心原则:**尽可能从 dangoui 标准 token 取,不自定。移动端页面底 = bg-2;通栏 content = bg-1;卡片/局部分组再按场景决定是否使用 bg-1/bg-2。**
 
 #### 三层视觉(基于 dangoui bg token 体系)
 
 ```
-最底层   body/页面       var(--du-bg-1)  #ffffff  白
-通栏     .contents        无 bg(继承 bg-1)
-卡片基类 .group          var(--du-bg-2)  #f7f7f9  浅灰
+最底层   body/页面       var(--du-bg-2)  #f7f7f9  浅灰
+通栏     content block   var(--du-bg-1)  #ffffff  白
+卡片基类 .group          按场景使用 bg-1/bg-2,不得无依据套壳
 主题卡   .re1999-hero 等  主题渐变 bg 覆盖 .group
 ```
 
@@ -151,7 +188,7 @@
 - [x] 因为 --mockup-scale 写死 1,calc 永远是 no-op,简化后语义清晰
 
 ##### Phase 5 · 激活 dead variable
-- [x] **--style-card-shadow 定义**:0 1px 3px rgba(0, 0, 0, 0.08)(10 处 box-shadow 激活)
+- [x] **--style-card-shadow 定义**:0 1px 3px rgba(0, 0, 0, 0.08)(10 处 box-shadow 激活，临时:待迁移到 Shadow token / recipe)
 - [x] **--style-media 定义**:transparent(5 处 background 激活,等价 dead 状态)
 
 #### Commit 链(06-17 token 化完整历史)
@@ -169,11 +206,11 @@
 
 ```css
 :root {
-  --shadow: 0 18px 60px ...;             /* 自定:demo 全局阴影 */
-  --style-card-radius-base: 12px;       /* 自定:卡片圆角 */
-  --style-control-radius-base: 8px;     /* 自定:控件圆角 */
-  --style-page-spacing-base: 12px;      /* 自定:页面间距 */
-  --style-card-shadow: 0 1px 3px ...;  /* 自定:卡片轻阴影(06-17 激活) */
+  --shadow: 0 18px 60px ...;             /* 临时:待迁移到 Shadow token / effect recipe */
+  --style-card-radius-base: 12px;       /* 临时:待迁移到 Radius token / recipe */
+  --style-control-radius-base: 8px;     /* 临时:待迁移到 Radius token / recipe */
+  --style-page-spacing-base: 12px;      /* 临时:待迁移到 Spacing token / recipe */
+  --style-card-shadow: 0 1px 3px ...;  /* 临时:待迁移到 Shadow token / recipe */
   --style-media: transparent;            /* 自定:媒体层底色(06-17 激活) */
   --mockup-radius / --mockup-screen-*   /* mockup 内部 */
   --mock-type-*                          /* mockup 内部 */

@@ -1,0 +1,234 @@
+{
+  "brand": "re1999",
+  "source": "https://re.bluepoch.com/home/",
+  "scopeNote": "This demo asset records the image-asset lane separately from UI color tokens. PNG/SVG/WebP evidence is treated as asset evidence and only becomes DangoUI tokens when the target project already exposes a matching component prop, slot or token.",
+  "statistics": {
+    "assetInventory": {
+      "scope": "Local assets already available in this project plus source-site asset roles that must be collected in future runs.",
+      "formula": "Each row records role, target scope and implementation candidate instead of mixing asset pixels into UI token frequency.",
+      "items": [
+        {
+          "asset": "/assets/re1999-logo.png",
+          "format": "png",
+          "dimensions": "333x132",
+          "alpha": true,
+          "role": "brand-mark",
+          "contexts": ["style switcher icon", "NavigationBar decorative watermark"],
+          "targetScope": [".theme-re1999 .phone .du-navigation-bar::before"],
+          "implementation": "CSS background-image, contain, right/bottom placement",
+          "mappingStatus": "style-only",
+          "reason": "The logo is a brand asset that affects recognition but is not a DangoUI color or radius token."
+        },
+        {
+          "asset": "./font/Serif.ttf",
+          "rawSrc": "../font/Serif.ttf",
+          "resolvedUrl": "https://re.bluepoch.com/home/font/Serif.ttf",
+          "localAssetPath": "/assets/brand-assets/re1999/font/Serif.ttf",
+          "format": "ttf",
+          "dimensions": "font file, 2.4MB",
+          "alpha": false,
+          "role": "font",
+          "contexts": ["@font-face SourceHanSerifCN", "body", "navigation", "title"],
+          "targetScope": [".theme-re1999 title/body typography"],
+          "implementation": "Local @font-face RE1999Serif; title and narrative text use this first, then serif fallbacks.",
+          "mappingStatus": "style-only",
+          "reason": "The official font package is a core style asset and cannot be recovered from color or spacing statistics."
+        },
+        {
+          "asset": "./font/Sans.ttf",
+          "rawSrc": "../font/Sans.ttf",
+          "resolvedUrl": "https://re.bluepoch.com/home/font/Sans.ttf",
+          "localAssetPath": "/assets/brand-assets/re1999/font/Sans.ttf",
+          "format": "ttf",
+          "dimensions": "font file, 1.6MB",
+          "alpha": false,
+          "role": "font",
+          "contexts": ["@font-face cn", "character description", "body copy"],
+          "targetScope": [".theme-re1999 .phone copy"],
+          "implementation": "Local @font-face RE1999Sans for body copy inside the demo.",
+          "mappingStatus": "style-only",
+          "reason": "Body typography evidence uses a real site font rather than a guessed system font."
+        },
+        {
+          "asset": "./font/Didot.ttf",
+          "rawSrc": "../font/Didot.ttf",
+          "resolvedUrl": "https://re.bluepoch.com/home/font/Didot.ttf",
+          "localAssetPath": "/assets/brand-assets/re1999/font/Didot.ttf",
+          "format": "ttf",
+          "dimensions": "font file, 98KB",
+          "alpha": false,
+          "role": "font",
+          "contexts": ["@font-face Den", "music/detail display typography"],
+          "targetScope": [".theme-re1999 display headings"],
+          "implementation": "Local @font-face RE1999Didot used for display heading fallback in the demo.",
+          "mappingStatus": "style-only",
+          "reason": "Display typography is a separate font asset and should be tracked even when only a subset is applied."
+        },
+        {
+          "asset": "./img/BG2.png",
+          "rawSrc": "../img/BG2.png",
+          "resolvedUrl": "https://re.bluepoch.com/home/img/BG2.png",
+          "localAssetPath": "/assets/brand-assets/re1999/img/BG2.png",
+          "format": "png",
+          "dimensions": "1920x1080",
+          "alpha": true,
+          "role": "texture",
+          "contexts": [".swiperBG2", "page background", "role media background"],
+          "targetScope": [".theme-re1999 .phone-screen", ".theme-re1999 .re1999-role-media"],
+          "implementation": "Local CSS background-image, cover, behind component content.",
+          "mappingStatus": "style-only",
+          "reason": "Dark grain, orbital lines and orange light leak are texture/decorative evidence, not color tokens."
+        },
+        {
+          "asset": "background-texture-candidates",
+          "rawSrc": ["../img/BG.png", "../img/BGM.png", "./img/01.jpg", "./kv/m.jpg", "./m/m_00000.jpg", "../img/login/loginBg.png"],
+          "resolvedUrl": ["https://re.bluepoch.com/home/img/BG.png", "https://re.bluepoch.com/home/img/BGM.png", "https://re.bluepoch.com/home/img/01.jpg", "https://re.bluepoch.com/home/kv/m.jpg", "https://re.bluepoch.com/home/m/m_00000.jpg", "https://re.bluepoch.com/home/img/login/loginBg.png"],
+          "localAssetPath": ["/assets/brand-assets/re1999/img/BG.png", "/assets/brand-assets/re1999/img/BGM.png", "/assets/brand-assets/re1999/img/01.jpg", "/assets/brand-assets/re1999/kv/m.jpg", "/assets/brand-assets/re1999/m/m_00000.jpg", "/assets/brand-assets/re1999/img/login/loginBg.png"],
+          "format": "png/jpg",
+          "dimensions": ["1920x1080", "750x1624", "1920x1080", "750x1334", "750x1334", "574x493"],
+          "alpha": "mixed",
+          "role": "texture",
+          "contexts": ["PC page background", "mobile page background", "home scene", "mobile key visual", "intro frame", "login modal panel"],
+          "targetScope": ["page shell", "mobile shell", "hero media", "modal/panel background"],
+          "implementation": "Vendored as candidates; apply only when the target scope matches the original context.",
+          "mappingStatus": "style-only",
+          "reason": "1999 has multiple background systems; BG2 is the current demo default, but other texture/KV/panel backgrounds must remain available for future page-specific mapping."
+        },
+        {
+          "asset": "high-salience-demo-assets",
+          "rawSrc": ["./img/first/1.png", "./img/first/2.png", "./img/gallery/01.png", "./img/backstory/p1.png", "./img/News.png", "./img/role/1.png", "./img/role/1t.png"],
+          "resolvedUrl": ["https://re.bluepoch.com/home/img/first/1.png", "https://re.bluepoch.com/home/img/first/2.png", "https://re.bluepoch.com/home/img/gallery/01.png", "https://re.bluepoch.com/home/img/backstory/p1.png", "https://re.bluepoch.com/home/img/News.png", "https://re.bluepoch.com/home/img/role/1.png", "https://re.bluepoch.com/home/img/role/1t.png"],
+          "localAssetPath": ["/assets/brand-assets/re1999/img/first/1.png", "/assets/brand-assets/re1999/img/first/2.png", "/assets/brand-assets/re1999/img/gallery/01.png", "/assets/brand-assets/re1999/img/backstory/p1.png", "/assets/brand-assets/re1999/img/News.png", "/assets/brand-assets/re1999/img/role/1.png", "/assets/brand-assets/re1999/img/role/1t.png"],
+          "format": "png",
+          "dimensions": ["156x37", "190x14", "502x555", "954x578", "212x84", "940x1160", "370x210"],
+          "alpha": "mixed",
+          "role": "decorative-layer",
+          "contexts": ["home title layer", "news gallery visual", "archive story scene", "role title image"],
+          "targetScope": [".theme-re1999 .re1999-hero::before/::after", ".theme-re1999 .re1999-news-feature", ".theme-re1999 .re1999-character-panel", ".theme-re1999 .re1999-character-panel::after"],
+          "implementation": "Visible demo application; these assets deliberately increase visual perception instead of staying only in inventory.",
+          "mappingStatus": "style-only",
+          "reason": "Heavy-style sites rely on layered images and illustration assets. A migration demo must visibly apply representative layers, not only record them."
+        },
+        {
+          "asset": "./img/role/false.webp",
+          "rawSrc": "./img/role/false.webp",
+          "resolvedUrl": "https://re.bluepoch.com/home/img/role/false.webp",
+          "localAssetPath": "/assets/brand-assets/re1999/img/role/false.webp",
+          "format": "webp",
+          "dimensions": "940x1160",
+          "alpha": true,
+          "role": "decorative-layer",
+          "contexts": ["official DOM inline image", "role media orbital layer"],
+          "targetScope": [".theme-re1999 .re1999-role-media::after"],
+          "implementation": "Local CSS overlay layer, contain, screen blend.",
+          "mappingStatus": "style-only",
+          "reason": "This image is a recognizable decorative layer around role media and should be preserved before generic illustration sampling."
+        },
+        {
+          "asset": "./img/role/1bg.png",
+          "rawSrc": "../img/role/1bg.png",
+          "resolvedUrl": "https://re.bluepoch.com/home/img/role/1bg.png",
+          "localAssetPath": "/assets/brand-assets/re1999/img/role/1bg.png",
+          "format": "png",
+          "dimensions": "940x1160",
+          "alpha": true,
+          "role": "background",
+          "contexts": [".character-right-left background", "role media backplate"],
+          "targetScope": [".theme-re1999 .re1999-role-media::before"],
+          "implementation": "Local CSS background layer behind role media content.",
+          "mappingStatus": "style-only",
+          "reason": "Role media styling depends on a real image backplate, not only a gradient."
+        },
+        {
+          "asset": "./img/icon/b.png + ./img/icon/bc.png",
+          "rawSrc": "../img/icon/b.png; ../img/icon/bc.png",
+          "resolvedUrl": "https://re.bluepoch.com/home/img/icon/b.png; https://re.bluepoch.com/home/img/icon/bc.png",
+          "localAssetPath": "/assets/brand-assets/re1999/img/icon/b.png; /assets/brand-assets/re1999/img/icon/bc.png",
+          "format": "png pair",
+          "dimensions": "30x30 each",
+          "alpha": true,
+          "role": "selected-bg",
+          "contexts": [".share-content-b background", ".share-content-b:hover background"],
+          "targetScope": ["state asset evidence", "future selected/active slot"],
+          "implementation": "State-scoped background-image pair; do not replace with generic shadow.",
+          "mappingStatus": "style-only",
+          "reason": "The site expresses hover/active state with paired images, which is the key pattern to preserve."
+        },
+        {
+          "asset": "./img/character/1.png",
+          "rawSrc": "./img/character/1.png",
+          "resolvedUrl": "https://re.bluepoch.com/home/img/character/1.png",
+          "localAssetPath": "/assets/brand-assets/re1999/img/character/1.png",
+          "format": "png",
+          "dimensions": "140x140",
+          "alpha": true,
+          "role": "role-art",
+          "contexts": ["official DOM inline image", "character carousel", "archive role media"],
+          "targetScope": [".theme-re1999 .re1999-role-media i"],
+          "implementation": "Local vendored asset used as CSS background-image in the demo media slot; rawSrc and resolvedUrl are retained for traceability.",
+          "mappingStatus": "composed",
+          "reason": "DOM inline character images are part of the site's recognizable style and must not be dropped just because they are not CSS backgrounds or token values."
+        },
+        {
+          "asset": "selected-state-png-candidate",
+          "format": "png/webp",
+          "dimensions": "unknown",
+          "alpha": "expected",
+          "role": "selected-bg",
+          "contexts": ["active navigation", "selected card", "selected tab"],
+          "targetScope": [".theme-re1999 .click-target.selected", ".theme-re1999 .workspace-demo-tabs button.active"],
+          "implementation": "state-scoped CSS background layer or pseudo-element",
+          "mappingStatus": "ask-user",
+          "reason": "If source evidence contains a selected background asset, it must replace generic outline/shadow feedback."
+        },
+        {
+          "asset": "archive-texture-candidate",
+          "format": "png/webp",
+          "dimensions": "tile or large background",
+          "alpha": "optional",
+          "role": "texture",
+          "contexts": ["page background", "archive panel", "paper surface"],
+          "targetScope": [".theme-re1999 .phone-screen", ".theme-re1999 .re1999-news-list", ".theme-re1999 .re1999-file-grid"],
+          "implementation": "repeat or overlay CSS background",
+          "mappingStatus": "ask-user",
+          "reason": "Texture changes the 1999 archival feel and should be recorded as an asset recipe, not inferred from color values only."
+        },
+        {
+          "asset": "frame-corner-png-candidate",
+          "format": "png/svg",
+          "dimensions": "9-slice or corner piece",
+          "alpha": true,
+          "role": "asset-frame",
+          "contexts": ["Hero", "Card", "Panel", "Media"],
+          "targetScope": [".theme-re1999 .re1999-hero", ".theme-re1999 .re1999-character-panel", ".theme-re1999 .re1999-role-media"],
+          "implementation": "border-image, parent background edge layer, or pseudo-element only when stacking requires it",
+          "mappingStatus": "ask-user",
+          "reason": "Frame assets replace the parent border and determine radius/divider behavior."
+        }
+      ]
+    },
+    "nonColor": {
+      "scope": "User-calibrated style decisions from the demo.",
+      "frequency": [
+        {
+          "type": "radius",
+          "value": "0px",
+          "contexts": ["Hero", "Card", "Panel", "Media", "plain border panels"],
+          "role": "plain card/frame/media radius follows archival straight-edge geometry"
+        },
+        {
+          "type": "radius",
+          "value": "top-right 50-100px",
+          "contexts": ["news-left", "new-left-swiper", "backstory-left"],
+          "role": "large media shell only; do not generalize to ordinary cards"
+        },
+        {
+          "type": "frame",
+          "value": "copper parent edge-line CSS",
+          "contexts": ["Hero", "NewsList", "FileGrid"],
+          "role": "style-only frame fallback until PNG frame assets are collected"
+        }
+      ]
+    }
+  }
+}

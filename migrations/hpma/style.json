@@ -1,0 +1,576 @@
+{
+  "name": "hpma",
+  "schemaVersion": 1,
+  "source": {
+    "type": "web",
+    "url": "https://www.harrypottermagicawakened.com/cn/index.html",
+    "evidence": [
+      "migrations/hpma/brand-evidence.json",
+      "migrations/hpma/dangoui-adapter.json",
+      "migrations/hpma/component-mapping.json"
+    ]
+  },
+  "document": {
+    "id": "style:hpma",
+    "name": "HPMA Brand Style",
+    "type": "DOCUMENT",
+    "children": [
+      {
+        "id": "page:hpma-home",
+        "name": "HPMA / 官网首页",
+        "type": "CANVAS",
+        "children": [
+          {
+            "id": "web:hpma:home:hero",
+            "name": "Hero / Hogwarts Letter",
+            "type": "FRAME",
+            "absoluteBoundingBox": {
+              "x": 0,
+              "y": 0,
+              "width": 375,
+              "height": 312
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "boundVariable": "{color.page.darkBrown}"
+              },
+              {
+                "type": "GRADIENT_RADIAL",
+                "name": "gold magical glow"
+              }
+            ],
+            "strokes": [
+              {
+                "type": "SOLID",
+                "boundVariable": "{color.frame.gold}"
+              }
+            ],
+            "cornerRadius": 0,
+            "children": [],
+            "pluginData": {
+              "echo.brand": {
+                "assetRole": "hero-scene",
+                "migrationIntent": "use-dark-scene-plus-gold-frame",
+                "targets": {
+                  "dangoui": {
+                    "component": "Hero"
+                  },
+                  "vue": {
+                    "component": "section"
+                  },
+                  "unocss": {
+                    "shortcut": "hpma-hero-scene"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "web:hpma:home:letter-actions",
+            "name": "Button Group / 入学行动",
+            "type": "INSTANCE",
+            "componentProperties": {
+              "Tone": {
+                "value": "primary-outline",
+                "type": "VARIANT"
+              }
+            },
+            "boundVariables": {
+              "primaryColor": {
+                "type": "VARIABLE_ALIAS",
+                "id": "{color.action.brown}"
+              },
+              "borderColor": {
+                "type": "VARIABLE_ALIAS",
+                "id": "{color.frame.gold}"
+              }
+            },
+            "children": [],
+            "pluginData": {
+              "echo.brand": {
+                "assetRole": "control",
+                "migrationIntent": "keep-control-radius-separate-from-frame-radius",
+                "targets": {
+                  "dangoui": {
+                    "component": "Button",
+                    "props": [
+                      "type"
+                    ]
+                  },
+                  "vue": {
+                    "component": "DuButton"
+                  },
+                  "unocss": {
+                    "shortcut": "hpma-control-button"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      },
+      {
+        "id": "page:hpma-news",
+        "name": "HPMA / 资讯活动",
+        "type": "CANVAS",
+        "children": [
+          {
+            "id": "web:hpma:news:carousel",
+            "name": "Swiper / 魔法资讯轮播",
+            "type": "FRAME",
+            "absoluteBoundingBox": {
+              "x": 0,
+              "y": 0,
+              "width": 343,
+              "height": 190
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "boundVariable": "{color.surface.panelBrown}"
+              },
+              {
+                "type": "GRADIENT_LINEAR",
+                "name": "dark-to-gold scene overlay"
+              }
+            ],
+            "strokes": [],
+            "cornerRadius": 0,
+            "children": [],
+            "pluginData": {
+              "echo.brand": {
+                "assetRole": "media-frame",
+                "migrationIntent": "ornate-frame-replaces-default-border",
+                "targets": {
+                  "dangoui": {
+                    "component": "Swiper"
+                  },
+                  "vue": {
+                    "component": "DuSwiper"
+                  },
+                  "unocss": {
+                    "shortcut": "hpma-ornate-media-frame"
+                  }
+                }
+              }
+            }
+          },
+          {
+            "id": "web:hpma:news:tabs",
+            "name": "Tabs / 活动新闻公告",
+            "type": "INSTANCE",
+            "componentId": "dangoui:Tabs",
+            "componentProperties": {
+              "type": {
+                "value": "tag",
+                "type": "VARIANT"
+              },
+              "state": {
+                "value": "selected",
+                "type": "VARIANT"
+              }
+            },
+            "boundVariables": {
+              "selectedBg": {
+                "type": "VARIABLE_ALIAS",
+                "id": "{color.action.brown}"
+              },
+              "selectedText": {
+                "type": "VARIABLE_ALIAS",
+                "id": "{color.text.parchment}"
+              }
+            },
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": "page:hpma-cards",
+        "name": "HPMA / 魔咒卡牌",
+        "type": "CANVAS",
+        "children": [
+          {
+            "id": "web:hpma:cards:spell-media",
+            "name": "Image / 魔咒图鉴媒体",
+            "type": "FRAME",
+            "absoluteBoundingBox": {
+              "x": 0,
+              "y": 0,
+              "width": 343,
+              "height": 196
+            },
+            "fills": [
+              {
+                "type": "SOLID",
+                "boundVariable": "{color.page.darkBrown}"
+              },
+              {
+                "type": "GRADIENT_RADIAL",
+                "name": "blue gold spell glow"
+              }
+            ],
+            "cornerRadius": 0,
+            "children": [],
+            "pluginData": {
+              "echo.brand": {
+                "assetRole": "spell-illustration-shell",
+                "migrationIntent": "media-and-card-frame-radius-is-zero",
+                "targets": {
+                  "dangoui": {
+                    "component": "Image"
+                  },
+                  "vue": {
+                    "component": "DuImage"
+                  },
+                  "unocss": {
+                    "shortcut": "hpma-spell-media"
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "components": {
+    "dangoui:NavigationBar": {
+      "name": "NavigationBar",
+      "status": "composed",
+      "unsupported": [
+        "center logo lockup",
+        "ornate hover decoration"
+      ]
+    },
+    "dangoui:Swiper": {
+      "name": "Swiper",
+      "status": "composed",
+      "unsupported": [
+        "official banner feed",
+        "ornate carousel frame asset"
+      ]
+    },
+    "dangoui:Card": {
+      "name": "Card",
+      "status": "fallback",
+      "unsupported": [
+        "ornate media border asset",
+        "rarity-specific frame"
+      ]
+    },
+    "dangoui:Tabs": {
+      "name": "Tabs",
+      "status": "mapped",
+      "componentProperties": [
+        "type=tag",
+        "value"
+      ]
+    },
+    "dangoui:Button": {
+      "name": "Button",
+      "status": "mapped",
+      "componentProperties": [
+        "type"
+      ]
+    }
+  },
+  "componentSets": {},
+  "styles": {
+    "style:hpma:frame-gold": {
+      "key": "style:hpma:frame-gold",
+      "name": "HPMA / Frame Gold",
+      "style_type": "STROKE"
+    },
+    "style:hpma:title-font": {
+      "key": "style:hpma:title-font",
+      "name": "HPMA / Title Font",
+      "style_type": "TEXT"
+    }
+  },
+  "tokens": {
+    "$extensions": {
+      "com.figma.modeName": "hpma"
+    },
+    "color": {
+      "page": {
+        "darkBrown": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.133,
+              0.106,
+              0.082
+            ],
+            "alpha": 1,
+            "hex": "#221B15"
+          },
+          "$description": "Warm dark page canvas."
+        }
+      },
+      "surface": {
+        "panelBrown": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.286,
+              0.22,
+              0.196
+            ],
+            "alpha": 1,
+            "hex": "#493832"
+          },
+          "$description": "Panel and input surface."
+        }
+      },
+      "text": {
+        "parchment": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.957,
+              0.933,
+              0.863
+            ],
+            "alpha": 1,
+            "hex": "#F4EEDC"
+          },
+          "$description": "Warm parchment foreground."
+        },
+        "mutedGold": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.784,
+              0.69,
+              0.545
+            ],
+            "alpha": 1,
+            "hex": "#C8B08B"
+          },
+          "$description": "Gold muted labels."
+        }
+      },
+      "frame": {
+        "gold": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.784,
+              0.69,
+              0.545
+            ],
+            "alpha": 0.72,
+            "hex": "#C8B08B"
+          },
+          "$description": "Ornate frame hairline color.",
+          "$extensions": {
+            "echo.brand.role": "frame-decoration"
+          }
+        }
+      },
+      "action": {
+        "brown": {
+          "$type": "color",
+          "$value": {
+            "colorSpace": "srgb",
+            "components": [
+              0.6,
+              0.396,
+              0.251
+            ],
+            "alpha": 1,
+            "hex": "#996540"
+          },
+          "$description": "Primary brown action control."
+        }
+      }
+    },
+    "radius": {
+      "frame": {
+        "$type": "dimension",
+        "$value": {
+          "value": 0,
+          "unit": "px"
+        },
+        "$description": "Straight-edged ornate frame/card/media radius."
+      },
+      "control": {
+        "$type": "dimension",
+        "$value": {
+          "value": 5,
+          "unit": "px"
+        },
+        "$description": "Input/control radius only."
+      }
+    }
+  },
+  "assets": {
+    "font:title": {
+      "type": "FONT",
+      "remote": "https://www.harrypottermagicawakened.com/pc/gw/20201020114844/css/font/uifont_cn_title_1404b12.woff",
+      "local": null,
+      "status": "remote-only",
+      "role": "title-font"
+    },
+    "font:nav": {
+      "type": "FONT",
+      "remote": "https://www.harrypottermagicawakened.com/pc/gw/20201020114844/css/font/nav_font_e50e757.ttf",
+      "local": null,
+      "status": "remote-only",
+      "role": "navigation-font"
+    },
+    "asset:media-border": {
+      "type": "IMAGE",
+      "remoteName": "media_border_67b7223.png",
+      "local": null,
+      "status": "missing-local",
+      "role": "ornate-media-frame"
+    },
+    "asset:media-border-2": {
+      "type": "IMAGE",
+      "remoteName": "media_border2_e5450c6.png",
+      "local": null,
+      "status": "missing-local",
+      "role": "thumbnail-frame"
+    }
+  },
+  "brandMetadata": {
+    "targets": [
+      "dangoui",
+      "vue",
+      "unocss",
+      "assets"
+    ],
+    "status": "draft",
+    "reviewQueue": [
+      "Download HPMA border and icon assets locally instead of relying on remote CSS names.",
+      "Verify whether ornate media frame is a real double frame or a border replacement before applying inset layers.",
+      "Keep frame/card/media radius at 0px; keep control radius separate."
+    ],
+    "demoWorkflow": {
+      "pages": [
+        {
+          "id": "page:hpma-home",
+          "scenarioRole": "home-distribution",
+          "distributionSide": [
+            "news",
+            "features",
+            "spell-cards",
+            "media"
+          ],
+          "displaySide": [
+            "hogwarts-letter-hero",
+            "parchment-copy",
+            "entry-actions"
+          ],
+          "interactiveStates": [
+            "button.hover",
+            "entry.active"
+          ],
+          "assetRoles": [
+            "title-font",
+            "nav-font",
+            "magic-glow",
+            "parchment-text",
+            "ornate-frame"
+          ],
+          "antiPatterns": [
+            "generic-rounded-card",
+            "download-card-if-not-core",
+            "shadow-without-source"
+          ]
+        },
+        {
+          "id": "page:hpma-news",
+          "scenarioRole": "news-feed",
+          "distributionSide": [
+            "event",
+            "news",
+            "notice"
+          ],
+          "displaySide": [
+            "news-carousel",
+            "dated-list",
+            "gold-tag-tabs"
+          ],
+          "interactiveStates": [
+            "tabs.selected",
+            "tag.selected"
+          ],
+          "assetRoles": [
+            "media-frame",
+            "gold-divider",
+            "parchment-text"
+          ],
+          "antiPatterns": [
+            "plain-list-without-frame",
+            "inner-frame-by-default"
+          ]
+        },
+        {
+          "id": "page:hpma-cards",
+          "scenarioRole": "archive-profile",
+          "distributionSide": [
+            "spell",
+            "partner"
+          ],
+          "displaySide": [
+            "spell-card-orbit",
+            "rarity-badge",
+            "card-grid"
+          ],
+          "interactiveStates": [
+            "tabs.selected",
+            "badge.visible"
+          ],
+          "assetRoles": [
+            "spell-illustration-shell",
+            "blue-gold-glow",
+            "rarity-frame"
+          ],
+          "antiPatterns": [
+            "treat-media-glow-as-color-token",
+            "card-radius-from-control-radius"
+          ]
+        },
+        {
+          "id": "page:hpma-media",
+          "scenarioRole": "media-gallery",
+          "distributionSide": [
+            "video",
+            "wallpaper",
+            "feature-scenes"
+          ],
+          "displaySide": [
+            "large-media-cover",
+            "thumbnail-grid",
+            "caption-list"
+          ],
+          "interactiveStates": [
+            "tabs.selected",
+            "thumbnail.active"
+          ],
+          "assetRoles": [
+            "media-border",
+            "wallpaper-cover",
+            "video-play-icon"
+          ],
+          "antiPatterns": [
+            "media-entry-jumps-back-to-news",
+            "missing-local-border-asset-hidden"
+          ]
+        }
+      ],
+      "requiredDemoUpgrade": [
+        "Add an independent HPMA media/gallery page when enough local assets are collected.",
+        "Replace remote-only fonts and missing media_border assets with local assets before claiming complete application."
+      ]
+    }
+  }
+}
